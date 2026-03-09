@@ -59,7 +59,7 @@ A "repository" (or "repo") is just a folder on GitHub that stores your code.
    - Drag the `.github` folder
    - Drag the `data` folder
    - Drag the `scripts` folder
-   - Drag the `site` folder
+   - Drag the `docs` folder; this is where the html page lives
 3. At the bottom, click **Commit changes**
 
 > **Tip on the .github folder:** On Mac, folders starting with `.` are hidden by default. Press `Cmd+Shift+.` in Finder to show hidden files before uploading.
@@ -71,7 +71,7 @@ GitHub Pages turns your repository into a live website automatically.
 1. In your repository, click **Settings** (tab near the top)
 2. In the left sidebar, click **Pages**
 3. Under "Source", select **Deploy from a branch**
-4. Under "Branch", select **main** and set the folder to **/site**
+4. Under "Branch", select **main** and set the folder to **/docs**
 5. Click **Save**
 6. Wait 1-2 minutes, then your site will be live at:
    `https://YOUR-USERNAME.github.io/sandals-777-tracker`
