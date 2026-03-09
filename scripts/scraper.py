@@ -29,7 +29,7 @@ from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeo
 
 # ── PATHS ──────────────────────────────────────────────────────────────────────
 BASE_DIR   = Path(__file__).parent.parent          # /sandals-tracker/
-DATA_DIR   = BASE_DIR / "data"
+DATA_DIR   = BASE_DIR / "docs" / "data"
 DEALS_FILE = DATA_DIR / "deals.json"
 HIST_FILE  = DATA_DIR / "history.json"
 DATA_DIR.mkdir(exist_ok=True)
