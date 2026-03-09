@@ -1,0 +1,99 @@
+# .github/workflows/scrape-weekly.yml
+#
+# This is a GitHub Actions "workflow" — a set of instructions that GitHub's
+# servers execute automatically on a schedule.
+#
+# Think of GitHub as a free computer that:
+#   1. Wakes up every Wednesday at 1am ET (6am UTC)
+#   2. Downloads your code
+#   3. Runs the scraper
+#   4. Saves the new deals.json back into your repository
+#   5. Your website then reads that file and shows live data
+#
+# All of this is COMPLETELY FREE on GitHub's free tier.
+
+name: "Scrape Sandals 7·7·7 Deals"
+
+on:
+  # ── Automatic: every Wednesday at 6:00 UTC (1am US Eastern, 2am after DST) ──
+  # Sandals updates their deals on Wednesday. We run 1 hour after midnight
+  # to give their site time to update.
+  schedule:
+    - cron: "0 6 * * 3"   # minute hour day month weekday(3=Wednesday)
+
+  # ── Manual: you can also click "Run workflow" in the GitHub Actions tab ──
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Why are you running this manually?"
+        required: false
+        default: "Manual test run"
+
+jobs:
+  scrape:
+    name: "Fetch & Save Deals"
+    runs-on: ubuntu-latest   # GitHub spins up a free Ubuntu Linux machine
+
+    steps:
+      # Step 1: Check out your repository code onto the GitHub machine
+      - name: "Checkout repository"
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # auto-provided, no setup needed
+
+      # Step 2: Install Python
+      - name: "Set up Python 3.12"
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Step 3: Install Python packages our scraper needs
+      - name: "Install dependencies"
+        run: |
+          pip install playwright beautifulsoup4 requests
+          playwright install chromium   # download headless Chrome
+
+      # Step 4: Run the scraper! This creates/updates data/deals.json
+      - name: "Run scraper"
+        run: |
+          python scripts/scraper.py
+        env:
+          # Playwright needs this in some CI environments
+          PLAYWRIGHT_BROWSERS_PATH: /home/runner/.cache/ms-playwright
+
+      # Step 5: Check if deals.json actually changed (if Sandals hasn't
+      # updated yet, no point committing)
+      - name: "Check for changes"
+        id: changes
+        run: |
+          git diff --quiet data/ && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+
+      # Step 6: If the data changed, commit it back to the repo.
+      # Your live site reads from this file, so this IS the deployment.
+      - name: "Commit updated deal data"
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name  "777-Watch Bot"
+          git config user.email "bot@777watch.com"
+          git add data/deals.json data/history.json
+          git commit -m "🏖️ Weekly 7·7·7 deals update — $(date +'%Y-%m-%d')"
+          git push
+
+      # Step 7: If nothing changed, log it so you know
+      - name: "Log no-change result"
+        if: steps.changes.outputs.changed == 'false'
+        run: echo "Deals unchanged since last run. Sandals may not have updated yet."
+
+      # Step 8: Send a notification on failure (optional but recommended)
+      # Uncomment and configure if you want email/Slack alerts when scraping breaks
+      # - name: "Notify on failure"
+      #   if: failure()
+      #   uses: actions/github-script@v7
+      #   with:
+      #     script: |
+      #       github.rest.issues.create({
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         title: '🚨 Scraper failed — check Sandals page structure',
+      #         body: 'The weekly scraper failed. Sandals may have changed their page layout.'
+      #       })
