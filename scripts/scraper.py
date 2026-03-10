@@ -58,6 +58,25 @@ RESORT_COLORS = {
     "SST":"#2a5868","SAB":"#5a6848","SMB":"#384868","SPR":"#685838",
 }
 
+# Maps our resort codes → Sandals CDN folder slugs (confirmed from live scrape logs)
+RESORT_CDN_SLUG = {
+    "SAB": "sat",   # Grande Antigua
+    "SRP": "brp",   # Royal Plantation  (CDN uses 'brp')
+    "SRB": "srb",   # Royal Bahamian    (CDN uses 'srb')
+    "SSV": "ssv",
+    "SNG": "sng",
+    "SGO": "sgo",
+    "SCR": "scr",
+    "SBR": "sbr",
+    "SPR": "spr",
+    "SLU": "slu",
+    "SST": "sst",
+    "SSN": "ssn",
+    "SKJ": "skj",
+    "SML": "sml",
+    "SMB": "smb",
+}
+
 # Resort name fragments → resort code (order matters: more specific first)
 RESORT_NAME_TO_CODE = {
     "grande antigua":    "SAB",
@@ -123,9 +142,6 @@ def download_images(deals: list[dict]) -> None:
         "Accept": "image/webp,image/apng,image/*,*/*;q=0.8",
     }
     for deal in deals:
-        slug = RESORT_CDN_SLUG.get(deal["resortCode"], "").lower()
-        if not slug:
-            continue
         # Get all CDN URLs for this resort from img_urls_raw stored on deal
         cdn_urls = deal.pop("_cdn_urls", [])
         if not cdn_urls and deal.get("imgUrl"):
@@ -255,28 +271,6 @@ def scrape_deals() -> list[dict]:
     rc_count = body_text.count("Room Code:")
     print(f"[scraper] Rendered text: {len(body_text)} chars, {rc_count} 'Room Code:' occurrences")
     deals = parse_rendered_text(body_text)
-
-    # Match images to deals by resort code in the URL path
-    # Sandals CDN URLs contain the resort abbreviation, e.g.:
-    #   cdn.sandals.com/.../resorts/sat/...  → SAT = Grande Antigua (SAB)
-    #   cdn.sandals.com/.../resorts/brp/...  → BRP = Royal Bahamian (SRB)
-    RESORT_CDN_SLUG = {
-        "SAB": "sat",   # Grande Antigua  (CDN: sat)
-        "SRP": "brp",   # Royal Plantation (CDN uses 'brp' — confirmed by visual match)
-        "SRB": "srb",   # Royal Bahamian   (CDN uses 'srb' — confirmed by visual match)
-        "SSV": "ssv",   # Saint Vincent
-        "SNG": "sng",   # Negril
-        "SGO": "sgo",   # Ochi
-        "SCR": "scr",   # Royal Curacao
-        "SBR": "sbr",   # Barbados
-        "SLU": "slu",   # Regency La Toc
-        "SPR": "spr",   # Royal Barbados
-        "SST": "sst",   # Grande St. Lucian
-        "SSN": "ssn",   # Grenada
-        "SKJ": "skj",   # South Coast
-        "SML": "sml",   # Montego Bay
-        "SMB": "smb",   # Emerald Bay
-    }
 
     for deal in deals:
         slug = RESORT_CDN_SLUG.get(deal["resortCode"], "").lower()
