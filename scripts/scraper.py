@@ -232,6 +232,8 @@ def scrape_deals() -> list[dict]:
                 return imgs;
             }""")
             print(f"[scraper] Found {len(img_urls_raw)} CDN image URLs total")
+            for u in img_urls_raw:
+                print(f"[scraper] CDN: {u[:100]}")
         except Exception as e:
             print(f"[scraper] Image extraction error: {e}")
 
@@ -251,7 +253,7 @@ def scrape_deals() -> list[dict]:
     #   cdn.sandals.com/.../resorts/brp/...  → BRP = Royal Bahamian (SRB)
     RESORT_CDN_SLUG = {
         "SAB": "sat",   # Grande Antigua
-        "SRP": "srp",   # Royal Plantation
+        "SRP": "orp",   # Royal Plantation (CDN uses 'orp' not 'srp')
         "SRB": "brp",   # Royal Bahamian
         "SSV": "ssv",   # Saint Vincent
         "SNG": "sng",   # Negril
