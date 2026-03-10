@@ -435,12 +435,18 @@ async function loadData() {
 // ─── COUNTDOWN ──────────────────────────────────────────────────────────────
 
 function getNextTuesdayMidnight() {
+  // Deals run Wed–Tue. Expiry = this Tuesday at 23:59:59 (or next if it just reset).
+  // Sandals resets at ~midnight Wednesday UTC, so we target Tue 23:59:59 UTC.
   const now = new Date();
-  const day = now.getDay(); // 0=Sun … 6=Sat
-  const daysUntilTue = (2 - day + 7) % 7 || 7;
-  const tue = new Date(now);
-  tue.setDate(now.getDate() + daysUntilTue);
-  tue.setHours(23, 59, 59, 0);
+  const day = now.getUTCDay(); // 0=Sun, 2=Tue, 3=Wed
+  // Days until Tuesday: if today IS Tuesday and it's before midnight, use 0 (tonight)
+  const daysUntilTue = (2 - day + 7) % 7;
+  const tue = new Date(Date.UTC(
+    now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + daysUntilTue,
+    23, 59, 59, 0
+  ));
+  // If we've passed Tuesday midnight UTC already, jump to next Tuesday
+  if (tue <= now) tue.setUTCDate(tue.getUTCDate() + 7);
   return tue;
 }
 
