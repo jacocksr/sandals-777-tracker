@@ -252,9 +252,9 @@ def scrape_deals() -> list[dict]:
     #   cdn.sandals.com/.../resorts/sat/...  → SAT = Grande Antigua (SAB)
     #   cdn.sandals.com/.../resorts/brp/...  → BRP = Royal Bahamian (SRB)
     RESORT_CDN_SLUG = {
-        "SAB": "sat",   # Grande Antigua
-        "SRP": "orp",   # Royal Plantation (CDN uses 'orp' not 'srp')
-        "SRB": "brp",   # Royal Bahamian
+        "SAB": "sat",   # Grande Antigua  (CDN: sat)
+        "SRP": "srb",   # Royal Plantation (CDN uses 'srb' — confirmed in log)
+        "SRB": "brp",   # Royal Bahamian   (CDN uses 'brp')
         "SSV": "ssv",   # Saint Vincent
         "SNG": "sng",   # Negril
         "SGO": "sgo",   # Ochi
