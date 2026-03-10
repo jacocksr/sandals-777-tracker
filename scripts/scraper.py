@@ -92,23 +92,32 @@ def get_week_label():
 # ══════════════════════════════════════════════════════════════════════════════
 
 def strategy_a_intercept() -> list[dict]:
-    print("[A] Trying network interception...")
+    """
+    Sandals' page fires one request per deal room using URLs like:
+      /specials/suite-deals/?categoryCode=VF&_rsc=rbniq
+    The _rsc suffix means React Server Component — a streaming text format.
+    We capture ALL such responses, then mine them for room data.
+    """
+    print("[A] Trying network interception (RSC-aware)...")
+
+    # Store (categoryCode, raw_body) pairs
     captured = []
 
     def handle_response(response):
         url = response.url
-        # Look for API calls that likely carry room/deal data
-        if any(k in url for k in ["suite", "deal", "special", "promo", "offer",
-                                   "qualifying", "room", "rate"]):
+        # Target the per-room categoryCode requests specifically
+        if "suite-deals" in url and ("categoryCode" in url or "_rsc" in url):
             try:
                 body = response.body()
                 text = body.decode("utf-8", errors="ignore")
-                if len(text) > 200 and ('"room' in text.lower() or '"suite' in text.lower()
-                                         or '"code"' in text.lower()):
-                    print(f"[A] Captured API response from: {url}")
-                    captured.append(text)
-            except Exception:
-                pass
+                if len(text) > 100:
+                    # Pull out the categoryCode if present
+                    m = re.search(r"categoryCode=([A-Z0-9]+)", url)
+                    cat = m.group(1) if m else "UNKNOWN"
+                    print(f"[A] Captured RSC response: categoryCode={cat} ({len(text)} bytes)")
+                    captured.append((cat, text))
+            except Exception as e:
+                print(f"[A] Error reading response: {e}")
 
     with sync_playwright() as p:
         browser = p.chromium.launch(
@@ -123,73 +132,218 @@ def strategy_a_intercept() -> list[dict]:
                 "Chrome/123.0.0.0 Safari/537.36"
             ),
             viewport={"width": 1440, "height": 900},
-            extra_http_headers={
-                "Accept-Language": "en-US,en;q=0.9",
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            }
+            extra_http_headers={"Accept-Language": "en-US,en;q=0.9"},
         )
-        # Remove webdriver flag
-        ctx.add_init_script("""
-            Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
-            Object.defineProperty(navigator, 'plugins', {get: () => [1,2,3]});
-        """)
+        ctx.add_init_script(
+            "Object.defineProperty(navigator,'webdriver',{get:()=>undefined});"
+        )
         page = ctx.new_page()
         page.on("response", handle_response)
 
         try:
-            page.goto(SANDALS_URL, wait_until="domcontentloaded", timeout=30_000)
-            # Scroll slowly like a human
-            for _ in range(5):
-                page.mouse.wheel(0, 400)
-                time.sleep(random.uniform(0.4, 0.9))
-            page.wait_for_timeout(5000)
+            page.goto(SANDALS_URL, wait_until="domcontentloaded", timeout=35_000)
+            # Scroll to trigger lazy-loaded deal cards
+            for _ in range(6):
+                page.mouse.wheel(0, 500)
+                time.sleep(random.uniform(0.5, 1.0))
+            page.wait_for_timeout(6000)
         except PWTimeout:
-            print("[A] Page load timed out")
+            print("[A] Page load timed out — using whatever was captured")
 
         browser.close()
 
-    deals = []
-    for raw in captured:
-        deals = _parse_api_json(raw)
-        if deals:
-            break
+    if not captured:
+        print("[A] No RSC responses captured")
+        return []
 
-    print(f"[A] Extracted {len(deals)} deals")
+    deals = _parse_rsc_responses(captured)
+    print(f"[A] Extracted {len(deals)} deals from {len(captured)} RSC responses")
     return deals
 
 
-def _parse_api_json(raw: str) -> list[dict]:
-    """Try to parse an API JSON blob into deal dicts."""
-    try:
-        data = json.loads(raw)
-    except Exception:
-        return []
+def _parse_rsc_responses(captured: list[tuple]) -> list[dict]:
+    """
+    React Server Component payloads look like:
+      1:{"key":"value","roomName":"...","resortCode":"SGO",...}
+      2:["$","div",null,{"children":...}]
+    We extract JSON objects from each line and hunt for room/resort fields.
+    """
+    deals = []
+    seen_codes = set()
 
-    # Handle various possible response shapes
-    items = []
-    if isinstance(data, list):
-        items = data
-    elif isinstance(data, dict):
-        for key in ["deals", "rooms", "suites", "results", "data", "items", "qualifying"]:
-            if key in data and isinstance(data[key], list):
-                items = data[key]
+    for cat_code, text in captured:
+        if cat_code == "UNKNOWN":
+            continue
+
+        # Split into lines — each line in RSC is a self-contained chunk
+        for line in text.splitlines():
+            line = line.strip()
+            if not line:
+                continue
+
+            # RSC lines start with  "N:" where N is a number
+            # Strip the leading number prefix to get the JSON part
+            json_part = re.sub(r"^\d+:", "", line).strip()
+            if not json_part.startswith("{") and not json_part.startswith("["):
+                continue
+
+            try:
+                obj = json.loads(json_part)
+            except Exception:
+                # Not valid JSON on its own — try to find embedded JSON objects
+                # by scanning for {"resortCode": patterns
+                matches = re.findall(r'\{[^{}]{20,}\}', json_part)
+                for m in matches:
+                    try:
+                        obj = json.loads(m)
+                        deal = _extract_deal_from_obj(obj, cat_code, len(deals)+1)
+                        if deal and deal["resortCode"] not in seen_codes:
+                            seen_codes.add(deal["resortCode"])
+                            deals.append(deal)
+                    except Exception:
+                        pass
+                continue
+
+            deal = _extract_deal_from_obj(obj, cat_code, len(deals)+1)
+            if deal and deal["resortCode"] not in seen_codes:
+                seen_codes.add(deal["resortCode"])
+                deals.append(deal)
+
+            # Also recurse into nested dicts/lists to find embedded room data
+            if isinstance(obj, (dict, list)):
+                extras = _deep_search_rsc(obj, cat_code, len(deals))
+                for d in extras:
+                    if d["resortCode"] not in seen_codes:
+                        seen_codes.add(d["resortCode"])
+                        d["id"] = len(deals) + 1
+                        deals.append(d)
+
+        if len(deals) >= 7:
+            break
+
+    return deals[:7]
+
+
+def _extract_deal_from_obj(obj: dict, cat_code: str, idx: int):
+    """Try to build a deal from a parsed JSON object."""
+    if not isinstance(obj, dict):
+        return None
+
+    # Look for resort code in various field names
+    resort_code = (obj.get("resortCode") or obj.get("resort_code") or
+                   obj.get("propertyCode") or obj.get("property_code") or
+                   obj.get("hotelCode") or "")
+
+    # Also check if any known resort code appears anywhere in the stringified obj
+    if not resort_code:
+        obj_str = json.dumps(obj)
+        for code in RESORT_MAP:
+            if f'"{code}"' in obj_str or f"'{code}'" in obj_str:
+                resort_code = code
                 break
 
-    deals = []
-    for i, item in enumerate(items[:7], 1):
-        if not isinstance(item, dict):
-            continue
-        code = (item.get("resortCode") or item.get("resort_code") or
-                item.get("propertyCode") or "")
-        room_code = (item.get("roomCode") or item.get("room_code") or
-                     item.get("code") or "")
-        room_name = (item.get("roomName") or item.get("room_name") or
-                     item.get("name") or item.get("description") or "")
-        travel = str(item.get("travelWindow") or item.get("travel_window") or
-                     item.get("dates") or "")
-        if code and room_name:
-            deals.append(make_deal(i, code, room_code, room_name, travel))
+    if not resort_code or resort_code not in RESORT_MAP:
+        return None
 
+    room_code = (obj.get("roomCode") or obj.get("room_code") or
+                 obj.get("categoryCode") or obj.get("code") or cat_code or "")
+    room_name = (obj.get("roomName") or obj.get("room_name") or
+                 obj.get("roomDescription") or obj.get("name") or
+                 obj.get("description") or obj.get("title") or "")
+    travel = str(obj.get("travelWindow") or obj.get("travel_window") or
+                 obj.get("dates") or obj.get("blackoutDates") or "")
+    price_from = obj.get("price") or obj.get("priceFrom") or obj.get("from_price")
+    price_was  = obj.get("originalPrice") or obj.get("wasPrice") or obj.get("rack_rate")
+
+    if not room_name:
+        return None
+
+    return make_deal(idx, resort_code, room_code, room_name, travel,
+                     price_from, price_was)
+
+
+def _deep_search_rsc(obj, cat_code: str, current_count: int) -> list[dict]:
+    """Recursively search nested structures for deal objects."""
+    results = []
+    if current_count >= 7:
+        return results
+
+    if isinstance(obj, dict):
+        d = _extract_deal_from_obj(obj, cat_code, current_count + len(results) + 1)
+        if d:
+            results.append(d)
+        for v in obj.values():
+            results.extend(_deep_search_rsc(v, cat_code, current_count + len(results)))
+    elif isinstance(obj, list):
+        for item in obj:
+            results.extend(_deep_search_rsc(item, cat_code, current_count + len(results)))
+
+    return results
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  STRATEGY D  —  Direct HTTP requests to the categoryCode endpoints
+#  The log showed Sandals fires requests like:
+#    /specials/suite-deals/?categoryCode=VF&_rsc=rbniq
+#  We call these directly with requests (no browser needed).
+# ══════════════════════════════════════════════════════════════════════════════
+
+KNOWN_CATEGORY_CODES = [
+    "LV", "1R", "HSUP", "VF", "NPV", "HG", "KB",
+    "STB", "OCV", "PLB", "RON", "PCS", "GOV", "SLV",
+    "BWV", "SKYV", "VFP", "HB", "LR",
+]
+
+RSC_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
+    ),
+    "Accept": "text/x-component",
+    "RSC": "1",
+    "Next-Url": "/specials/suite-deals/",
+    "Referer": "https://www.sandals.com/specials/suite-deals/",
+}
+
+def _get_rsc_token() -> str:
+    try:
+        r = requests.get(SANDALS_URL,
+            headers={**RSC_HEADERS, "Accept": "text/html"}, timeout=15)
+        matches = re.findall(r'_rsc=([a-z0-9]+)', r.text)
+        if matches:
+            print(f"[D] Found RSC token: {matches[0]}")
+            return matches[0]
+    except Exception as e:
+        print(f"[D] Could not fetch RSC token: {e}")
+    return "rbniq"  # fallback to last known token
+
+def strategy_d_direct_api() -> list[dict]:
+    print("[D] Trying direct RSC API calls...")
+    rsc_token = _get_rsc_token()
+    captured = []
+
+    for code in KNOWN_CATEGORY_CODES:
+        url = f"https://www.sandals.com/specials/suite-deals/?categoryCode={code}&_rsc={rsc_token}"
+        try:
+            r = requests.get(url, headers=RSC_HEADERS, timeout=15)
+            if r.status_code == 200 and len(r.text) > 100:
+                print(f"[D] Got categoryCode={code} ({len(r.text)} bytes)")
+                captured.append((code, r.text))
+        except Exception as e:
+            print(f"[D] Failed {code}: {e}")
+        time.sleep(0.3)
+
+    if not captured:
+        print("[D] No responses received")
+        return []
+
+    deals = _parse_rsc_responses(captured)
+    if not deals:
+        print("[D] RSC parse empty — trying plain text extraction")
+        all_text = "\n".join(t for _, t in captured)
+        deals = _parse_text_for_deals(all_text)
+
+    print(f"[D] Extracted {len(deals)} deals")
     return deals
 
 
@@ -422,7 +576,7 @@ def run():
     deals = []
 
     # Try each strategy in order until one works
-    for strategy in [strategy_a_intercept, strategy_b_stealth, strategy_c_partners]:
+    for strategy in [strategy_d_direct_api, strategy_a_intercept, strategy_b_stealth, strategy_c_partners]:
         try:
             deals = strategy()
         except Exception as e:
