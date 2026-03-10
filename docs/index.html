@@ -508,7 +508,7 @@ function renderDeals(filter) {
     return `
       <div class="deal-card" style="animation-delay:${i * 0.07}s" onclick="openModal(${d.id})">
         <div class="deal-card-img" style="background:linear-gradient(135deg,${d.imgColor} 0%,${d.imgColor}bb 100%)">
-          ${d.imgUrl ? `<img src="${d.imgUrl}" alt="${d.roomName}" loading="lazy" onerror="this.style.display='none'">` : '<div class="deal-card-img-placeholder">✦</div>'}
+          ${d.imgPath ? `<img src="https://jacocksr.github.io/sandals-777-tracker/${d.imgPath}" alt="${d.roomName}" loading="lazy" onerror="this.style.display='none'">` : (d.imgUrl ? `<img src="${d.imgUrl}" alt="${d.roomName}" loading="lazy" onerror="this.style.display='none'">` : '<div class="deal-card-img-placeholder">✦</div>')}
           <div class="deal-card-img-overlay"></div>
           <div class="deal-badge">7·7·7 Deal</div>
           <div class="deal-discount-bubble">
