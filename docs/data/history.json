@@ -221,7 +221,7 @@
   },
   {
     "weekLabel": "Mar 4 – Mar 10, 2026",
-    "fetchedAt": "2026-03-10T19:03:32.045838+00:00",
+    "fetchedAt": "2026-03-10T19:28:21.040060+00:00",
     "deals": [
       {
         "id": 1,
@@ -239,8 +239,9 @@
         ],
         "roomCode": "LV",
         "roomName": "Mediterranean One Bedroom Butler Villa with Private Pool Sanctuary",
+        "roomView": "Beachfront, Pool, Tropical Garden",
+        "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "travelWindow": "",
         "priceFrom": 843,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/grande-antigua/rooms-suites/lv/"
@@ -261,8 +262,9 @@
         ],
         "roomCode": "1R",
         "roomName": "Royal Oceanfront One Bedroom Butler Suite",
+        "roomView": "Oceanfront, Oceanview",
+        "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "travelWindow": "",
         "priceFrom": 674,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/royal-plantation/rooms-suites/1r/"
@@ -283,8 +285,9 @@
         ],
         "roomCode": "HSUP",
         "roomName": "West Bay Swim-up Oversized Club Level Junior Suite",
+        "roomView": "Pool, Tropical Garden",
+        "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "travelWindow": "",
         "priceFrom": 636,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/hsup/"
@@ -305,8 +308,9 @@
         ],
         "roomCode": "VF",
         "roomName": "One-Bedroom Butler Villa Suite with Patio Tranquility Soaking Tub",
+        "roomView": "Tropical Garden",
+        "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "travelWindow": "",
         "priceFrom": 619,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/saint-vincent/rooms-suites/vf/"
@@ -327,8 +331,9 @@
         ],
         "roomCode": "1B",
         "roomName": "Longshore Beachfront Two-Story One Bedroom Butler Villa Suite w/ Tranquility Soaking Tub",
+        "roomView": "Beachfront, Oceanfront, Oceanview",
+        "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "travelWindow": "",
         "priceFrom": 485,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/negril/rooms-suites/1b/"
@@ -349,8 +354,9 @@
         ],
         "roomCode": "OV1",
         "roomName": "Oceanview One Bedroom Poolside Butler Villa Suite",
+        "roomView": "Oceanview, Pool, Tropical Garden",
+        "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "travelWindow": "",
         "priceFrom": 383,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/ochi-beach-resort/rooms-suites/ov1/"
@@ -370,8 +376,9 @@
         ],
         "roomCode": "WSCL",
         "roomName": "Subi Club Level Walkout Room with Patio Tranquility Soaking Tub",
+        "roomView": "Tropical Garden",
+        "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "travelWindow": "",
         "priceFrom": 352,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/royal-curacao/rooms-suites/wscl/"
