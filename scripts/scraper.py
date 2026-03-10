@@ -95,6 +95,7 @@ def make_deal(i, resort_code, room_code, room_name, resort_display,
         "resort":      info["name"],
         "location":    info["location"],
         "imgColor":    RESORT_COLORS.get(resort_code, "#1a5c6a"),
+        "imgUrl":      "",   # populated after scraping by image extractor
         "roomCode":    room_code,
         "roomName":    room_name,
         "discount":    "7%+ off",
@@ -165,6 +166,47 @@ def scrape_deals() -> list[dict]:
             except Exception:
                 pass
 
+        # Extract real photo URLs via JavaScript before closing the browser
+        img_urls = []
+        try:
+            img_urls = page.evaluate("""() => {
+                const imgs = [];
+                const seen = new Set();
+                const selectors = [
+                    '[class*="suite"] img', '[class*="deal"] img',
+                    '[class*="card"] img',  '[class*="room"] img',
+                    '[class*="result"] img','article img', 'li img',
+                ];
+                for (const sel of selectors) {
+                    document.querySelectorAll(sel).forEach(img => {
+                        const src = img.src || img.dataset.src || '';
+                        if (src && src.includes('sandals') &&
+                            !src.includes('logo') && !src.includes('icon') &&
+                            !src.includes('flag') && !src.includes('card_image') &&
+                            !seen.has(src)) {
+                            seen.add(src); imgs.push(src);
+                        }
+                    });
+                    if (imgs.length >= 7) break;
+                }
+                if (imgs.length < 7) {
+                    document.querySelectorAll('img').forEach(img => {
+                        const src = img.src || '';
+                        if (src.includes('cdn.sandals.com') &&
+                            !src.includes('logo') && !src.includes('icon') &&
+                            !src.includes('card_image') && !seen.has(src)) {
+                            seen.add(src); imgs.push(src);
+                        }
+                    });
+                }
+                return imgs.slice(0, 21);
+            }""")
+            print(f"[scraper] Captured {len(img_urls)} image URLs from DOM")
+            for url in img_urls[:7]:
+                print(f"[scraper]   {url[:90]}")
+        except Exception as e:
+            print(f"[scraper] Image extraction error: {e}")
+
         browser.close()
 
     if not body_text:
@@ -173,7 +215,14 @@ def scrape_deals() -> list[dict]:
 
     rc_count = body_text.count("Room Code:")
     print(f"[scraper] Rendered text: {len(body_text)} chars, {rc_count} 'Room Code:' occurrences")
-    return parse_rendered_text(body_text)
+    deals = parse_rendered_text(body_text)
+
+    # Attach one image per deal — cards show 3 photos each, take first of each set
+    primary_imgs = img_urls[::3] if len(img_urls) >= 7 else img_urls
+    for i, deal in enumerate(deals):
+        deal["imgUrl"] = primary_imgs[i] if i < len(primary_imgs) else ""
+
+    return deals
 
 
 # ══════════════════════════════════════════════════════════════════════════════
