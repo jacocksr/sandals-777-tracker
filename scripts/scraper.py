@@ -98,8 +98,9 @@ def make_deal(i, resort_code, room_code, room_name, resort_display,
         "resort":      info["name"],
         "location":    info["location"],
         "imgColor":    RESORT_COLORS.get(resort_code, "#1a5c6a"),
-        "imgUrl":      "",   # CDN source URL (captured from DOM)
-        "imgPath":     "",   # local path after download (used by site)
+        "imgUrl":      "",   # primary CDN source URL
+        "imgPath":     "",   # primary local path (used by site)
+        "imgPaths":    [],   # all downloaded photos for carousel
         "roomCode":    room_code,
         "roomName":    room_name,
         "discount":    "7%+ off",
@@ -111,38 +112,46 @@ def make_deal(i, resort_code, room_code, room_name, resort_display,
 
 def download_images(deals: list[dict]) -> None:
     """
-    Download each deal's image from Sandals CDN and save it locally.
-    Sandals uses hotlink protection so we can't embed CDN URLs directly —
-    images must be hosted from our own domain (GitHub Pages).
-    Saved as docs/images/{resortCode}_{roomCode}.jpg
+    Download up to 4 photos per deal from Sandals CDN and save locally.
+    Sandals hotlink-protects their CDN, so images must be hosted on GitHub Pages.
+    Primary:  docs/images/{resortCode}_{roomCode}.jpg
+    Extras:   docs/images/{resortCode}_{roomCode}_2.jpg, _3.jpg, _4.jpg
     """
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-        "Referer": "https://www.sandals.com/",   # required to bypass hotlink protection
+        "Referer": "https://www.sandals.com/",
         "Accept": "image/webp,image/apng,image/*,*/*;q=0.8",
     }
     for deal in deals:
-        if not deal.get("imgUrl"):
+        slug = RESORT_CDN_SLUG.get(deal["resortCode"], "").lower()
+        if not slug:
             continue
-        filename = f"{deal['resortCode']}_{deal['roomCode']}.jpg"
-        dest = IMAGE_DIR / filename
-        # Skip if already downloaded this week (saves time on re-runs)
-        if dest.exists() and dest.stat().st_size > 5000:
-            deal["imgPath"] = f"images/{filename}"
-            print(f"[images] Already have {filename}")
-            continue
-        try:
-            r = requests.get(deal["imgUrl"], headers=headers, timeout=15)
-            if r.status_code == 200 and len(r.content) > 5000:
-                dest.write_bytes(r.content)
-                deal["imgPath"] = f"images/{filename}"
-                print(f"[images] Downloaded {filename} ({len(r.content)//1024}KB)")
-            else:
-                deal["imgPath"] = ""
-                print(f"[images] Failed {filename}: HTTP {r.status_code}")
-        except Exception as e:
-            deal["imgPath"] = ""
-            print(f"[images] Error {filename}: {e}")
+        # Get all CDN URLs for this resort from img_urls_raw stored on deal
+        cdn_urls = deal.pop("_cdn_urls", [])
+        if not cdn_urls and deal.get("imgUrl"):
+            cdn_urls = [deal["imgUrl"]]
+        # Download up to 4 images
+        paths = []
+        for idx, url in enumerate(cdn_urls[:4]):
+            suffix = "" if idx == 0 else f"_{idx+1}"
+            filename = f"{deal['resortCode']}_{deal['roomCode']}{suffix}.jpg"
+            dest = IMAGE_DIR / filename
+            if dest.exists() and dest.stat().st_size > 5000:
+                paths.append(f"images/{filename}")
+                print(f"[images] Already have {filename}")
+                continue
+            try:
+                r = requests.get(url, headers=headers, timeout=15)
+                if r.status_code == 200 and len(r.content) > 5000:
+                    dest.write_bytes(r.content)
+                    paths.append(f"images/{filename}")
+                    print(f"[images] Downloaded {filename} ({len(r.content)//1024}KB)")
+                else:
+                    print(f"[images] Failed {filename}: HTTP {r.status_code}")
+            except Exception as e:
+                print(f"[images] Error {filename}: {e}")
+        deal["imgPath"]  = paths[0] if paths else ""
+        deal["imgPaths"] = paths
 
 
 def get_week_label():
@@ -272,13 +281,14 @@ def scrape_deals() -> list[dict]:
     for deal in deals:
         slug = RESORT_CDN_SLUG.get(deal["resortCode"], "").lower()
         matched = [u for u in img_urls_raw if f"/resorts/{slug}/" in u.lower()] if slug else []
-        deal["imgUrl"] = matched[0] if matched else ""
+        deal["imgUrl"]    = matched[0] if matched else ""
+        deal["_cdn_urls"] = matched[:4]   # store all for multi-photo download
         if deal["imgUrl"]:
-            print(f"[scraper] Matched image for {deal['resortCode']}: {deal['imgUrl'][:80]}")
+            print(f"[scraper] Matched {len(matched)} images for {deal['resortCode']} (slug='{slug}')")
         else:
             print(f"[scraper] No image matched for {deal['resortCode']} (slug='{slug}')")
 
-    # Download images and save locally to avoid hotlink-protection blocking
+    # Download all images locally to avoid hotlink-protection blocking
     download_images(deals)
 
     return deals
@@ -409,7 +419,41 @@ def resolve_resort_code(resort_display: str) -> str:
 #  PERSISTENCE
 # ══════════════════════════════════════════════════════════════════════════════
 
+# Deep-link URLs to specific room pages on sandals.com
+# Format: sandals.com/{resort-slug}/rooms/{room-slug}/
+RESORT_BOOKING_SLUG = {
+    "SAB": "grande-antigua",
+    "SRP": "royal-plantation",
+    "SRB": "royal-bahamian",
+    "SSV": "saint-vincent",
+    "SNG": "negril",
+    "SGO": "ochi-beach-resort",
+    "SCR": "royal-curacao",
+    "SBR": "barbados",
+    "SPR": "royal-barbados",
+    "SLU": "regency-la-toc",
+    "SST": "grande-st-lucian",
+    "SSN": "grenada",
+    "SKJ": "south-coast",
+    "SML": "montego-bay",
+    "SMB": "emerald-bay",
+}
+
+def make_room_url(resort_code: str, room_name: str) -> str:
+    resort_slug = RESORT_BOOKING_SLUG.get(resort_code, "")
+    if not resort_slug or not room_name:
+        return "https://www.sandals.com/specials/suite-deals/"
+    # Convert room name to URL slug
+    slug = room_name.lower()
+    slug = re.sub(r"[^a-z0-9\s-]", "", slug)
+    slug = re.sub(r"\s+", "-", slug.strip())
+    slug = re.sub(r"-+", "-", slug)
+    return f"https://www.sandals.com/{resort_slug}/rooms/{slug}/"
+
+
 def save_deals(deals: list[dict]) -> None:
+    for deal in deals:
+        deal["bookUrl"] = make_room_url(deal["resortCode"], deal["roomName"])
     payload = {
         "weekLabel": get_week_label(),
         "fetchedAt": datetime.now(timezone.utc).isoformat(),
