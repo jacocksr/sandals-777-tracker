@@ -346,6 +346,8 @@ def parse_rendered_text(text: str) -> list[dict]:
 
         # ── Room code: first word after "Room Code:" ───────────────────────────
         room_code = lines[0].split()[0].strip()
+        # Diagnostic: print first 15 lines of this block so we can see travel window format
+        print(f"[parser] Block {i} raw lines: {lines[:15]}")
 
         # ── Look back in the text before this block for resort + room name ──────
         # Find the position of this Room Code: in the original text
