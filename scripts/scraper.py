@@ -126,7 +126,7 @@ SUITE_KEYWORDS = [
 
 
 def make_deal(i, resort_code, room_code, room_name, resort_display,
-              location, travel="", price_from=None):
+              location, price_from=None):
     info = RESORT_MAP.get(resort_code, {
         "name": resort_display or f"Sandals {resort_code}",
         "location": location or "Caribbean"
@@ -142,8 +142,9 @@ def make_deal(i, resort_code, room_code, room_name, resort_display,
         "imgPaths":    [],   # all downloaded photos for carousel
         "roomCode":    room_code,
         "roomName":    room_name,
+        "roomView":    "",   # e.g. "Beachfront, Pool, Tropical Garden"
+        "bedding":     "",   # e.g. "1 King Bed"
         "discount":    "7%+ off",
-        "travelWindow": travel,
         "priceFrom":   price_from,
         "priceWas":    None,
     }
@@ -346,8 +347,15 @@ def parse_rendered_text(text: str) -> list[dict]:
 
         # ── Room code: first word after "Room Code:" ───────────────────────────
         room_code = lines[0].split()[0].strip()
-        # Diagnostic: print first 15 lines of this block so we can see travel window format
-        print(f"[parser] Block {i} raw lines: {lines[:15]}")
+
+        # ── Room View and Bedding (lines 1 and 2 after room code) ─────────────
+        room_view = ""
+        bedding   = ""
+        for line in lines[1:5]:
+            if line.startswith("Room View"):
+                room_view = re.sub(r"^Room View\(s\):\s*", "", line).strip()
+            elif line.startswith("Bedding:"):
+                bedding = re.sub(r"^Bedding:\s*", "", line).strip()
 
         # ── Look back in the text before this block for resort + room name ──────
         # Find the position of this Room Code: in the original text
@@ -367,10 +375,13 @@ def parse_rendered_text(text: str) -> list[dict]:
               f"{room_name[:55] if room_name else 'NO NAME'} | ${price_from}")
 
         if room_name and resort_code:
-            deals.append(make_deal(
+            deal = make_deal(
                 len(deals) + 1, resort_code, room_code, room_name,
-                resort_display, location, "", price_from,
-            ))
+                resort_display, location, price_from,
+            )
+            deal["roomView"] = room_view
+            deal["bedding"]  = bedding
+            deals.append(deal)
         else:
             print(f"[parser]   ↳ Skipped (resort_code='{resort_code}' "
                   f"room_name='{room_name[:30] if room_name else ''}')")
