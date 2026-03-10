@@ -1,6 +1,6 @@
 {
   "weekLabel": "Mar 4 \u2013 Mar 10, 2026",
-  "fetchedAt": "2026-03-10T13:00:25.619371+00:00",
+  "fetchedAt": "2026-03-10T13:30:09.121593+00:00",
   "dealCount": 6,
   "deals": [
     {
@@ -9,7 +9,7 @@
       "resort": "Sandals Ochi",
       "location": "Ocho Rios, Jamaica",
       "imgColor": "#1a5c6a",
-      "roomCode": "LV",
+      "roomCode": "1R",
       "roomName": "Book Online Today & Get $100 Off",
       "discount": "7%+ off",
       "travelWindow": "",
