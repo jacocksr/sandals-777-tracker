@@ -77,6 +77,26 @@ RESORT_CDN_SLUG = {
     "SMB": "smb",
 }
 
+# Maps our resort codes → sandals.com URL slugs for deep booking links
+# Confirmed pattern: sandals.com/{slug}/rooms-suites/{room-code}/
+RESORT_BOOKING_SLUG = {
+    "SAB": "grande-antigua",
+    "SRP": "royal-plantation",
+    "SRB": "royal-bahamian",
+    "SSV": "saint-vincent",
+    "SNG": "negril",
+    "SGO": "ochi-beach-resort",
+    "SCR": "royal-curacao",
+    "SBR": "barbados",
+    "SPR": "royal-barbados",
+    "SLU": "regency-la-toc",
+    "SST": "grande-st-lucian",
+    "SSN": "grenada",
+    "SKJ": "south-coast",
+    "SML": "montego-bay",
+    "SMB": "emerald-bay",
+}
+
 # Resort name fragments → resort code (order matters: more specific first)
 RESORT_NAME_TO_CODE = {
     "grande antigua":    "SAB",
