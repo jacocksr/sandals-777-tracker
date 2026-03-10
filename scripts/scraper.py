@@ -45,7 +45,7 @@ RESORT_MAP = {
     "SDL": {"name": "Sandals Dunns River",           "location": "Ocho Rios, Jamaica"},
     "SSN": {"name": "Sandals Grenada",               "location": "Point Saline, Grenada"},
     "SST": {"name": "Sandals Grande St. Lucian",     "location": "Gros Islet, Saint Lucia"},
-    "SAB": {"name": "Sandals Antigua",               "location": "Dickenson Bay, Antigua"},
+    "SAB": {"name": "Sandals Grande Antigua",         "location": "St. John's, Antigua"},
     "SMB": {"name": "Sandals Emerald Bay",           "location": "Exuma, Bahamas"},
     "SPR": {"name": "Sandals Royal Barbados",        "location": "Christ Church, Barbados"},
 }
@@ -288,11 +288,42 @@ def _deep_search_rsc(obj, cat_code: str, current_count: int) -> list[dict]:
 #  We call these directly with requests (no browser needed).
 # ══════════════════════════════════════════════════════════════════════════════
 
+# All room codes Sandals has ever used in the 777 deal.
+# Each RSC response is for ONE specific categoryCode — that IS the room code.
 KNOWN_CATEGORY_CODES = [
-    "LV", "1R", "HSUP", "VF", "NPV", "HG", "KB",
-    "STB", "OCV", "PLB", "RON", "PCS", "GOV", "SLV",
-    "BWV", "SKYV", "VFP", "HB", "LR",
+    "LV", "1R", "HSUP", "VF", "1B", "OV1", "WSCL",   # current week (Mar 10 2026)
+    "NPV", "HG", "KB", "STB", "OCV", "PLB", "RON",     # recent weeks
+    "PCS", "GOV", "SLV", "BWV", "SKYV", "VFP", "HB", "LR",
 ]
+
+# Map room code → resort code. Built from observed deal history.
+# When a new room code appears that isn't here, the scraper will try to
+# detect the resort from the page text automatically.
+ROOM_TO_RESORT = {
+    "LV":   "SAB",  # Grande Antigua
+    "1R":   "SRP",  # Royal Plantation
+    "HSUP": "SRB",  # Royal Bahamian
+    "VF":   "SSV",  # Saint Vincent
+    "1B":   "SNG",  # Negril
+    "OV1":  "SGO",  # Ochi
+    "WSCL": "SCR",  # Royal Curacao
+    "NPV":  "SGO",  # Ochi
+    "HG":   "SRB",  # Royal Bahamian
+    "KB":   "SCR",  # Royal Curacao
+    "KIB":  "SCR",  # Royal Curacao
+    "STB":  "SGO",  # Ochi
+    "OCV":  "SRB",  # Royal Bahamian
+    "PLB":  "SCR",  # Royal Curacao
+    "RON":  "SNG",  # Negril
+    "PCS":  "SBR",  # Barbados
+    "GOV":  "SLU",  # Regency La Toc
+    "SLV":  "SSV",  # Saint Vincent
+    "BWV":  "SNG",  # Negril
+    "SKYV": "SLU",  # Regency La Toc
+    "VFP":  "SSV",  # Saint Vincent
+    "HB":   "SNG",  # Negril
+    "LR":   "SRP",  # Royal Plantation
+}
 
 RSC_HEADERS = {
     "User-Agent": (
@@ -305,6 +336,13 @@ RSC_HEADERS = {
     "Referer": "https://www.sandals.com/specials/suite-deals/",
 }
 
+# Known suite name keywords to help identify real room names vs nav text
+SUITE_KEYWORDS = [
+    "suite", "villa", "room", "bungalow", "cottage", "loft",
+    "butler", "oceanfront", "beachfront", "poolside", "walkout",
+    "tranquility", "sanctuary", "rondoval", "swim-up", "oversize",
+]
+
 def _get_rsc_token() -> str:
     try:
         r = requests.get(SANDALS_URL,
@@ -315,7 +353,7 @@ def _get_rsc_token() -> str:
             return matches[0]
     except Exception as e:
         print(f"[D] Could not fetch RSC token: {e}")
-    return "rbniq"  # fallback to last known token
+    return "rbniq"
 
 def strategy_d_direct_api() -> list[dict]:
     print("[D] Trying direct RSC API calls...")
@@ -337,14 +375,147 @@ def strategy_d_direct_api() -> list[dict]:
         print("[D] No responses received")
         return []
 
-    deals = _parse_rsc_responses(captured)
-    if not deals:
-        print("[D] RSC parse empty — trying plain text extraction")
-        all_text = "\n".join(t for _, t in captured)
-        deals = _parse_text_for_deals(all_text)
-
+    deals = _parse_rsc_targeted(captured)
     print(f"[D] Extracted {len(deals)} deals")
     return deals
+
+
+def _parse_rsc_targeted(captured: list[tuple]) -> list[dict]:
+    """
+    Each RSC response contains the FULL page but with one deal highlighted.
+    We know the categoryCode = room code. We find the resort and room name by:
+    1. Looking for the room code appearing near "Room Code:" in the text
+    2. Extracting the room name from surrounding context
+    3. Extracting price from "Starting from $NNN" pattern
+    4. Using ROOM_TO_RESORT to assign the correct resort
+    """
+    deals = []
+    seen_room_codes = set()
+
+    for cat_code, text in captured:
+        # Skip if we've already found a deal for this room code
+        if cat_code in seen_room_codes:
+            continue
+
+        # ── Find "Room Code: XXX" in the text ─────────────────────────────────
+        # The page renders "Room Code: LV" near the deal card
+        rc_match = re.search(
+            rf'Room\s*Code[:\s]+({re.escape(cat_code)})\b', text, re.IGNORECASE
+        )
+        if not rc_match:
+            # Room code not found in this response — skip, it's not a 777 deal
+            print(f"[D] categoryCode={cat_code}: Room Code not found in response, skipping")
+            continue
+
+        print(f"[D] categoryCode={cat_code}: Room Code confirmed in response ✓")
+
+        # ── Extract room name ──────────────────────────────────────────────────
+        # Room name appears just before or after the Room Code line.
+        # Strategy: find all strings near "Room Code:" that look like suite names
+        pos = rc_match.start()
+        # Take a window of text around the room code mention (±3000 chars)
+        window = text[max(0, pos-3000):pos+500]
+
+        room_name = _extract_room_name_from_window(window, cat_code)
+
+        # ── Extract price ──────────────────────────────────────────────────────
+        price_from = None
+        price_match = re.search(
+            r'[Ss]tarting\s+from\s+\$\s*([\d,]+)', text[max(0,pos-5000):pos+5000]
+        )
+        if price_match:
+            price_from = int(price_match.group(1).replace(",", ""))
+
+        # ── Map to resort ──────────────────────────────────────────────────────
+        resort_code = ROOM_TO_RESORT.get(cat_code)
+        if not resort_code:
+            # Try to detect from text near the room code
+            resort_code = _detect_resort_from_window(window)
+
+        if not resort_code:
+            print(f"[D] categoryCode={cat_code}: could not determine resort, skipping")
+            continue
+
+        if room_name:
+            seen_room_codes.add(cat_code)
+            deals.append(make_deal(
+                len(deals) + 1,
+                resort_code,
+                cat_code,
+                room_name,
+                "",          # travel window — hard to extract from RSC reliably
+                price_from,
+                None
+            ))
+            print(f"[D]   → {resort_code} | {cat_code} | {room_name[:60]} | ${price_from}")
+
+        if len(deals) >= 7:
+            break
+
+    return deals
+
+
+def _extract_room_name_from_window(window: str, room_code: str) -> str:
+    """
+    Extract the room name from a text window around the Room Code mention.
+    Room names are mixed-case strings containing suite keywords.
+    We look for the longest qualifying string in the window.
+    """
+    # Split into chunks by common delimiters in RSC text
+    chunks = re.split(r'["\n\r\t\\]+', window)
+
+    candidates = []
+    for chunk in chunks:
+        chunk = chunk.strip()
+        # Must be long enough to be a room name
+        if len(chunk) < 15 or len(chunk) > 200:
+            continue
+        # Must contain at least one suite keyword
+        chunk_lower = chunk.lower()
+        if not any(kw in chunk_lower for kw in SUITE_KEYWORDS):
+            continue
+        # Must not be just navigation/footer text
+        if any(bad in chunk_lower for bad in [
+            "book online", "check rates", "find a travel", "returning guest",
+            "sandals blog", "privacy policy", "terms", "contact us",
+            "get $100", "bonus points", "sweepstakes", "learn more",
+            "view all", "read more", "room details",
+        ]):
+            continue
+        # Must have mixed case (real room names do; nav items are often ALL CAPS)
+        if chunk == chunk.upper():
+            continue
+        candidates.append(chunk)
+
+    if not candidates:
+        return ""
+
+    # Return the longest qualifying candidate (room names tend to be descriptive)
+    return max(candidates, key=len)
+
+
+def _detect_resort_from_window(window: str) -> str:
+    """Scan window text for known resort name fragments to identify the resort."""
+    resort_hints = {
+        "SAB": ["grande antigua", "antigua resort", "dickenson bay"],
+        "SGO": ["ochi", "ocho rios"],
+        "SRP": ["royal plantation", "plantation"],
+        "SRB": ["royal bahamian", "nassau", "west bay"],
+        "SSV": ["saint vincent", "buccament"],
+        "SNG": ["negril", "longshore"],
+        "SCR": ["cura", "santa barbara", "subi"],
+        "SBR": ["barbados", "christ church"],
+        "SLU": ["la toc", "castries", "regency"],
+        "SST": ["grande st. lucian", "gros islet"],
+        "SSN": ["grenada"],
+        "SAB": ["antigua"],
+        "SKJ": ["south coast", "whitehouse"],
+    }
+    window_lower = window.lower()
+    for code, hints in resort_hints.items():
+        if any(h in window_lower for h in hints):
+            return code
+    return ""
 
 
 # ══════════════════════════════════════════════════════════════════════════════
