@@ -1,6 +1,6 @@
 [
   {
-    "weekLabel": "Feb 18 \u2013 Feb 24, 2026",
+    "weekLabel": "Feb 18 – Feb 24, 2026",
     "fetchedAt": "2026-02-18T06:05:00Z",
     "deals": [
       {
@@ -8,14 +8,14 @@
         "resort": "Sandals Ochi",
         "roomCode": "NPV",
         "roomName": "Poolside Club Level Villa Room",
-        "travelWindow": "Feb 18 \u2013 Dec 25, 2026"
+        "travelWindow": "Feb 18 – Dec 25, 2026"
       },
       {
         "resortCode": "SSV",
         "resort": "Sandals Saint Vincent",
         "roomCode": "VFP",
         "roomName": "One-Bedroom Butler Villa Suite with Private Pool",
-        "travelWindow": "Apr \u2013 Nov 2026"
+        "travelWindow": "Apr – Nov 2026"
       },
       {
         "resortCode": "SLU",
@@ -55,7 +55,7 @@
     ]
   },
   {
-    "weekLabel": "Feb 11 \u2013 Feb 17, 2026",
+    "weekLabel": "Feb 11 – Feb 17, 2026",
     "fetchedAt": "2026-02-11T06:05:00Z",
     "deals": [
       {
@@ -63,54 +63,54 @@
         "resort": "Sandals Ochi",
         "roomCode": "STB",
         "roomName": "Stingray Butler Suite with Patio Tranquility Soaking Tub",
-        "travelWindow": "Now \u2013 Dec 2026"
+        "travelWindow": "Now – Dec 2026"
       },
       {
         "resortCode": "SRB",
         "resort": "Sandals Royal Bahamian",
         "roomCode": "OCV",
         "roomName": "Oceanview Club Level Suite",
-        "travelWindow": "Mar \u2013 Dec 2026"
+        "travelWindow": "Mar – Dec 2026"
       },
       {
         "resortCode": "SCR",
         "resort": "Sandals Royal Curacao",
         "roomCode": "PLB",
         "roomName": "Plunge Pool Butler Bungalow",
-        "travelWindow": "Now \u2013 Dec 2026"
+        "travelWindow": "Now – Dec 2026"
       },
       {
         "resortCode": "SNG",
         "resort": "Sandals Negril",
         "roomCode": "RON",
         "roomName": "Rondoval Butler Villa with Private Pool",
-        "travelWindow": "May \u2013 Oct 2026"
+        "travelWindow": "May – Oct 2026"
       },
       {
         "resortCode": "SBR",
         "resort": "Sandals Barbados",
         "roomCode": "PCS",
         "roomName": "Poolside Club Level Suite",
-        "travelWindow": "Now \u2013 Dec 2026"
+        "travelWindow": "Now – Dec 2026"
       },
       {
         "resortCode": "SLU",
         "resort": "Sandals Regency La Toc",
         "roomCode": "GOV",
         "roomName": "Governor's Seaside One-Bedroom Butler Villa",
-        "travelWindow": "Jun \u2013 Nov 2026"
+        "travelWindow": "Jun – Nov 2026"
       },
       {
         "resortCode": "SSV",
         "resort": "Sandals Saint Vincent",
         "roomCode": "SLV",
         "roomName": "Swim-Up Lagoon Level Butler Suite",
-        "travelWindow": "Jun \u2013 Nov 2026"
+        "travelWindow": "Jun – Nov 2026"
       }
     ]
   },
   {
-    "weekLabel": "Feb 4 \u2013 Feb 10, 2026",
+    "weekLabel": "Feb 4 – Feb 10, 2026",
     "fetchedAt": "2026-02-04T06:05:00Z",
     "deals": [
       {
@@ -118,54 +118,54 @@
         "resort": "Sandals Royal Curacao",
         "roomCode": "KIB",
         "roomName": "Kurason Island Poolside Butler Bungalow",
-        "travelWindow": "Jun \u2013 Dec 2026"
+        "travelWindow": "Jun – Dec 2026"
       },
       {
         "resortCode": "SGO",
         "resort": "Sandals Ochi",
         "roomCode": "BTB",
         "roomName": "Beachfront Tranquility Soaking Tub Butler Suite",
-        "travelWindow": "Now \u2013 Dec 2026"
+        "travelWindow": "Now – Dec 2026"
       },
       {
         "resortCode": "SRP",
         "resort": "Sandals Royal Plantation",
         "roomCode": "OCV",
         "roomName": "One-Bedroom Butler Oceanfront Suite with Balcony",
-        "travelWindow": "Now \u2013 Dec 2026"
+        "travelWindow": "Now – Dec 2026"
       },
       {
         "resortCode": "SLU",
         "resort": "Sandals Regency La Toc",
         "roomCode": "SKYV",
         "roomName": "Rondoval Butler Sky Villa with Private Pool",
-        "travelWindow": "May \u2013 Oct 2026"
+        "travelWindow": "May – Oct 2026"
       },
       {
         "resortCode": "SNG",
         "resort": "Sandals Negril",
         "roomCode": "BWV",
         "roomName": "Beachfront Walkout Crystal Lagoon Two-Story Loft Suite",
-        "travelWindow": "Now \u2013 Dec 2026"
+        "travelWindow": "Now – Dec 2026"
       },
       {
         "resortCode": "SSV",
         "resort": "Sandals Saint Vincent",
         "roomCode": "SKYV",
         "roomName": "Rondoval Butler Sky Villa with Private Pool",
-        "travelWindow": "Apr \u2013 Nov 2026"
+        "travelWindow": "Apr – Nov 2026"
       },
       {
         "resortCode": "SRB",
         "resort": "Sandals Royal Bahamian",
         "roomCode": "HG",
         "roomName": "West Bay Honeymoon Club Level Junior Suite",
-        "travelWindow": "Now \u2013 Dec 2026"
+        "travelWindow": "Now – Dec 2026"
       }
     ]
   },
   {
-    "weekLabel": "Jan 28 \u2013 Feb 3, 2026",
+    "weekLabel": "Jan 28 – Feb 3, 2026",
     "fetchedAt": "2026-01-28T06:05:00Z",
     "deals": [
       {
@@ -173,132 +173,145 @@
         "resort": "Sandals Barbados",
         "roomCode": "RCV",
         "roomName": "Riviera Cottage with Balcony",
-        "travelWindow": "Now \u2013 Dec 2026"
+        "travelWindow": "Now – Dec 2026"
       },
       {
         "resortCode": "SGO",
         "resort": "Sandals Ochi",
         "roomCode": "NPV",
         "roomName": "Poolside Club Level Villa Room",
-        "travelWindow": "Now \u2013 Dec 2026"
+        "travelWindow": "Now – Dec 2026"
       },
       {
         "resortCode": "SCR",
         "resort": "Sandals Royal Curacao",
         "roomCode": "KIB",
         "roomName": "Kurason Island Poolside Butler Bungalow",
-        "travelWindow": "Now \u2013 Dec 2026"
+        "travelWindow": "Now – Dec 2026"
       },
       {
         "resortCode": "SSV",
         "resort": "Sandals Saint Vincent",
         "roomCode": "VFP",
         "roomName": "One-Bedroom Butler Villa Suite with Private Pool",
-        "travelWindow": "Jun \u2013 Nov 2026"
+        "travelWindow": "Jun – Nov 2026"
       },
       {
         "resortCode": "SNG",
         "resort": "Sandals Negril",
         "roomCode": "HB",
         "roomName": "Paradise Beachfront Grande Luxe Club Level Room",
-        "travelWindow": "Now \u2013 Dec 2026"
+        "travelWindow": "Now – Dec 2026"
       },
       {
         "resortCode": "SRP",
         "resort": "Sandals Royal Plantation",
         "roomCode": "LR",
         "roomName": "Royal Monarch Oceanfront Butler Suite",
-        "travelWindow": "Now \u2013 Dec 2026"
+        "travelWindow": "Now – Dec 2026"
       },
       {
         "resortCode": "SLU",
         "resort": "Sandals Regency La Toc",
         "roomCode": "BWV",
         "roomName": "Beachfront Walkout Butler Villa",
-        "travelWindow": "May \u2013 Oct 2026"
+        "travelWindow": "May – Oct 2026"
       }
     ]
   },
   {
-    "weekLabel": "Mar 4 \u2013 Mar 10, 2026",
-    "fetchedAt": "2026-03-10T13:00:25.619908+00:00",
+    "weekLabel": "Mar 4 – Mar 10, 2026",
+    "fetchedAt": "2026-03-10T14:04:55.582779+00:00",
     "deals": [
       {
         "id": 1,
-        "resortCode": "SGO",
-        "resort": "Sandals Ochi",
-        "location": "Ocho Rios, Jamaica",
-        "imgColor": "#1a5c6a",
+        "resortCode": "SAB",
+        "resort": "Sandals Grande Antigua",
+        "location": "St. John's, Antigua",
+        "imgColor": "#5a6848",
         "roomCode": "LV",
-        "roomName": "Book Online Today & Get $100 Off",
+        "roomName": "Mediterranean One Bedroom Butler Villa with Private Pool Sanctuary",
         "discount": "7%+ off",
         "travelWindow": "",
-        "priceFrom": null,
+        "priceFrom": 843,
         "priceWas": null
       },
       {
         "id": 2,
-        "resortCode": "SBR",
-        "resort": "Sandals Barbados",
-        "location": "Christ Church, Barbados",
-        "imgColor": "#3a7868",
-        "roomCode": "SBR",
-        "roomName": "Royal Barbados",
+        "resortCode": "SRP",
+        "resort": "Sandals Royal Plantation",
+        "location": "Ocho Rios, Jamaica",
+        "imgColor": "#785848",
+        "roomCode": "1R",
+        "roomName": "Royal Oceanfront One Bedroom Butler Suite",
         "discount": "7%+ off",
         "travelWindow": "",
-        "priceFrom": null,
+        "priceFrom": 674,
         "priceWas": null
       },
       {
         "id": 3,
-        "resortCode": "SCR",
-        "resort": "Sandals Royal Curacao",
-        "location": "Willemstad, Curacao",
-        "imgColor": "#1a6878",
-        "roomCode": "SCR",
-        "roomName": "Royal Cura\u00c3\u00a7ao",
+        "resortCode": "SRB",
+        "resort": "Sandals Royal Bahamian",
+        "location": "Nassau, Bahamas",
+        "imgColor": "#2a6858",
+        "roomCode": "HSUP",
+        "roomName": "West Bay Swim-up Oversized Club Level Junior Suite",
         "discount": "7%+ off",
         "travelWindow": "",
-        "priceFrom": null,
+        "priceFrom": 636,
         "priceWas": null
       },
       {
         "id": 4,
-        "resortCode": "SLU",
-        "resort": "Sandals Regency La Toc",
-        "location": "Castries, Saint Lucia",
-        "imgColor": "#5a4878",
-        "roomCode": "SLU",
-        "roomName": "Regency La Toc Spa & Beach Resort",
+        "resortCode": "SSV",
+        "resort": "Sandals Saint Vincent",
+        "location": "Buccament Bay, Saint Vincent",
+        "imgColor": "#3a5878",
+        "roomCode": "VF",
+        "roomName": "One-Bedroom Butler Villa Suite with Patio Tranquility Soaking Tub",
         "discount": "7%+ off",
         "travelWindow": "",
-        "priceFrom": null,
+        "priceFrom": 619,
         "priceWas": null
       },
       {
         "id": 5,
-        "resortCode": "SMB",
-        "resort": "Sandals Emerald Bay",
-        "location": "Exuma, Bahamas",
-        "imgColor": "#384868",
-        "roomCode": "SMB",
-        "roomName": "Montego Bay",
-        "discount": "7%+ off",
-        "travelWindow": "",
-        "priceFrom": null,
-        "priceWas": null
-      },
-      {
-        "id": 6,
         "resortCode": "SNG",
         "resort": "Sandals Negril",
         "location": "Negril, Jamaica",
         "imgColor": "#4a7848",
-        "roomCode": "SNG",
-        "roomName": "Negril",
+        "roomCode": "1B",
+        "roomName": "Longshore Beachfront Two-Story One Bedroom Butler Villa Suite w/ Tranquility Soaking Tub",
         "discount": "7%+ off",
         "travelWindow": "",
-        "priceFrom": null,
+        "priceFrom": 485,
+        "priceWas": null
+      },
+      {
+        "id": 6,
+        "resortCode": "SGO",
+        "resort": "Sandals Ochi",
+        "location": "Ocho Rios, Jamaica",
+        "imgColor": "#1a5c6a",
+        "roomCode": "OV1",
+        "roomName": "Oceanview One Bedroom Poolside Butler Villa Suite",
+        "discount": "7%+ off",
+        "travelWindow": "",
+        "priceFrom": 383,
+        "priceWas": null
+      },
+      {
+        "id": 7,
+        "resortCode": "SCR",
+        "resort": "Sandals Royal Curacao",
+        "location": "Santa Barbara, Curaçao",
+        "imgColor": "#1a6878",
+        "roomCode": "WSCL",
+        "roomName": "Subi Club Level Walkout Room with Patio Tranquility Soaking Tub",
+        "discount": "7%+ off",
+        "travelWindow": "",
+        "priceFrom": 352,
         "priceWas": null
       }
     ]
