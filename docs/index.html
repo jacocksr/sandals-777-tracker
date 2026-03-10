@@ -105,6 +105,9 @@
 
     .deal-card-img { height: 190px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     .deal-card-img-placeholder { font-family: 'Cormorant Garamond', serif; font-size: 5rem; color: rgba(255,255,255,0.12); user-select: none; }
+    .deal-card-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+    .deal-card:hover .deal-card-img img { transform: scale(1.04); }
+    .deal-card-img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 60%); pointer-events: none; }
     .deal-badge { position: absolute; top: 12px; left: 12px; background: var(--coral); color: white; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.28rem 0.7rem; border-radius: 2px; font-weight: 500; }
     .deal-discount-bubble { position: absolute; top: 12px; right: 12px; background: white; border-radius: 50%; width: 54px; height: 54px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
     .deal-discount-pct { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; color: var(--coral); line-height: 1; text-align: center; }
@@ -396,8 +399,8 @@ async function loadData() {
   try {
     // Fetch both files in parallel for speed
     const [dealsRes, histRes] = await Promise.all([
-      fetch('https://jacocksr.github.io/sandals-777-tracker/data/deals.json'),
-      fetch('https://jacocksr.github.io/sandals-777-tracker/data/history.json'),
+      fetch('data/deals.json'),
+      fetch('data/history.json'),
     ]);
 
     if (!dealsRes.ok) throw new Error(`deals.json: ${dealsRes.status}`);
@@ -505,7 +508,8 @@ function renderDeals(filter) {
     return `
       <div class="deal-card" style="animation-delay:${i * 0.07}s" onclick="openModal(${d.id})">
         <div class="deal-card-img" style="background:linear-gradient(135deg,${d.imgColor} 0%,${d.imgColor}bb 100%)">
-          <div class="deal-card-img-placeholder">✦</div>
+          ${d.imgUrl ? `<img src="${d.imgUrl}" alt="${d.roomName}" loading="lazy" onerror="this.style.display='none'">` : '<div class="deal-card-img-placeholder">✦</div>'}
+          <div class="deal-card-img-overlay"></div>
           <div class="deal-badge">7·7·7 Deal</div>
           <div class="deal-discount-bubble">
             <span class="deal-discount-pct">+7%</span>
