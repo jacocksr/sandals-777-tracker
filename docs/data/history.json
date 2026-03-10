@@ -221,7 +221,7 @@
   },
   {
     "weekLabel": "Mar 4 – Mar 10, 2026",
-    "fetchedAt": "2026-03-10T17:21:11.198450+00:00",
+    "fetchedAt": "2026-03-10T18:47:30.117908+00:00",
     "deals": [
       {
         "id": 1,
@@ -243,7 +243,7 @@
         "travelWindow": "",
         "priceFrom": 843,
         "priceWas": null,
-        "bookUrl": "https://www.sandals.com/grande-antigua/rooms/mediterranean-one-bedroom-butler-villa-with-private-pool-sanctuary/"
+        "bookUrl": "https://www.sandals.com/grande-antigua/rooms-suites/lv/"
       },
       {
         "id": 2,
@@ -265,7 +265,7 @@
         "travelWindow": "",
         "priceFrom": 674,
         "priceWas": null,
-        "bookUrl": "https://www.sandals.com/royal-plantation/rooms/royal-oceanfront-one-bedroom-butler-suite/"
+        "bookUrl": "https://www.sandals.com/royal-plantation/rooms-suites/1r/"
       },
       {
         "id": 3,
@@ -287,7 +287,7 @@
         "travelWindow": "",
         "priceFrom": 636,
         "priceWas": null,
-        "bookUrl": "https://www.sandals.com/royal-bahamian/rooms/west-bay-swim-up-oversized-club-level-junior-suite/"
+        "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/hsup/"
       },
       {
         "id": 4,
@@ -309,7 +309,7 @@
         "travelWindow": "",
         "priceFrom": 619,
         "priceWas": null,
-        "bookUrl": "https://www.sandals.com/saint-vincent/rooms/one-bedroom-butler-villa-suite-with-patio-tranquility-soaking-tub/"
+        "bookUrl": "https://www.sandals.com/saint-vincent/rooms-suites/vf/"
       },
       {
         "id": 5,
@@ -331,7 +331,7 @@
         "travelWindow": "",
         "priceFrom": 485,
         "priceWas": null,
-        "bookUrl": "https://www.sandals.com/negril/rooms/longshore-beachfront-two-story-one-bedroom-butler-villa-suite-w-tranquility-soaking-tub/"
+        "bookUrl": "https://www.sandals.com/negril/rooms-suites/1b/"
       },
       {
         "id": 6,
@@ -353,7 +353,7 @@
         "travelWindow": "",
         "priceFrom": 383,
         "priceWas": null,
-        "bookUrl": "https://www.sandals.com/ochi-beach-resort/rooms/oceanview-one-bedroom-poolside-butler-villa-suite/"
+        "bookUrl": "https://www.sandals.com/ochi-beach-resort/rooms-suites/ov1/"
       },
       {
         "id": 7,
@@ -374,7 +374,7 @@
         "travelWindow": "",
         "priceFrom": 352,
         "priceWas": null,
-        "bookUrl": "https://www.sandals.com/royal-curacao/rooms/subi-club-level-walkout-room-with-patio-tranquility-soaking-tub/"
+        "bookUrl": "https://www.sandals.com/royal-curacao/rooms-suites/wscl/"
       }
     ]
   }
