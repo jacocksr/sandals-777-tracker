@@ -176,21 +176,45 @@
     .alert-form button:hover { background: var(--gold-light); }
 
     /* MODAL */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(13,46,58,0.7); z-index: 200; align-items: center; justify-content: center; padding: 2rem; }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(13,46,58,0.72); z-index: 200; align-items: center; justify-content: center; padding: 1.5rem; }
     .modal-overlay.active { display: flex; }
-    .modal { background: white; border-radius: 10px; max-width: 560px; width: 100%; overflow: hidden; animation: modalIn 0.25s ease; position: relative; }
-    @keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-    .modal-img { height: 200px; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 5rem; color: rgba(255,255,255,0.1); }
-    .modal-body { padding: 2rem; }
+    .modal { background: white; border-radius: 12px; max-width: 580px; width: 100%; overflow: hidden; animation: modalIn 0.22s ease; position: relative; }
+    @keyframes modalIn { from { opacity: 0; transform: scale(0.96) translateY(12px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    /* ── Carousel ── */
+    .modal-carousel { position: relative; height: 240px; background: #ccc; overflow: hidden; }
+    .modal-carousel-track { display: flex; height: 100%; transition: transform 0.35s cubic-bezier(.4,0,.2,1); }
+    .modal-carousel-slide { flex: 0 0 100%; height: 100%; }
+    .modal-carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .modal-carousel-slide.placeholder { display: flex; align-items: center; justify-content: center;
+      font-family: "Cormorant Garamond", serif; font-size: 5rem; color: rgba(255,255,255,0.15); }
+    .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.18); border: 1.5px solid rgba(255,255,255,0.5);
+      color: white; width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
+      font-size: 1rem; display: flex; align-items: center; justify-content: center;
+      transition: background 0.18s; z-index: 2; backdrop-filter: blur(4px); }
+    .carousel-btn:hover { background: rgba(255,255,255,0.35); }
+    .carousel-btn.prev { left: 12px; }
+    .carousel-btn.next { right: 12px; }
+    .carousel-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 5px; z-index: 2; }
+    .carousel-dot { width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.45); transition: background 0.2s, transform 0.2s; cursor: pointer; }
+    .carousel-dot.active { background: white; transform: scale(1.25); }
+    .modal-close { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.3);
+      border: none; color: white; width: 30px; height: 30px; border-radius: 50%;
+      cursor: pointer; font-size: 0.9rem; z-index: 3; display: flex; align-items: center; justify-content: center; }
+    /* ── Body ── */
+    .modal-body { padding: 1.6rem 2rem 2rem; }
     .modal-eyebrow { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
-    .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--ocean-deep); margin-bottom: 1rem; line-height: 1.2; }
+    .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; color: var(--ocean-deep); margin-bottom: 1rem; line-height: 1.2; }
     .modal-details { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.4rem; }
     .modal-detail-key { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px; }
     .modal-detail-val { font-size: 0.9rem; color: var(--text); font-weight: 500; }
     .modal-actions { display: flex; gap: 0.8rem; }
-    .modal-btn-primary { flex: 1; background: var(--ocean-deep); color: white; border: none; padding: 0.8rem; border-radius: 4px; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; }
-    .modal-btn-secondary { background: var(--sand); color: var(--text); border: none; padding: 0.8rem 1.2rem; border-radius: 4px; font-size: 0.82rem; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-    .modal-close { position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.2); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 1rem; z-index: 1; }
+    .modal-btn-primary { flex: 1; background: var(--ocean-deep); color: white; border: none; padding: 0.85rem; border-radius: 4px; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 500; transition: background 0.18s; }
+    .modal-btn-primary:hover { background: #1a3d4f; }
+    .modal-btn-secondary { background: var(--sand); color: var(--text); border: none; padding: 0.85rem 1.2rem; border-radius: 4px; font-size: 0.82rem; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.18s; }
+    .modal-btn-secondary:hover { background: var(--border); }
 
     /* LOADING STATE */
     .skeleton { background: linear-gradient(90deg, #f0e6d2 25%, #faf6ef 50%, #f0e6d2 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; }
@@ -213,7 +237,12 @@
 <div class="modal-overlay" id="dealModal">
   <div class="modal" id="modalContent">
     <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-img" id="modalImg">✦</div>
+    <div class="modal-carousel" id="modalCarousel">
+      <div class="modal-carousel-track" id="carouselTrack"></div>
+      <button class="carousel-btn prev" id="carouselPrev" onclick="carouselNav(-1)">&#8249;</button>
+      <button class="carousel-btn next" id="carouselNext" onclick="carouselNav(1)">&#8250;</button>
+      <div class="carousel-dots" id="carouselDots"></div>
+    </div>
     <div class="modal-body">
       <div class="modal-eyebrow" id="modalResort"></div>
       <div class="modal-title" id="modalTitle"></div>
@@ -551,13 +580,92 @@ function renderDeals(filter) {
 
 // ─── MODAL ──────────────────────────────────────────────────────────────────
 
+// ── Carousel state ────────────────────────────────────────────────────────
+let carouselIndex = 0;
+let carouselTotal = 0;
+
+function buildCarousel(deal) {
+  const BASE = 'https://jacocksr.github.io/sandals-777-tracker/';
+  const track = document.getElementById('carouselTrack');
+  const dots  = document.getElementById('carouselDots');
+  const prev  = document.getElementById('carouselPrev');
+  const next  = document.getElementById('carouselNext');
+  track.innerHTML = '';
+  dots.innerHTML  = '';
+  carouselIndex   = 0;
+
+  // Build slides from imgPaths array, fall back to single imgPath/imgUrl
+  const paths = (deal.imgPaths && deal.imgPaths.length)
+    ? deal.imgPaths
+    : (deal.imgPath ? [deal.imgPath] : []);
+
+  if (paths.length === 0) {
+    // Colour placeholder
+    track.innerHTML = `<div class="modal-carousel-slide placeholder"
+      style="background:linear-gradient(135deg,${deal.imgColor} 0%,${deal.imgColor}99 100%)">✦</div>`;
+    prev.style.display = next.style.display = dots.style.display = 'none';
+    carouselTotal = 1;
+    return;
+  }
+
+  paths.forEach((p, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'modal-carousel-slide';
+    const img = document.createElement('img');
+    img.src = BASE + p;
+    img.alt = deal.roomName;
+    img.onerror = function() {
+      this.parentElement.className = 'modal-carousel-slide placeholder';
+      this.parentElement.style.background = `linear-gradient(135deg,${deal.imgColor} 0%,${deal.imgColor}99 100%)`;
+      this.parentElement.innerHTML = '✦';
+    };
+    slide.appendChild(img);
+    track.appendChild(slide);
+    const dot = document.createElement('div');
+    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    dots.appendChild(dot);
+  });
+
+  carouselTotal = paths.length;
+  prev.style.display = next.style.display = carouselTotal > 1 ? 'flex' : 'none';
+  dots.style.display = carouselTotal > 1 ? 'flex' : 'none';
+  updateCarouselPosition();
+}
+
+function carouselNav(dir) {
+  carouselIndex = (carouselIndex + dir + carouselTotal) % carouselTotal;
+  updateCarouselPosition();
+}
+
+function goToSlide(idx) {
+  carouselIndex = idx;
+  updateCarouselPosition();
+}
+
+function updateCarouselPosition() {
+  document.getElementById('carouselTrack').style.transform =
+    `translateX(-${carouselIndex * 100}%)`;
+  document.querySelectorAll('.carousel-dot').forEach((d, i) =>
+    d.classList.toggle('active', i === carouselIndex));
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('dealModal').classList.contains('active')) return;
+  if (e.key === 'ArrowLeft')  carouselNav(-1);
+  if (e.key === 'ArrowRight') carouselNav(1);
+  if (e.key === 'Escape')     closeModal();
+});
+
 function openModal(id) {
   const d = currentDeals.find(x => x.id === id);
   if (!d) return;
+
+  buildCarousel(d);
+
   document.getElementById('modalResort').textContent = `${d.resort} · ${d.resortCode}`;
   document.getElementById('modalTitle').textContent  = d.roomName;
-  document.getElementById('modalImg').style.background =
-    `linear-gradient(135deg, ${d.imgColor} 0%, ${d.imgColor}99 100%)`;
   document.getElementById('modalDetails').innerHTML = `
     <div><div class="modal-detail-key">Location</div><div class="modal-detail-val">${d.location}</div></div>
     <div><div class="modal-detail-key">Room Code</div><div class="modal-detail-val">${d.roomCode || '–'}</div></div>
@@ -565,7 +673,9 @@ function openModal(id) {
     <div><div class="modal-detail-key">Deal Expires</div><div class="modal-detail-val">Tuesday midnight ET</div></div>
     <div style="grid-column:1/-1"><div class="modal-detail-key">Travel Window</div><div class="modal-detail-val">${d.travelWindow || 'See Sandals.com for details'}</div></div>
   `;
-  document.getElementById('modalBookBtn').onclick = bookDeal;
+  // Deep link to the specific room page, or fall back to suite deals page
+  const bookUrl = d.bookUrl || 'https://www.sandals.com/specials/suite-deals/';
+  document.getElementById('modalBookBtn').onclick = () => window.open(bookUrl, '_blank');
   document.getElementById('dealModal').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
