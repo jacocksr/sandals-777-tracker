@@ -435,19 +435,24 @@ async function loadData() {
 // ─── COUNTDOWN ──────────────────────────────────────────────────────────────
 
 function getNextTuesdayMidnight() {
-  // Deals run Wed–Tue. Expiry = this Tuesday at 23:59:59 (or next if it just reset).
-  // Sandals resets at ~midnight Wednesday UTC, so we target Tue 23:59:59 UTC.
+  // Sandals resets deals at midnight Eastern Time (ET) on Wednesday.
+  // In March–Nov (EDT) that is 04:00 UTC Wednesday = Tue 23:59 ET.
+  // We target Wednesday 04:00 UTC (= Tuesday 11:59 PM Eastern).
   const now = new Date();
-  const day = now.getUTCDay(); // 0=Sun, 2=Tue, 3=Wed
-  // Days until Tuesday: if today IS Tuesday and it's before midnight, use 0 (tonight)
-  const daysUntilTue = (2 - day + 7) % 7;
-  const tue = new Date(Date.UTC(
-    now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + daysUntilTue,
-    23, 59, 59, 0
+  const utcDay = now.getUTCDay();      // 0=Sun … 3=Wed … 6=Sat
+  const utcHour = now.getUTCHours();
+
+  // Days until Wednesday in UTC
+  let daysUntilWed = (3 - utcDay + 7) % 7;
+  // If it's already Wednesday but before 04:00 UTC, expiry is still today at 04:00
+  // If it's Wednesday after 04:00 UTC, the new week just started — next expiry is 7 days away
+  if (daysUntilWed === 0 && utcHour >= 4) daysUntilWed = 7;
+
+  const expiry = new Date(Date.UTC(
+    now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + daysUntilWed,
+    4, 0, 0, 0   // 04:00 UTC = midnight Eastern (EDT, UTC-4)
   ));
-  // If we've passed Tuesday midnight UTC already, jump to next Tuesday
-  if (tue <= now) tue.setUTCDate(tue.getUTCDate() + 7);
-  return tue;
+  return expiry;
 }
 
 const EXPIRY = getNextTuesdayMidnight();
