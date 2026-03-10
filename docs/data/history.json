@@ -221,7 +221,7 @@
   },
   {
     "weekLabel": "Mar 4 – Mar 10, 2026",
-    "fetchedAt": "2026-03-10T16:26:38.104408+00:00",
+    "fetchedAt": "2026-03-10T16:41:10.773044+00:00",
     "deals": [
       {
         "id": 1,
@@ -244,8 +244,8 @@
         "resort": "Sandals Royal Plantation",
         "location": "Ocho Rios, Jamaica",
         "imgColor": "#785848",
-        "imgUrl": "",
-        "imgPath": "",
+        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/srb/accommodations/large/srb-226.jpg",
+        "imgPath": "images/SRP_1R.jpg",
         "roomCode": "1R",
         "roomName": "Royal Oceanfront One Bedroom Butler Suite",
         "discount": "7%+ off",
