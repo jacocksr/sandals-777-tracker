@@ -571,7 +571,7 @@ function renderDeals(filter) {
           </div>
           <div class="deal-price-row">
             ${priceHtml}
-            <button class="deal-book-btn" onclick="event.stopPropagation(); window.open(d.bookUrl || 'https://www.sandals.com/specials/suite-deals/', '_blank')">Book Now</button>
+            <button class="deal-book-btn" onclick="event.stopPropagation(); window.open('${d.bookUrl || 'https://www.sandals.com/specials/suite-deals/'}', '_blank')">Book Now</button>
           </div>
         </div>
       </div>`;
