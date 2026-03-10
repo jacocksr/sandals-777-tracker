@@ -378,7 +378,7 @@
             <th>Resort</th>
             <th>Room Category</th>
             <th>Code</th>
-            <th>Travel Window</th>
+            <th>Price From</th>
           </tr>
         </thead>
         <tbody id="historyBody">
@@ -565,8 +565,8 @@ function renderDeals(filter) {
               <span class="deal-meta-val">${d.roomCode || '–'}</span>
             </div>
             <div class="deal-meta-item">
-              <span class="deal-meta-key">Travel Window</span>
-              <span class="deal-meta-val" style="font-size:0.78rem">${d.travelWindow || 'See Sandals.com'}</span>
+              <span class="deal-meta-key">Room View</span>
+              <span class="deal-meta-val" style="font-size:0.78rem">${d.roomView || '–'}</span>
             </div>
           </div>
           <div class="deal-price-row">
@@ -669,9 +669,10 @@ function openModal(id) {
   document.getElementById('modalDetails').innerHTML = `
     <div><div class="modal-detail-key">Location</div><div class="modal-detail-val">${d.location}</div></div>
     <div><div class="modal-detail-key">Room Code</div><div class="modal-detail-val">${d.roomCode || '–'}</div></div>
+    <div><div class="modal-detail-key">Room View</div><div class="modal-detail-val">${d.roomView || '–'}</div></div>
+    <div><div class="modal-detail-key">Bedding</div><div class="modal-detail-val">${d.bedding || '–'}</div></div>
     <div><div class="modal-detail-key">Extra Discount</div><div class="modal-detail-val" style="color:var(--coral);font-size:1.1rem">+7% on top of current deals</div></div>
     <div><div class="modal-detail-key">Deal Expires</div><div class="modal-detail-val">Tuesday midnight ET</div></div>
-    <div style="grid-column:1/-1"><div class="modal-detail-key">Travel Window</div><div class="modal-detail-val">${d.travelWindow || 'See Sandals.com for details'}</div></div>
   `;
   // Deep link to the specific room page, or fall back to suite deals page
   const bookUrl = d.bookUrl || 'https://www.sandals.com/specials/suite-deals/';
@@ -761,7 +762,7 @@ function renderHistory() {
       <td><span class="resort-tag">${r.resortCode}</span> <span style="font-size:0.82rem">${(r.resort||'').replace('Sandals ','')}</span></td>
       <td style="font-size:0.84rem;max-width:260px">${r.roomName || '–'}</td>
       <td style="font-size:0.8rem;color:var(--text-muted)">${r.roomCode || '–'}</td>
-      <td style="font-size:0.8rem;color:var(--text-muted)">${r.travelWindow || '–'}</td>
+      <td style="font-size:0.8rem;color:var(--text-muted)">${r.priceFrom ? '$'+r.priceFrom+'/nt' : '–'}</td>
     </tr>
   `).join('');
 }
