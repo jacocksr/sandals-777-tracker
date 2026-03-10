@@ -396,8 +396,8 @@ async function loadData() {
   try {
     // Fetch both files in parallel for speed
     const [dealsRes, histRes] = await Promise.all([
-      fetch('/data/deals.json'),
-      fetch('/data/history.json'),
+      fetch('https://jacocksr.github.io/sandals-777-tracker/data/deals.json'),
+      fetch('https://jacocksr.github.io/sandals-777-tracker/data/history.json'),
     ]);
 
     if (!dealsRes.ok) throw new Error(`deals.json: ${dealsRes.status}`);
