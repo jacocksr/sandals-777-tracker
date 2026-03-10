@@ -413,41 +413,22 @@ def resolve_resort_code(resort_display: str) -> str:
 #  PERSISTENCE
 # ══════════════════════════════════════════════════════════════════════════════
 
-# Deep-link URLs to specific room pages on sandals.com
-# Format: sandals.com/{resort-slug}/rooms/{room-slug}/
-RESORT_BOOKING_SLUG = {
-    "SAB": "grande-antigua",
-    "SRP": "royal-plantation",
-    "SRB": "royal-bahamian",
-    "SSV": "saint-vincent",
-    "SNG": "negril",
-    "SGO": "ochi-beach-resort",
-    "SCR": "royal-curacao",
-    "SBR": "barbados",
-    "SPR": "royal-barbados",
-    "SLU": "regency-la-toc",
-    "SST": "grande-st-lucian",
-    "SSN": "grenada",
-    "SKJ": "south-coast",
-    "SML": "montego-bay",
-    "SMB": "emerald-bay",
-}
-
-def make_room_url(resort_code: str, room_name: str) -> str:
+def make_room_url(resort_code: str, room_code: str) -> str:
+    """
+    Confirmed URL pattern from live Sandals site:
+      sandals.com/{resort-slug}/rooms-suites/{room-code-lowercase}/
+    e.g. sandals.com/grande-antigua/rooms-suites/lv/
+         sandals.com/royal-plantation/rooms-suites/1r/
+    """
     resort_slug = RESORT_BOOKING_SLUG.get(resort_code, "")
-    if not resort_slug or not room_name:
+    if not resort_slug or not room_code:
         return "https://www.sandals.com/specials/suite-deals/"
-    # Convert room name to URL slug
-    slug = room_name.lower()
-    slug = re.sub(r"[^a-z0-9\s-]", "", slug)
-    slug = re.sub(r"\s+", "-", slug.strip())
-    slug = re.sub(r"-+", "-", slug)
-    return f"https://www.sandals.com/{resort_slug}/rooms/{slug}/"
+    return f"https://www.sandals.com/{resort_slug}/rooms-suites/{room_code.lower()}/"
 
 
 def save_deals(deals: list[dict]) -> None:
     for deal in deals:
-        deal["bookUrl"] = make_room_url(deal["resortCode"], deal["roomName"])
+        deal["bookUrl"] = make_room_url(deal["resortCode"], deal["roomCode"])
     payload = {
         "weekLabel": get_week_label(),
         "fetchedAt": datetime.now(timezone.utc).isoformat(),
