@@ -17,14 +17,17 @@ then parses the text by splitting on "Room Code:" occurrences.
 import json, re, time
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
+import requests
 from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
 
 # ── PATHS ──────────────────────────────────────────────────────────────────────
 BASE_DIR   = Path(__file__).parent.parent
 DATA_DIR   = BASE_DIR / "docs" / "data"
-DEALS_FILE = DATA_DIR / "deals.json"
-HIST_FILE  = DATA_DIR / "history.json"
+DEALS_FILE  = DATA_DIR / "deals.json"
+HIST_FILE   = DATA_DIR / "history.json"
+IMAGE_DIR   = BASE_DIR / "docs" / "images"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
+IMAGE_DIR.mkdir(parents=True, exist_ok=True)
 
 SANDALS_URL = "https://www.sandals.com/specials/suite-deals/"
 
@@ -95,7 +98,8 @@ def make_deal(i, resort_code, room_code, room_name, resort_display,
         "resort":      info["name"],
         "location":    info["location"],
         "imgColor":    RESORT_COLORS.get(resort_code, "#1a5c6a"),
-        "imgUrl":      "",   # populated after scraping by image extractor
+        "imgUrl":      "",   # CDN source URL (captured from DOM)
+        "imgPath":     "",   # local path after download (used by site)
         "roomCode":    room_code,
         "roomName":    room_name,
         "discount":    "7%+ off",
@@ -103,6 +107,42 @@ def make_deal(i, resort_code, room_code, room_name, resort_display,
         "priceFrom":   price_from,
         "priceWas":    None,
     }
+
+
+def download_images(deals: list[dict]) -> None:
+    """
+    Download each deal's image from Sandals CDN and save it locally.
+    Sandals uses hotlink protection so we can't embed CDN URLs directly —
+    images must be hosted from our own domain (GitHub Pages).
+    Saved as docs/images/{resortCode}_{roomCode}.jpg
+    """
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "Referer": "https://www.sandals.com/",   # required to bypass hotlink protection
+        "Accept": "image/webp,image/apng,image/*,*/*;q=0.8",
+    }
+    for deal in deals:
+        if not deal.get("imgUrl"):
+            continue
+        filename = f"{deal['resortCode']}_{deal['roomCode']}.jpg"
+        dest = IMAGE_DIR / filename
+        # Skip if already downloaded this week (saves time on re-runs)
+        if dest.exists() and dest.stat().st_size > 5000:
+            deal["imgPath"] = f"images/{filename}"
+            print(f"[images] Already have {filename}")
+            continue
+        try:
+            r = requests.get(deal["imgUrl"], headers=headers, timeout=15)
+            if r.status_code == 200 and len(r.content) > 5000:
+                dest.write_bytes(r.content)
+                deal["imgPath"] = f"images/{filename}"
+                print(f"[images] Downloaded {filename} ({len(r.content)//1024}KB)")
+            else:
+                deal["imgPath"] = ""
+                print(f"[images] Failed {filename}: HTTP {r.status_code}")
+        except Exception as e:
+            deal["imgPath"] = ""
+            print(f"[images] Error {filename}: {e}")
 
 
 def get_week_label():
@@ -166,44 +206,32 @@ def scrape_deals() -> list[dict]:
             except Exception:
                 pass
 
-        # Extract real photo URLs via JavaScript before closing the browser
-        img_urls = []
+        # Extract image URLs grouped by deal card position
+        # We need one image per card, matched to the correct deal in order.
+        # Strategy: find all img elements that are children of the same
+        # repeating card container, grouped so we can take one per card.
+        img_urls_raw = []
         try:
-            img_urls = page.evaluate("""() => {
-                const imgs = [];
+            img_urls_raw = page.evaluate("""() => {
+                // Collect all sandals CDN images, deduped, in DOM order
                 const seen = new Set();
-                const selectors = [
-                    '[class*="suite"] img', '[class*="deal"] img',
-                    '[class*="card"] img',  '[class*="room"] img',
-                    '[class*="result"] img','article img', 'li img',
-                ];
-                for (const sel of selectors) {
-                    document.querySelectorAll(sel).forEach(img => {
-                        const src = img.src || img.dataset.src || '';
-                        if (src && src.includes('sandals') &&
-                            !src.includes('logo') && !src.includes('icon') &&
-                            !src.includes('flag') && !src.includes('card_image') &&
-                            !seen.has(src)) {
-                            seen.add(src); imgs.push(src);
-                        }
-                    });
-                    if (imgs.length >= 7) break;
-                }
-                if (imgs.length < 7) {
-                    document.querySelectorAll('img').forEach(img => {
-                        const src = img.src || '';
-                        if (src.includes('cdn.sandals.com') &&
-                            !src.includes('logo') && !src.includes('icon') &&
-                            !src.includes('card_image') && !seen.has(src)) {
-                            seen.add(src); imgs.push(src);
-                        }
-                    });
-                }
-                return imgs.slice(0, 21);
+                const imgs = [];
+                document.querySelectorAll('img').forEach(img => {
+                    const src = img.src || '';
+                    if (src.includes('cdn.sandals.com') &&
+                        !src.includes('logo') &&
+                        !src.includes('icon') &&
+                        !src.includes('card_image') &&
+                        !src.includes('footer') &&
+                        !src.includes('brands') &&
+                        !seen.has(src)) {
+                        seen.add(src);
+                        imgs.push(src);
+                    }
+                });
+                return imgs;
             }""")
-            print(f"[scraper] Captured {len(img_urls)} image URLs from DOM")
-            for url in img_urls[:7]:
-                print(f"[scraper]   {url[:90]}")
+            print(f"[scraper] Found {len(img_urls_raw)} CDN image URLs total")
         except Exception as e:
             print(f"[scraper] Image extraction error: {e}")
 
@@ -217,10 +245,39 @@ def scrape_deals() -> list[dict]:
     print(f"[scraper] Rendered text: {len(body_text)} chars, {rc_count} 'Room Code:' occurrences")
     deals = parse_rendered_text(body_text)
 
-    # Attach one image per deal — cards show 3 photos each, take first of each set
-    primary_imgs = img_urls[::3] if len(img_urls) >= 7 else img_urls
-    for i, deal in enumerate(deals):
-        deal["imgUrl"] = primary_imgs[i] if i < len(primary_imgs) else ""
+    # Match images to deals by resort code in the URL path
+    # Sandals CDN URLs contain the resort abbreviation, e.g.:
+    #   cdn.sandals.com/.../resorts/sat/...  → SAT = Grande Antigua (SAB)
+    #   cdn.sandals.com/.../resorts/brp/...  → BRP = Royal Bahamian (SRB)
+    RESORT_CDN_SLUG = {
+        "SAB": "sat",   # Grande Antigua
+        "SRP": "srp",   # Royal Plantation
+        "SRB": "brp",   # Royal Bahamian
+        "SSV": "ssv",   # Saint Vincent
+        "SNG": "sng",   # Negril
+        "SGO": "sgo",   # Ochi
+        "SCR": "scr",   # Royal Curacao
+        "SBR": "sbr",   # Barbados
+        "SLU": "slu",   # Regency La Toc
+        "SPR": "spr",   # Royal Barbados
+        "SST": "sst",   # Grande St. Lucian
+        "SSN": "ssn",   # Grenada
+        "SKJ": "skj",   # South Coast
+        "SML": "sml",   # Montego Bay
+        "SMB": "smb",   # Emerald Bay
+    }
+
+    for deal in deals:
+        slug = RESORT_CDN_SLUG.get(deal["resortCode"], "").lower()
+        matched = [u for u in img_urls_raw if f"/resorts/{slug}/" in u.lower()] if slug else []
+        deal["imgUrl"] = matched[0] if matched else ""
+        if deal["imgUrl"]:
+            print(f"[scraper] Matched image for {deal['resortCode']}: {deal['imgUrl'][:80]}")
+        else:
+            print(f"[scraper] No image matched for {deal['resortCode']} (slug='{slug}')")
+
+    # Download images and save locally to avoid hotlink-protection blocking
+    download_images(deals)
 
     return deals
 
