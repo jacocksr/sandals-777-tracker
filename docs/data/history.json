@@ -221,7 +221,7 @@
   },
   {
     "weekLabel": "Mar 4 – Mar 10, 2026",
-    "fetchedAt": "2026-03-10T16:58:25.793770+00:00",
+    "fetchedAt": "2026-03-10T17:21:11.198450+00:00",
     "deals": [
       {
         "id": 1,
@@ -231,12 +231,19 @@
         "imgColor": "#5a6848",
         "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sat/accommodations/large/sat-249.jpg",
         "imgPath": "images/SAB_LV.jpg",
+        "imgPaths": [
+          "images/SAB_LV.jpg",
+          "images/SAB_LV_2.jpg",
+          "images/SAB_LV_3.jpg",
+          "images/SAB_LV_4.jpg"
+        ],
         "roomCode": "LV",
         "roomName": "Mediterranean One Bedroom Butler Villa with Private Pool Sanctuary",
         "discount": "7%+ off",
         "travelWindow": "",
         "priceFrom": 843,
-        "priceWas": null
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/grande-antigua/rooms/mediterranean-one-bedroom-butler-villa-with-private-pool-sanctuary/"
       },
       {
         "id": 2,
@@ -246,12 +253,19 @@
         "imgColor": "#785848",
         "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/brp/accommodations/large/brp-128.jpg",
         "imgPath": "images/SRP_1R.jpg",
+        "imgPaths": [
+          "images/SRP_1R.jpg",
+          "images/SRP_1R_2.jpg",
+          "images/SRP_1R_3.jpg",
+          "images/SRP_1R_4.jpg"
+        ],
         "roomCode": "1R",
         "roomName": "Royal Oceanfront One Bedroom Butler Suite",
         "discount": "7%+ off",
         "travelWindow": "",
         "priceFrom": 674,
-        "priceWas": null
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/royal-plantation/rooms/royal-oceanfront-one-bedroom-butler-suite/"
       },
       {
         "id": 3,
@@ -261,12 +275,19 @@
         "imgColor": "#2a6858",
         "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/srb/accommodations/large/srb-226.jpg",
         "imgPath": "images/SRB_HSUP.jpg",
+        "imgPaths": [
+          "images/SRB_HSUP.jpg",
+          "images/SRB_HSUP_2.jpg",
+          "images/SRB_HSUP_3.jpg",
+          "images/SRB_HSUP_4.jpg"
+        ],
         "roomCode": "HSUP",
         "roomName": "West Bay Swim-up Oversized Club Level Junior Suite",
         "discount": "7%+ off",
         "travelWindow": "",
         "priceFrom": 636,
-        "priceWas": null
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/royal-bahamian/rooms/west-bay-swim-up-oversized-club-level-junior-suite/"
       },
       {
         "id": 4,
@@ -276,12 +297,19 @@
         "imgColor": "#3a5878",
         "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/ssv/accommodations/large/ssv-285.jpg",
         "imgPath": "images/SSV_VF.jpg",
+        "imgPaths": [
+          "images/SSV_VF.jpg",
+          "images/SSV_VF_2.jpg",
+          "images/SSV_VF_3.jpg",
+          "images/SSV_VF_4.jpg"
+        ],
         "roomCode": "VF",
         "roomName": "One-Bedroom Butler Villa Suite with Patio Tranquility Soaking Tub",
         "discount": "7%+ off",
         "travelWindow": "",
         "priceFrom": 619,
-        "priceWas": null
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/saint-vincent/rooms/one-bedroom-butler-villa-suite-with-patio-tranquility-soaking-tub/"
       },
       {
         "id": 5,
@@ -291,12 +319,19 @@
         "imgColor": "#4a7848",
         "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sng/accommodations/large/sng-124.jpg",
         "imgPath": "images/SNG_1B.jpg",
+        "imgPaths": [
+          "images/SNG_1B.jpg",
+          "images/SNG_1B_2.jpg",
+          "images/SNG_1B_3.jpg",
+          "images/SNG_1B_4.jpg"
+        ],
         "roomCode": "1B",
         "roomName": "Longshore Beachfront Two-Story One Bedroom Butler Villa Suite w/ Tranquility Soaking Tub",
         "discount": "7%+ off",
         "travelWindow": "",
         "priceFrom": 485,
-        "priceWas": null
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/negril/rooms/longshore-beachfront-two-story-one-bedroom-butler-villa-suite-w-tranquility-soaking-tub/"
       },
       {
         "id": 6,
@@ -306,12 +341,19 @@
         "imgColor": "#1a5c6a",
         "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sgo/accommodations/large/sgo-100.jpg",
         "imgPath": "images/SGO_OV1.jpg",
+        "imgPaths": [
+          "images/SGO_OV1.jpg",
+          "images/SGO_OV1_2.jpg",
+          "images/SGO_OV1_3.jpg",
+          "images/SGO_OV1_4.jpg"
+        ],
         "roomCode": "OV1",
         "roomName": "Oceanview One Bedroom Poolside Butler Villa Suite",
         "discount": "7%+ off",
         "travelWindow": "",
         "priceFrom": 383,
-        "priceWas": null
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/ochi-beach-resort/rooms/oceanview-one-bedroom-poolside-butler-villa-suite/"
       },
       {
         "id": 7,
@@ -321,12 +363,18 @@
         "imgColor": "#1a6878",
         "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/scr/accommodations/large/scr-231.jpg",
         "imgPath": "images/SCR_WSCL.jpg",
+        "imgPaths": [
+          "images/SCR_WSCL.jpg",
+          "images/SCR_WSCL_2.jpg",
+          "images/SCR_WSCL_3.jpg"
+        ],
         "roomCode": "WSCL",
         "roomName": "Subi Club Level Walkout Room with Patio Tranquility Soaking Tub",
         "discount": "7%+ off",
         "travelWindow": "",
         "priceFrom": 352,
-        "priceWas": null
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/royal-curacao/rooms/subi-club-level-walkout-room-with-patio-tranquility-soaking-tub/"
       }
     ]
   }
