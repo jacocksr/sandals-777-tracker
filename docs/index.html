@@ -108,6 +108,11 @@
     .deal-card-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
     .deal-card:hover .deal-card-img img { transform: scale(1.04); }
     .deal-card-img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 60%); pointer-events: none; }
+    .tier-badge { display: inline-block; font-size: 0.6rem; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 2px 8px; border-radius: 3px; font-weight: 600; margin-bottom: 0.5rem; }
+    .tier-butler  { background: rgba(180,140,40,0.15); color: var(--gold); border: 1px solid var(--gold); }
+    .tier-club    { background: rgba(26,92,106,0.12); color: var(--ocean); border: 1px solid var(--ocean); }
+    .tier-luxury  { background: rgba(100,100,100,0.1); color: var(--text-muted); border: 1px solid var(--border); }
     .deal-badge { position: absolute; top: 12px; left: 12px; background: var(--coral); color: white; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.28rem 0.7rem; border-radius: 2px; font-weight: 500; }
     .deal-discount-bubble { position: absolute; top: 12px; right: 12px; background: white; border-radius: 50%; width: 54px; height: 54px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
     .deal-discount-pct { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; color: var(--coral); line-height: 1; text-align: center; }
@@ -202,9 +207,12 @@
     .carousel-dot { width: 6px; height: 6px; border-radius: 50%;
       background: rgba(255,255,255,0.45); transition: background 0.2s, transform 0.2s; cursor: pointer; }
     .carousel-dot.active { background: white; transform: scale(1.25); }
-    .modal-close { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.3);
-      border: none; color: white; width: 30px; height: 30px; border-radius: 50%;
-      cursor: pointer; font-size: 0.9rem; z-index: 3; display: flex; align-items: center; justify-content: center; }
+    .modal-close { position: absolute; top: 10px; right: 10px;
+      background: rgba(255,255,255,0.18); border: 1.5px solid rgba(255,255,255,0.5);
+      color: white; width: 36px; height: 36px; border-radius: 50%;
+      cursor: pointer; font-size: 0.9rem; z-index: 3; display: flex; align-items: center; justify-content: center;
+      transition: background 0.18s; backdrop-filter: blur(4px); }
+    .modal-close:hover { background: rgba(255,255,255,0.35); }
     /* ── Body ── */
     .modal-body { padding: 1.6rem 2rem 2rem; }
     .modal-eyebrow { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
@@ -551,6 +559,14 @@ function filterDeals(code, btn) {
 
 // ─── DEAL CARDS ─────────────────────────────────────────────────────────────
 
+function getRoomTier(roomName) {
+  const n = (roomName || '').toLowerCase();
+  if (n.includes('butler'))      return { label: 'Butler',      cls: 'tier-butler' };
+  if (n.includes('club level'))  return { label: 'Club Level',  cls: 'tier-club'   };
+  if (n.includes('luxury'))      return { label: 'Luxury',      cls: 'tier-luxury' };
+  return null;
+}
+
 function renderDeals(filter) {
   const grid = document.getElementById('dealGrid');
   const deals = filter === 'all'
@@ -584,6 +600,7 @@ function renderDeals(filter) {
         </div>
         <div class="deal-card-body">
           <div class="deal-resort">${d.resort} · ${d.location}</div>
+          ${(t => t ? `<span class="tier-badge ${t.cls}">${t.label}</span>` : '')(getRoomTier(d.roomName))}
           <div class="deal-room-name">${d.roomName}</div>
           <div class="deal-meta-row">
             <div class="deal-meta-item">
@@ -692,6 +709,18 @@ function openModal(id) {
 
   document.getElementById('modalResort').textContent = `${d.resort} · ${d.location}`;
   document.getElementById('modalTitle').textContent  = d.roomName;
+  const tier = getRoomTier(d.roomName);
+  const existingBadge = document.getElementById('modalTierBadge');
+  if (existingBadge) existingBadge.remove();
+  if (tier) {
+    const badge = document.createElement('span');
+    badge.id = 'modalTierBadge';
+    badge.className = `tier-badge ${tier.cls}`;
+    badge.textContent = tier.label;
+    badge.style.display = 'block';
+    badge.style.marginBottom = '0.5rem';
+    document.getElementById('modalTitle').before(badge);
+  }
   document.getElementById('modalDetails').innerHTML = `
     <div><div class="modal-detail-key">Location</div><div class="modal-detail-val">${d.location}</div></div>
     <div><div class="modal-detail-key">Room Code</div><div class="modal-detail-val">${d.roomCode || '–'}</div></div>
