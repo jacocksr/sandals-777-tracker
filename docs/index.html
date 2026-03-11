@@ -561,9 +561,9 @@ function filterDeals(code, btn) {
 
 function getRoomTier(roomName) {
   const n = (roomName || '').toLowerCase();
-  if (n.includes('butler'))      return { label: 'Butler',      cls: 'tier-butler' };
-  if (n.includes('club level'))  return { label: 'Club Level',  cls: 'tier-club'   };
-  if (n.includes('luxury'))      return { label: 'Luxury',      cls: 'tier-luxury' };
+  if (n.includes('butler'))      return { label: 'Butler Level',     cls: 'tier-butler' };
+  if (n.includes('club level'))  return { label: 'Club Level',       cls: 'tier-club'   };
+  if (n.includes('luxury'))      return { label: 'Luxury Level',     cls: 'tier-luxury' };
   return null;
 }
 
@@ -717,12 +717,11 @@ function openModal(id) {
     badge.id = 'modalTierBadge';
     badge.className = `tier-badge ${tier.cls}`;
     badge.textContent = tier.label;
-    badge.style.display = 'block';
+    badge.style.display = 'inline-block';
     badge.style.marginBottom = '0.5rem';
     document.getElementById('modalTitle').before(badge);
   }
   document.getElementById('modalDetails').innerHTML = `
-    <div><div class="modal-detail-key">Location</div><div class="modal-detail-val">${d.location}</div></div>
     <div><div class="modal-detail-key">Room Code</div><div class="modal-detail-val">${d.roomCode || '–'}</div></div>
     <div><div class="modal-detail-key">Room View</div><div class="modal-detail-val">${d.roomView || '–'}</div></div>
     <div><div class="modal-detail-key">Bedding</div><div class="modal-detail-val">${d.bedding || '–'}</div></div>
