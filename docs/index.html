@@ -690,7 +690,7 @@ function openModal(id) {
 
   buildCarousel(d);
 
-  document.getElementById('modalResort').textContent = `${d.resort} · ${d.resortCode}`;
+  document.getElementById('modalResort').textContent = `${d.resort} · ${d.location}`;
   document.getElementById('modalTitle').textContent  = d.roomName;
   document.getElementById('modalDetails').innerHTML = `
     <div><div class="modal-detail-key">Location</div><div class="modal-detail-val">${d.location}</div></div>
