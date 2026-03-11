@@ -1,27 +1,25 @@
 # .github/workflows/scrape-weekly.yml
 #
-# This is a GitHub Actions "workflow" — a set of instructions that GitHub's
-# servers execute automatically on a schedule.
-#
-# Think of GitHub as a free computer that:
-#   1. Wakes up every Wednesday at 1am ET (6am UTC)
-#   2. Downloads your code
-#   3. Runs the scraper
-#   4. Saves the new deals.json back into your repository
-#   5. Your website then reads that file and shows live data
-#
-# All of this is COMPLETELY FREE on GitHub's free tier.
+# Runs every Wednesday starting at 04:05 UTC (midnight ET) and retries
+# hourly until 10:00 UTC (6am ET) in case Sandals updates late.
+# Max 7 attempts total. Once deals are successfully updated, later
+# runs that same day will detect no change and skip the commit.
 
 name: "Scrape Sandals 7·7·7 Deals"
 
 on:
-  # ── Automatic: every Wednesday at 6:00 UTC (1am US Eastern, 2am after DST) ──
-  # Sandals updates their deals on Wednesday. We run 1 hour after midnight
-  # to give their site time to update.
+  # ── Attempt 1: 04:05 UTC (midnight ET) ──
+  # ── Attempts 2–7: every hour until 10:05 UTC (6am ET) ──
   schedule:
-    - cron: "0 6 * * 3"   # minute hour day month weekday(3=Wednesday)
+    - cron: "5 4 * * 3"    # 04:05 UTC — attempt 1 (midnight ET)
+    - cron: "5 5 * * 3"    # 05:05 UTC — attempt 2
+    - cron: "5 6 * * 3"    # 06:05 UTC — attempt 3
+    - cron: "5 7 * * 3"    # 07:05 UTC — attempt 4
+    - cron: "5 8 * * 3"    # 08:05 UTC — attempt 5
+    - cron: "5 9 * * 3"    # 09:05 UTC — attempt 6
+    - cron: "5 10 * * 3"   # 10:05 UTC — attempt 7 (final, 6am ET)
 
-  # ── Manual: you can also click "Run workflow" in the GitHub Actions tab ──
+  # ── Manual trigger ──
   workflow_dispatch:
     inputs:
       reason:
@@ -32,44 +30,67 @@ on:
 jobs:
   scrape:
     name: "Fetch & Save Deals"
-    runs-on: ubuntu-latest   # GitHub spins up a free Ubuntu Linux machine
+    runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out your repository code onto the GitHub machine
       - name: "Checkout repository"
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}  # auto-provided, no setup needed
+          persist-credentials: true
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Step 2: Install Python
       - name: "Set up Python 3.12"
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      # Step 3: Install Python packages our scraper needs
       - name: "Install dependencies"
         run: |
           pip install playwright beautifulsoup4 requests
-          playwright install chromium   # download headless Chrome
+          playwright install chromium
 
-      # Step 4: Run the scraper! This creates/updates data/deals.json
-      - name: "Run scraper"
+      # Check if we already have this week's deals before scraping.
+      # If deals.json was updated within the last 6 days, skip the scrape.
+      - name: "Check if already up to date"
+        id: freshcheck
         run: |
-          python scripts/scraper.py
+          python3 - <<'PYEOF'
+          import json, sys
+          from pathlib import Path
+          from datetime import datetime, timezone, timedelta
+
+          deals_file = Path("docs/data/deals.json")
+          if not deals_file.exists():
+              print("fresh=false")
+              with open("$GITHUB_OUTPUT", "a") as f:
+                  f.write("fresh=false\n")
+              sys.exit(0)
+
+          data = json.loads(deals_file.read_text())
+          fetched_at = datetime.fromisoformat(data.get("fetchedAt", "2000-01-01T00:00:00+00:00"))
+          age_hours = (datetime.now(timezone.utc) - fetched_at).total_seconds() / 3600
+
+          # Consider fresh if updated within last 6 days
+          is_fresh = age_hours < 144
+          result = "true" if is_fresh else "false"
+          print(f"Age: {age_hours:.1f}h — fresh={result}")
+          with open("$GITHUB_OUTPUT", "a") as f:
+              f.write(f"fresh={result}\n")
+          PYEOF
         env:
-          # Playwright needs this in some CI environments
+          GITHUB_OUTPUT: ${{ runner.temp }}/github_output.txt
+
+      - name: "Run scraper"
+        if: steps.freshcheck.outputs.fresh != 'true'
+        run: python scripts/scraper.py
+        env:
           PLAYWRIGHT_BROWSERS_PATH: /home/runner/.cache/ms-playwright
 
-      # Step 5: Check if deals.json actually changed (if Sandals hasn't
-      # updated yet, no point committing)
       - name: "Check for changes"
         id: changes
         run: |
-          git diff --quiet data/ && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+          git diff --quiet docs/ && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
 
-      # Step 6: If the data changed, commit it back to the repo.
-      # Your live site reads from this file, so this IS the deployment.
       - name: "Commit updated deal data"
         if: steps.changes.outputs.changed == 'true'
         run: |
@@ -77,24 +98,15 @@ jobs:
           git config user.email "bot@777watch.com"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git add docs/data/deals.json docs/data/history.json docs/images/
-          git commit -m "🏖️ Weekly 7·7·7 deals update — $(date +'%Y-%m-%d')"
+          git commit -m "🏖️ Weekly 7·7·7 deals update — $(date +'%Y-%m-%d %H:%M UTC')"
           git push origin main
 
-      # Step 7: If nothing changed, log it so you know
-      - name: "Log no-change result"
-        if: steps.changes.outputs.changed == 'false'
-        run: echo "Deals unchanged since last run. Sandals may not have updated yet."
-
-      # Step 8: Send a notification on failure (optional but recommended)
-      # Uncomment and configure if you want email/Slack alerts when scraping breaks
-      # - name: "Notify on failure"
-      #   if: failure()
-      #   uses: actions/github-script@v7
-      #   with:
-      #     script: |
-      #       github.rest.issues.create({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         title: '🚨 Scraper failed — check Sandals page structure',
-      #         body: 'The weekly scraper failed. Sandals may have changed their page layout.'
-      #       })
+      - name: "Log result"
+        run: |
+          if [ "${{ steps.changes.outputs.changed }}" = "true" ]; then
+            echo "✅ Deals updated and committed successfully."
+          elif [ "${{ steps.freshcheck.outputs.fresh }}" = "true" ]; then
+            echo "⏭️  Already up to date — skipping scrape."
+          else
+            echo "⚠️  Scraper ran but no changes detected. Sandals may not have updated yet."
+          fi
