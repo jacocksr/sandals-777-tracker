@@ -71,9 +71,9 @@
     .pulse { width: 6px; height: 6px; background: #4caf7d; border-radius: 50%; animation: pulse 2s infinite; }
     @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.4); } }
 
-    .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(5rem, 8vw, 9rem); font-weight: 300; color: white; line-height: 1.1; letter-spacing: 0.02em; margin-bottom: 0.3rem; }
-    .hero h1 em { font-size: clamp(8rem, 8vw, 8rem); font-style: italic; color: var(--gold-light); }
-    .hero-sub { font-size: 1.15rem; color: rgba(255,255,255,0.6); font-weight: 300; margin: 1.2rem auto 2.5rem; max-width: 480px; line-height: 1.65; }
+    .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 6vw, 5rem); font-weight: 300; color: white; line-height: 1.2; letter-spacing: 0.02em; margin-bottom: 0.3rem; }
+    .hero h1 em { font-style: italic; color: var(--gold-light); font-size: clamp(4.8rem, 9.5vw, 8rem); }
+    .hero-sub { font-size: 1.05rem; color: rgba(255,255,255,0.6); font-weight: 300; margin: 1.2rem auto 2.5rem; max-width: 480px; line-height: 1.65; }
 
     .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
     .hero-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 600; color: var(--gold-light); line-height: 1; }
@@ -221,15 +221,24 @@
     /* LOADING STATE */
     .skeleton { background: linear-gradient(90deg, #f0e6d2 25%, #faf6ef 50%, #f0e6d2 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; }
     @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .stale-banner { background: rgba(180,140,40,0.15); border: 1px solid var(--gold-light); color: var(--gold-light); padding: 0.9rem 1.2rem; border-radius: 6px; margin-bottom: 1.5rem; font-size: 0.88rem; line-height: 1.6; }
+    .stale-banner a { color: var(--gold-light); font-weight: 600; }
     .error-banner { background: #fff3f0; border: 1px solid #f5c6be; color: #c9624a; padding: 1rem 1.4rem; border-radius: 6px; font-size: 0.88rem; margin-bottom: 1.5rem; }
 
     footer { margin-top: 5rem; background: var(--ocean-deep); color: rgba(255,255,255,0.5); padding: 2.5rem; text-align: center; font-size: 0.78rem; line-height: 1.8; }
     footer a { color: var(--gold-light); text-decoration: none; }
 
     @media (max-width: 640px) {
-      .hero h1 { font-size: 3rem; }
+      .hero { padding: 4rem 1.5rem 3rem; }
+      .hero h1 { font-size: 2.4rem; line-height: 1.2; }
+      .hero h1 em { font-size: 3.8rem; }
+      .hero-sub { font-size: 0.95rem; margin: 1rem auto 2rem; }
+      .hero-stats { gap: 1.5rem; flex-wrap: nowrap; justify-content: space-around; }
+      .hero-stat-num { font-size: 2.2rem; }
       nav { display: none; }
       .deal-grid { grid-template-columns: 1fr; }
+      .modal { margin: 0.5rem; }
+      .modal-carousel { height: 200px; }
     }
   </style>
 </head>
@@ -318,6 +327,10 @@
       <span class="section-meta" id="weekLabel">Loading…</span>
     </div>
     <div id="errorBanner" style="display:none" class="error-banner"></div>
+    <div id="staleBanner" style="display:none" class="stale-banner">
+      ⏳ This week's deals are still loading — Sandals updates their site late on Tuesday night.
+      Check back later today for fresh deals, or <a href="https://www.sandals.com/specials/suite-deals/" target="_blank">view them directly on Sandals.com</a>.
+    </div>
     <div class="filter-bar" id="filterBar">
       <button class="filter-btn active" onclick="filterDeals('all', this)">All Resorts</button>
     </div>
@@ -441,6 +454,17 @@ async function loadData() {
     historyData        = await histRes.json();
 
     currentDeals = dealsPayload.deals || [];
+
+    // Check for stale data — warn if fetchedAt is more than 9 days old
+    // (deals reset every Wednesday; 9 days = clearly last week or older)
+    const fetchedAt = new Date(dealsPayload.fetchedAt);
+    const ageHours  = (Date.now() - fetchedAt) / (1000 * 60 * 60);
+    const nowUtc    = new Date();
+    const isWedOrLater = nowUtc.getUTCDay() >= 3; // Wed=3
+    if (ageHours > 9 * 24 || (isWedOrLater && ageHours > 36)) {
+      const staleBanner = document.getElementById('staleBanner');
+      staleBanner.style.display = 'block';
+    }
 
     // Render everything
     document.getElementById('weekLabel').textContent =
