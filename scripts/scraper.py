@@ -423,11 +423,14 @@ def extract_resort_and_room(lookback: str) -> tuple:
             break
 
     if resort_idx is not None:
-        # Room name is on the line immediately after the resort line
+        # Room name is on the line immediately after the resort line.
+        # Cap at 150 chars to avoid picking up marketing description blurbs,
+        # which are long sentences. Real room names are always short titles.
         for offset in [1, 2]:
             if resort_idx + offset < len(lines):
                 candidate = lines[resort_idx + offset]
-                if any(kw in candidate.lower() for kw in SUITE_KEYWORDS):
+                if (len(candidate) <= 150 and
+                        any(kw in candidate.lower() for kw in SUITE_KEYWORDS)):
                     room_name = candidate
                     break
 
