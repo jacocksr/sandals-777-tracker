@@ -1,7 +1,7 @@
 {
   "weekLabel": "Mar 11 – Mar 17, 2026",
-  "fetchedAt": "2026-03-11T13:31:52.544759+00:00",
-  "dealCount": 6,
+  "fetchedAt": "2026-03-11T15:13:53.643096+00:00",
+  "dealCount": 7,
   "deals": [
     {
       "id": 1,
@@ -51,6 +51,28 @@
     },
     {
       "id": 3,
+      "resortCode": "SCR",
+      "resort": "Sandals Royal Curacao",
+      "location": "Santa Barbara, Curaçao",
+      "imgColor": "#1a6878",
+      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/scr/accommodations/large/scr-383.jpg",
+      "imgPath": "images/SCR_CLX.jpg",
+      "imgPaths": [
+        "images/SCR_CLX.jpg",
+        "images/SCR_CLX_2.jpg",
+        "images/SCR_CLX_3.jpg"
+      ],
+      "roomCode": "CLX",
+      "roomName": "Carisia Luxury",
+      "roomView": "Tropical Garden",
+      "bedding": "1 King Bed",
+      "discount": "7%+ off",
+      "priceFrom": 375,
+      "priceWas": null,
+      "bookUrl": "https://www.sandals.com/royal-curacao/rooms-suites/clx/"
+    },
+    {
+      "id": 4,
       "resortCode": "SAB",
       "resort": "Sandals Grande Antigua",
       "location": "St. John's, Antigua",
@@ -72,7 +94,7 @@
       "bookUrl": "https://www.sandals.com/grande-antigua/rooms-suites/vs/"
     },
     {
-      "id": 4,
+      "id": 5,
       "resortCode": "SRP",
       "resort": "Sandals Royal Plantation",
       "location": "Ocho Rios, Jamaica",
@@ -94,7 +116,7 @@
       "bookUrl": "https://www.sandals.com/royal-plantation/rooms-suites/prr/"
     },
     {
-      "id": 5,
+      "id": 6,
       "resortCode": "SNG",
       "resort": "Sandals Negril",
       "location": "Negril, Jamaica",
@@ -116,7 +138,7 @@
       "bookUrl": "https://www.sandals.com/negril/rooms-suites/lx/"
     },
     {
-      "id": 6,
+      "id": 7,
       "resortCode": "SGO",
       "resort": "Sandals Ochi",
       "location": "Ocho Rios, Jamaica",
