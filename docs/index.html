@@ -127,7 +127,7 @@
     .deal-price-row { display: flex; align-items: flex-end; justify-content: space-between; padding-top: 0.9rem; border-top: 1px solid var(--border); }
     .deal-price-from { font-size: 0.72rem; color: var(--text-muted); }
     .deal-price { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: var(--ocean-deep); line-height: 1; }
-    .deal-price-night { font-size: 0.72rem; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-weight: 400; }
+    .deal-price-night { font-size: 0.68rem; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-weight: 400; letter-spacing: 0.02em; }
     .deal-price-was { font-size: 0.82rem; color: var(--text-muted); text-decoration: line-through; }
     .deal-price-na { font-size: 0.82rem; color: var(--text-muted); font-style: italic; }
 
@@ -566,7 +566,7 @@ function renderDeals(filter) {
     const priceHtml = d.priceFrom
       ? `<div>
            <div class="deal-price-from">From</div>
-           <div class="deal-price">$${d.priceFrom}<span class="deal-price-night">/night</span></div>
+           <div class="deal-price">$${d.priceFrom}<span class="deal-price-night">/pp/pn</span></div>
            ${d.priceWas ? `<div class="deal-price-was">was $${d.priceWas}</div>` : ''}
          </div>`
       : `<div><div class="deal-price-na">Price: visit Sandals.com</div></div>`;
@@ -698,7 +698,7 @@ function openModal(id) {
     <div><div class="modal-detail-key">Room View</div><div class="modal-detail-val">${d.roomView || '–'}</div></div>
     <div><div class="modal-detail-key">Bedding</div><div class="modal-detail-val">${d.bedding || '–'}</div></div>
     <div><div class="modal-detail-key">Extra Discount</div><div class="modal-detail-val" style="color:var(--coral);font-size:1.1rem">+7% on top of current deals</div></div>
-    <div><div class="modal-detail-key">Deal Expires</div><div class="modal-detail-val">Tuesday midnight ET</div></div>
+    <div><div class="modal-detail-key">Price From</div><div class="modal-detail-val" style="font-size:1.1rem;font-weight:600;color:var(--ocean-deep)">${d.priceFrom ? '$'+d.priceFrom+' <span style="font-size:0.75rem;font-weight:400;color:var(--text-muted)">per person / per night</span>' : 'See Sandals.com'}</div></div>
   `;
   // Deep link to the specific room page, or fall back to suite deals page
   const bookUrl = d.bookUrl || 'https://www.sandals.com/specials/suite-deals/';
@@ -788,7 +788,7 @@ function renderHistory() {
       <td><span class="resort-tag">${r.resortCode}</span> <span style="font-size:0.82rem">${(r.resort||'').replace('Sandals ','')}</span></td>
       <td style="font-size:0.84rem;max-width:260px">${r.roomName || '–'}</td>
       <td style="font-size:0.8rem;color:var(--text-muted)">${r.roomCode || '–'}</td>
-      <td style="font-size:0.8rem;color:var(--text-muted)">${r.priceFrom ? '$'+r.priceFrom+'/nt' : '–'}</td>
+      <td style="font-size:0.8rem;color:var(--text-muted)">${r.priceFrom ? '$'+r.priceFrom+' pp/pn' : '–'}</td>
     </tr>
   `).join('');
 }
