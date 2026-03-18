@@ -1,7 +1,7 @@
 {
   "weekLabel": "Mar 18 – Mar 24, 2026",
-  "fetchedAt": "2026-03-18T10:54:27.208159+00:00",
-  "dealCount": 6,
+  "fetchedAt": "2026-03-18T15:00:39.625662+00:00",
+  "dealCount": 7,
   "deals": [
     {
       "id": 1,
@@ -113,6 +113,24 @@
     },
     {
       "id": 6,
+      "resortCode": "SHB",
+      "resort": "Sandals Halcyon Beach",
+      "location": "Castries, Saint Lucia",
+      "imgColor": "#3a6858",
+      "imgUrl": "",
+      "imgPath": "",
+      "imgPaths": [],
+      "roomCode": "PL",
+      "roomName": "Crystal Lagoon Poolside Luxury",
+      "roomView": "Pool, Tropical Garden",
+      "bedding": "1 King Bed",
+      "discount": "7%+ off",
+      "priceFrom": 285,
+      "priceWas": null,
+      "bookUrl": "https://www.sandals.com/halcyon-beach/rooms-suites/pl/"
+    },
+    {
+      "id": 7,
       "resortCode": "SGO",
       "resort": "Sandals Ochi",
       "location": "Ocho Rios, Jamaica",
