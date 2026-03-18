@@ -1,5 +1,5 @@
 """
-sandals_777_scraper.py  —  v3.1
+sandals_777_scraper.py  —  v3.2
 ================================
 What we know from testing:
 - Sandals' page is a Next.js React SPA
@@ -74,7 +74,7 @@ RESORT_CDN_SLUG = {
     "SNG": "sng",
     "SGO": "sgo",
     "SCR": "scr",
-    "SBR": "sbr",
+    "SBR": "sbd",   # CDN uses 'sbd' (confirmed from scrape logs)
     "SPR": "spr",
     "SLU": "slu",
     "SST": "sst",
@@ -82,7 +82,7 @@ RESORT_CDN_SLUG = {
     "SKJ": "skj",
     "SML": "sml",
     "SMB": "smb",
-    "SHB": "shb",   # v3.1 — Halcyon Beach (verify slug against CDN logs if images missing)
+    "SHB": "shc",   # CDN uses 'shc' (confirmed from scrape logs)
 }
 
 # Maps our resort codes → sandals.com URL slugs for deep booking links
@@ -546,7 +546,7 @@ def append_history(deals: list[dict]) -> None:
 
 def run():
     print("=" * 60)
-    print(f"  Sandals 7·7·7 Scraper v3.1  —  {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    print(f"  Sandals 7·7·7 Scraper v3.2  —  {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     print("=" * 60)
 
     deals = scrape_deals()
