@@ -1,6 +1,6 @@
 """
-sandals_777_scraper.py  —  v3
-==============================
+sandals_777_scraper.py  —  v3.1
+================================
 What we know from testing:
 - Sandals' page is a Next.js React SPA
 - The RSC network responses are binary streams, not parseable text
@@ -12,6 +12,11 @@ What we know from testing:
 This version loads the page in a real headless browser, waits until
 "Room Code:" appears in the rendered text (meaning deal cards loaded),
 then parses the text by splitting on "Room Code:" occurrences.
+
+v3.1 changes:
+- Added Sandals Halcyon Beach (SHB) to all lookup maps
+- Improved image loading: scroll through full page before capturing URLs,
+  then wait until at least 7 CDN images are present in the DOM
 """
 
 import json, re, time
@@ -36,6 +41,7 @@ RESORT_MAP = {
     "SGO": {"name": "Sandals Ochi",               "location": "Ocho Rios, Jamaica"},
     "SSV": {"name": "Sandals Saint Vincent",       "location": "Buccament Bay, Saint Vincent"},
     "SLU": {"name": "Sandals Regency La Toc",      "location": "Castries, Saint Lucia"},
+    "SHB": {"name": "Sandals Halcyon Beach",       "location": "Castries, Saint Lucia"},  # v3.1
     "SRB": {"name": "Sandals Royal Bahamian",      "location": "Nassau, Bahamas"},
     "SRP": {"name": "Sandals Royal Plantation",    "location": "Ocho Rios, Jamaica"},
     "SNG": {"name": "Sandals Negril",              "location": "Negril, Jamaica"},
@@ -56,6 +62,7 @@ RESORT_COLORS = {
     "SRP":"#785848","SNG":"#4a7848","SCR":"#1a6878","SBR":"#3a7868",
     "SKJ":"#6a4858","SML":"#487858","SDL":"#284878","SSN":"#784838",
     "SST":"#2a5868","SAB":"#5a6848","SMB":"#384868","SPR":"#685838",
+    "SHB":"#3a6858",  # v3.1
 }
 
 # Maps our resort codes → Sandals CDN folder slugs (confirmed from live scrape logs)
@@ -75,6 +82,7 @@ RESORT_CDN_SLUG = {
     "SKJ": "skj",
     "SML": "sml",
     "SMB": "smb",
+    "SHB": "shb",   # v3.1 — Halcyon Beach (verify slug against CDN logs if images missing)
 }
 
 # Maps our resort codes → sandals.com URL slugs for deep booking links
@@ -95,6 +103,7 @@ RESORT_BOOKING_SLUG = {
     "SKJ": "south-coast",
     "SML": "montego-bay",
     "SMB": "emerald-bay",
+    "SHB": "halcyon-beach",   # v3.1
 }
 
 # Resort name fragments → resort code (order matters: more specific first)
@@ -106,6 +115,7 @@ RESORT_NAME_TO_CODE = {
     "royal cura":        "SCR",
     "grande st. lucian": "SST",
     "saint vincent":     "SSV",
+    "halcyon":           "SHB",   # v3.1 — must appear before generic "saint lucia" entries
     "regency la toc":    "SLU",
     "south coast":       "SKJ",
     "montego bay":       "SML",
@@ -122,6 +132,7 @@ SUITE_KEYWORDS = [
     "beachfront", "oceanfront", "poolside", "walkout",
     "tranquility", "sanctuary", "swim-up", "oversized", "junior",
     "one-bedroom", "two-story", "club level", "mediterranean",
+    "luxury",   # v3.1 — catches "Crystal Lagoon Poolside Luxury" and similar
 ]
 
 
@@ -252,6 +263,32 @@ def scrape_deals() -> list[dict]:
             except Exception:
                 pass
 
+        # ── v3.1: Scroll through the full page to trigger lazy-loaded images ──
+        # Cards below the fold won't load their images until scrolled into view.
+        print("[scraper] Scrolling to trigger lazy image loading...")
+        for scroll_pos in [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000]:
+            page.mouse.wheel(0, scroll_pos)
+            time.sleep(0.8)
+
+        # Scroll back to top so the DOM is fully settled
+        page.evaluate("window.scrollTo(0, 0)")
+        time.sleep(1)
+
+        # Wait up to 10s for at least 7 CDN images to appear in the DOM
+        print("[scraper] Waiting for CDN images to load...")
+        for wait_attempt in range(10):
+            cdn_img_count = page.evaluate("""() =>
+                [...document.querySelectorAll('img')]
+                .filter(i => i.src && i.src.includes('cdn.sandals.com')).length
+            """)
+            print(f"[scraper] CDN images in DOM: {cdn_img_count} (attempt {wait_attempt+1})")
+            if cdn_img_count >= 7:
+                print("[scraper] Sufficient CDN images loaded ✓")
+                break
+            time.sleep(1)
+        else:
+            print("[scraper] ⚠️  Fewer than 7 CDN images found — proceeding anyway")
+
         # Extract image URLs grouped by deal card position
         # We need one image per card, matched to the correct deal in order.
         # Strategy: find all img elements that are children of the same
@@ -263,7 +300,7 @@ def scrape_deals() -> list[dict]:
                 const seen = new Set();
                 const imgs = [];
                 document.querySelectorAll('img').forEach(img => {
-                    const src = img.src || '';
+                    const src = img.src || img.dataset.src || img.dataset.lazy || '';
                     if (src.includes('cdn.sandals.com') &&
                         !src.includes('logo') &&
                         !src.includes('icon') &&
@@ -509,7 +546,7 @@ def append_history(deals: list[dict]) -> None:
 
 def run():
     print("=" * 60)
-    print(f"  Sandals 7·7·7 Scraper v3  —  {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    print(f"  Sandals 7·7·7 Scraper v3.1  —  {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     print("=" * 60)
 
     deals = scrape_deals()
