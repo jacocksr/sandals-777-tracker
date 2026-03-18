@@ -329,7 +329,7 @@
   },
   {
     "weekLabel": "Mar 18 – Mar 24, 2026",
-    "fetchedAt": "2026-03-18T07:15:49.605609+00:00",
+    "fetchedAt": "2026-03-18T07:58:42.236222+00:00",
     "deals": [
       {
         "id": 1,
@@ -435,7 +435,7 @@
         "roomView": "Pool, Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 315,
+        "priceFrom": 341,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/barbados/rooms-suites/lx/"
       },
