@@ -1,6 +1,6 @@
 {
   "weekLabel": "Mar 18 – Mar 24, 2026",
-  "fetchedAt": "2026-03-18T07:58:42.235643+00:00",
+  "fetchedAt": "2026-03-18T09:02:24.269520+00:00",
   "dealCount": 6,
   "deals": [
     {
@@ -28,28 +28,6 @@
     },
     {
       "id": 2,
-      "resortCode": "SAB",
-      "resort": "Sandals Grande Antigua",
-      "location": "St. John's, Antigua",
-      "imgColor": "#5a6848",
-      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sat/accommodations/large/sat-232.jpg",
-      "imgPath": "images/SAB_MO.jpg",
-      "imgPaths": [
-        "images/SAB_MO.jpg",
-        "images/SAB_MO_2.jpg",
-        "images/SAB_MO_3.jpg"
-      ],
-      "roomCode": "MO",
-      "roomName": "Mediterranean Honeymoon Oceanview Club Level Suite",
-      "roomView": "Oceanview, Pool, Tropical Garden",
-      "bedding": "1 King Bed",
-      "discount": "7%+ off",
-      "priceFrom": 431,
-      "priceWas": null,
-      "bookUrl": "https://www.sandals.com/grande-antigua/rooms-suites/mo/"
-    },
-    {
-      "id": 3,
       "resortCode": "SCR",
       "resort": "Sandals Royal Curacao",
       "location": "Santa Barbara, Curaçao",
@@ -66,9 +44,31 @@
       "roomView": "Partial Oceanview, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 410,
+      "priceFrom": 371,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/royal-curacao/rooms-suites/blx/"
+    },
+    {
+      "id": 3,
+      "resortCode": "SAB",
+      "resort": "Sandals Grande Antigua",
+      "location": "St. John's, Antigua",
+      "imgColor": "#5a6848",
+      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sat/accommodations/large/sat-232.jpg",
+      "imgPath": "images/SAB_MO.jpg",
+      "imgPaths": [
+        "images/SAB_MO.jpg",
+        "images/SAB_MO_2.jpg",
+        "images/SAB_MO_3.jpg"
+      ],
+      "roomCode": "MO",
+      "roomName": "Mediterranean Honeymoon Oceanview Club Level Suite",
+      "roomView": "Oceanview, Pool, Tropical Garden",
+      "bedding": "1 King Bed",
+      "discount": "7%+ off",
+      "priceFrom": 351,
+      "priceWas": null,
+      "bookUrl": "https://www.sandals.com/grande-antigua/rooms-suites/mo/"
     },
     {
       "id": 4,
@@ -107,7 +107,7 @@
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 341,
+      "priceFrom": 315,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/barbados/rooms-suites/lx/"
     },
