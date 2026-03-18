@@ -1,6 +1,6 @@
 {
   "weekLabel": "Mar 18 – Mar 24, 2026",
-  "fetchedAt": "2026-03-18T15:00:39.625662+00:00",
+  "fetchedAt": "2026-03-18T15:31:12.933866+00:00",
   "dealCount": 7,
   "deals": [
     {
@@ -99,9 +99,13 @@
       "resort": "Sandals Barbados",
       "location": "Christ Church, Barbados",
       "imgColor": "#3a7868",
-      "imgUrl": "",
-      "imgPath": "",
-      "imgPaths": [],
+      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sbd/accommodations/large/sbd-189.jpg",
+      "imgPath": "images/SBR_LX.jpg",
+      "imgPaths": [
+        "images/SBR_LX.jpg",
+        "images/SBR_LX_2.jpg",
+        "images/SBR_LX_3.jpg"
+      ],
       "roomCode": "LX",
       "roomName": "Crystal Lagoon Luxury Honeymoon Room with Balcony Tranquility Soaking Tub",
       "roomView": "Pool, Tropical Garden",
@@ -117,9 +121,13 @@
       "resort": "Sandals Halcyon Beach",
       "location": "Castries, Saint Lucia",
       "imgColor": "#3a6858",
-      "imgUrl": "",
-      "imgPath": "",
-      "imgPaths": [],
+      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/shc/accommodations/large/shc-152.jpg",
+      "imgPath": "images/SHB_PL.jpg",
+      "imgPaths": [
+        "images/SHB_PL.jpg",
+        "images/SHB_PL_2.jpg",
+        "images/SHB_PL_3.jpg"
+      ],
       "roomCode": "PL",
       "roomName": "Crystal Lagoon Poolside Luxury",
       "roomView": "Pool, Tropical Garden",
