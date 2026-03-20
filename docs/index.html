@@ -42,10 +42,17 @@
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
-    .logo { display: flex; align-items: baseline; gap: 10px; }
-    .logo-mark { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600; color: var(--gold-light); letter-spacing: 0.06em; line-height: 1; }
-    .logo-dot { color: var(--coral); }
-    .logo-sub { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.45); font-weight: 300; }
+    /* ── Logo image replaces text mark ── */
+    .logo {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+    .logo img {
+      height: 48px;   /* vertically centred with ~10px breathing room top/bottom */
+      width: auto;
+      display: block;
+    }
 
     nav { display: flex; gap: 2rem; align-items: center; }
     nav a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
@@ -247,6 +254,7 @@
       .deal-grid { grid-template-columns: 1fr; }
       .modal { margin: 0.5rem; }
       .modal-carousel { height: 200px; }
+      .logo img { height: 38px; }
     }
   </style>
 </head>
@@ -277,8 +285,7 @@
 <!-- HEADER -->
 <header>
   <div class="logo">
-    <span class="logo-mark">7<span class="logo-dot">·</span>7<span class="logo-dot">·</span>7</span>
-    <span class="logo-sub">Deal Watch</span>
+    <img src="images/Logo3Dark.png" alt="7·7·7 Vacation Tracker" />
   </div>
   <nav>
     <a href="#deals">This Week</a>
@@ -438,10 +445,6 @@
 <script>
 // ═══════════════════════════════════════════════════════════════════════════
 //  DATA LOADING
-//  The site reads from data/deals.json and data/history.json.
-//  These files are updated automatically each Wednesday by the scraper.
-//  When hosted on GitHub Pages, the browser fetches these files like any
-//  normal file — fast, free, no server needed.
 // ═══════════════════════════════════════════════════════════════════════════
 
 let currentDeals = [];
@@ -449,7 +452,6 @@ let historyData  = [];
 
 async function loadData() {
   try {
-    // Fetch both files in parallel for speed
     const [dealsRes, histRes] = await Promise.all([
       fetch('data/deals.json'),
       fetch('data/history.json'),
@@ -463,18 +465,14 @@ async function loadData() {
 
     currentDeals = dealsPayload.deals || [];
 
-    // Check for stale data — warn if fetchedAt is more than 9 days old
-    // (deals reset every Wednesday; 9 days = clearly last week or older)
     const fetchedAt = new Date(dealsPayload.fetchedAt);
     const ageHours  = (Date.now() - fetchedAt) / (1000 * 60 * 60);
     const nowUtc    = new Date();
-    const isWedOrLater = nowUtc.getUTCDay() >= 3; // Wed=3
+    const isWedOrLater = nowUtc.getUTCDay() >= 3;
     if (ageHours > 9 * 24 || (isWedOrLater && ageHours > 36)) {
-      const staleBanner = document.getElementById('staleBanner');
-      staleBanner.style.display = 'block';
+      document.getElementById('staleBanner').style.display = 'block';
     }
 
-    // Render everything
     document.getElementById('weekLabel').textContent =
       `Week of ${dealsPayload.weekLabel} · ${currentDeals.length} deals active`;
 
@@ -490,7 +488,6 @@ async function loadData() {
     document.getElementById('errorBanner').textContent =
       '⚠ Could not load live deal data. Showing cached example deals. ' +
       'If you are running locally, try a local server (see README).';
-    // Fall back to hardcoded example data
     useFallbackData();
   }
 }
@@ -498,22 +495,14 @@ async function loadData() {
 // ─── COUNTDOWN ──────────────────────────────────────────────────────────────
 
 function getNextTuesdayMidnight() {
-  // Sandals resets deals at midnight Eastern Time (ET) on Wednesday.
-  // In March–Nov (EDT) that is 04:00 UTC Wednesday = Tue 23:59 ET.
-  // We target Wednesday 04:00 UTC (= Tuesday 11:59 PM Eastern).
   const now = new Date();
-  const utcDay = now.getUTCDay();      // 0=Sun … 3=Wed … 6=Sat
+  const utcDay = now.getUTCDay();
   const utcHour = now.getUTCHours();
-
-  // Days until Wednesday in UTC
   let daysUntilWed = (3 - utcDay + 7) % 7;
-  // If it's already Wednesday but before 04:00 UTC, expiry is still today at 04:00
-  // If it's Wednesday after 04:00 UTC, the new week just started — next expiry is 7 days away
   if (daysUntilWed === 0 && utcHour >= 4) daysUntilWed = 7;
-
   const expiry = new Date(Date.UTC(
     now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + daysUntilWed,
-    4, 0, 0, 0   // 04:00 UTC = midnight Eastern (EDT, UTC-4)
+    4, 0, 0, 0
   ));
   return expiry;
 }
@@ -561,9 +550,9 @@ function filterDeals(code, btn) {
 
 function getRoomTier(roomName) {
   const n = (roomName || '').toLowerCase();
-  if (n.includes('butler'))      return { label: 'Butler Level',     cls: 'tier-butler' };
-  if (n.includes('club level'))  return { label: 'Club Level',       cls: 'tier-club'   };
-  if (n.includes('luxury'))      return { label: 'Luxury Level',     cls: 'tier-luxury' };
+  if (n.includes('butler'))      return { label: 'Butler Level', cls: 'tier-butler' };
+  if (n.includes('club level'))  return { label: 'Club Level',   cls: 'tier-club'   };
+  if (n.includes('luxury'))      return { label: 'Luxury Level', cls: 'tier-luxury' };
   return null;
 }
 
@@ -623,7 +612,6 @@ function renderDeals(filter) {
 
 // ─── MODAL ──────────────────────────────────────────────────────────────────
 
-// ── Carousel state ────────────────────────────────────────────────────────
 let carouselIndex = 0;
 let carouselTotal = 0;
 
@@ -637,13 +625,11 @@ function buildCarousel(deal) {
   dots.innerHTML  = '';
   carouselIndex   = 0;
 
-  // Build slides from imgPaths array, fall back to single imgPath/imgUrl
   const paths = (deal.imgPaths && deal.imgPaths.length)
     ? deal.imgPaths
     : (deal.imgPath ? [deal.imgPath] : []);
 
   if (paths.length === 0) {
-    // Colour placeholder
     track.innerHTML = `<div class="modal-carousel-slide placeholder"
       style="background:linear-gradient(135deg,${deal.imgColor} 0%,${deal.imgColor}99 100%)">✦</div>`;
     prev.style.display = next.style.display = dots.style.display = 'none';
@@ -693,7 +679,6 @@ function updateCarouselPosition() {
     d.classList.toggle('active', i === carouselIndex));
 }
 
-// Keyboard navigation
 document.addEventListener('keydown', e => {
   if (!document.getElementById('dealModal').classList.contains('active')) return;
   if (e.key === 'ArrowLeft')  carouselNav(-1);
@@ -728,7 +713,6 @@ function openModal(id) {
     <div><div class="modal-detail-key">Extra Discount</div><div class="modal-detail-val" style="color:var(--coral);font-size:1.1rem">+7% on top of current deals</div></div>
     <div><div class="modal-detail-key">Price From</div><div class="modal-detail-val" style="font-size:1.1rem;font-weight:600;color:var(--ocean-deep)">${d.priceFrom ? '$'+d.priceFrom+' <span style="font-size:0.75rem;font-weight:400;color:var(--text-muted)">per person / per night</span>' : 'See Sandals.com'}</div></div>
   `;
-  // Deep link to the specific room page, or fall back to suite deals page
   const bookUrl = d.bookUrl || 'https://www.sandals.com/specials/suite-deals/';
   document.getElementById('modalBookBtn').onclick = () => window.open(bookUrl, '_blank');
   document.getElementById('dealModal').classList.add('active');
@@ -744,17 +728,11 @@ document.getElementById('dealModal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 
-function bookDeal() {
-  window.open('https://www.sandals.com/specials/suite-deals/', '_blank');
-}
-// Note: card "Book Now" buttons use inline onclick with d.bookUrl (set per-card in renderDeals)
-
 // ─── TRENDS ─────────────────────────────────────────────────────────────────
 
 function renderTrends() {
   if (!historyData.length) return;
 
-  // Count resort appearances
   const resortCount = {};
   const roomCount   = {};
   historyData.forEach(week => {
@@ -799,7 +777,6 @@ function renderBarChart(containerId, data, max, suffix) {
 
 function renderHistory() {
   const rows = [];
-  // Flatten history into individual deal rows (newest first)
   const sorted = [...historyData].reverse();
   sorted.forEach(week => {
     (week.deals || []).forEach(deal => {
@@ -840,17 +817,16 @@ function subscribeAlert() {
 }
 
 // ─── FALLBACK DATA ──────────────────────────────────────────────────────────
-// Used when running locally without a web server (file:// can't fetch JSON)
 
 function useFallbackData() {
   currentDeals = [
-    { id:1, resortCode:"SGO", resort:"Sandals Ochi",             location:"Ocho Rios, Jamaica",   imgColor:"#1a5c6a", roomCode:"NPV",  roomName:"Poolside Club Level Villa Room",                         travelWindow:"Feb 18 – Dec 25, 2026", priceFrom:null, priceWas:null },
-    { id:2, resortCode:"SSV", resort:"Sandals Saint Vincent",    location:"St. Vincent",           imgColor:"#3a5878", roomCode:"VFP",  roomName:"One-Bedroom Butler Villa Suite with Private Pool",       travelWindow:"Apr – Nov 2026",         priceFrom:null, priceWas:null },
-    { id:3, resortCode:"SLU", resort:"Sandals Regency La Toc",   location:"Castries, Saint Lucia", imgColor:"#5a4878", roomCode:"SKYV", roomName:"Rondoval Butler Sky Villa with Private Pool",             travelWindow:"See Sandals.com",         priceFrom:null, priceWas:null },
-    { id:4, resortCode:"SRB", resort:"Sandals Royal Bahamian",   location:"Nassau, Bahamas",       imgColor:"#2a6858", roomCode:"HG",   roomName:"West Bay Honeymoon Club Level Oversized Junior Suite",   travelWindow:"See Sandals.com",         priceFrom:null, priceWas:null },
-    { id:5, resortCode:"SRP", resort:"Sandals Royal Plantation", location:"Ocho Rios, Jamaica",    imgColor:"#785848", roomCode:"LR",   roomName:"Royal Monarch Oceanfront Butler Suite",                  travelWindow:"See Sandals.com",         priceFrom:null, priceWas:null },
-    { id:6, resortCode:"SNG", resort:"Sandals Negril",           location:"Negril, Jamaica",       imgColor:"#4a7848", roomCode:"HB",   roomName:"Paradise Beachfront Grande Luxe Club Level Room",        travelWindow:"See Sandals.com",         priceFrom:null, priceWas:null },
-    { id:7, resortCode:"SCR", resort:"Sandals Royal Curacao",    location:"Willemstad, Curacao",   imgColor:"#1a6878", roomCode:"KB",   roomName:"Kurason Island Poolside Butler Bungalow with Soaking Tub", travelWindow:"See Sandals.com",      priceFrom:null, priceWas:null },
+    { id:1, resortCode:"SGO", resort:"Sandals Ochi",             location:"Ocho Rios, Jamaica",   imgColor:"#1a5c6a", roomCode:"NPV",  roomName:"Poolside Club Level Villa Room",                           priceFrom:null, priceWas:null },
+    { id:2, resortCode:"SSV", resort:"Sandals Saint Vincent",    location:"St. Vincent",           imgColor:"#3a5878", roomCode:"VFP",  roomName:"One-Bedroom Butler Villa Suite with Private Pool",         priceFrom:null, priceWas:null },
+    { id:3, resortCode:"SLU", resort:"Sandals Regency La Toc",   location:"Castries, Saint Lucia", imgColor:"#5a4878", roomCode:"SKYV", roomName:"Rondoval Butler Sky Villa with Private Pool",               priceFrom:null, priceWas:null },
+    { id:4, resortCode:"SRB", resort:"Sandals Royal Bahamian",   location:"Nassau, Bahamas",       imgColor:"#2a6858", roomCode:"HG",   roomName:"West Bay Honeymoon Club Level Oversized Junior Suite",     priceFrom:null, priceWas:null },
+    { id:5, resortCode:"SRP", resort:"Sandals Royal Plantation", location:"Ocho Rios, Jamaica",    imgColor:"#785848", roomCode:"LR",   roomName:"Royal Monarch Oceanfront Butler Suite",                    priceFrom:null, priceWas:null },
+    { id:6, resortCode:"SNG", resort:"Sandals Negril",           location:"Negril, Jamaica",       imgColor:"#4a7848", roomCode:"HB",   roomName:"Paradise Beachfront Grande Luxe Club Level Room",          priceFrom:null, priceWas:null },
+    { id:7, resortCode:"SCR", resort:"Sandals Royal Curacao",    location:"Willemstad, Curacao",   imgColor:"#1a6878", roomCode:"KB",   roomName:"Kurason Island Poolside Butler Bungalow with Soaking Tub", priceFrom:null, priceWas:null },
   ];
   document.getElementById('weekLabel').textContent = "Week of Feb 18 – Feb 24, 2026 · 7 deals active";
   buildFilters();
