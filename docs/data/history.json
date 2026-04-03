@@ -659,7 +659,7 @@
   },
   {
     "weekLabel": "Apr 1 – Apr 7, 2026",
-    "fetchedAt": "2026-04-01T10:58:07.878668+00:00",
+    "fetchedAt": "2026-04-03T12:59:24.024134+00:00",
     "deals": [
       {
         "id": 1,
@@ -703,7 +703,7 @@
         "roomView": "Oceanview, Pool, Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 623,
+        "priceFrom": 510,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/grande-antigua/rooms-suites/po/"
       },
@@ -732,28 +732,6 @@
       },
       {
         "id": 4,
-        "resortCode": "SCR",
-        "resort": "Sandals Royal Curacao",
-        "location": "Santa Barbara, Curaçao",
-        "imgColor": "#1a6878",
-        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/scr/accommodations/large/scr-359.jpg",
-        "imgPath": "images/SCR_SPR.jpg",
-        "imgPaths": [
-          "images/SCR_SPR.jpg",
-          "images/SCR_SPR_2.jpg",
-          "images/SCR_SPR_3.jpg"
-        ],
-        "roomCode": "SPR",
-        "roomName": "Subi Premium",
-        "roomView": "Tropical Garden",
-        "bedding": "1 King Bed",
-        "discount": "7%+ off",
-        "priceFrom": 411,
-        "priceWas": null,
-        "bookUrl": "https://www.sandals.com/royal-curacao/rooms-suites/spr/"
-      },
-      {
-        "id": 5,
         "resortCode": "SRB",
         "resort": "Sandals Royal Bahamian",
         "location": "Nassau, Bahamas",
@@ -775,7 +753,7 @@
         "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/gl/"
       },
       {
-        "id": 6,
+        "id": 5,
         "resortCode": "SGO",
         "resort": "Sandals Ochi",
         "location": "Ocho Rios, Jamaica",
@@ -792,12 +770,12 @@
         "roomView": "Pool, Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 399,
+        "priceFrom": 328,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/ochi-beach-resort/rooms-suites/npv/"
       },
       {
-        "id": 7,
+        "id": 6,
         "resortCode": "SBR",
         "resort": "Sandals Barbados",
         "location": "Christ Church, Barbados",
@@ -814,9 +792,31 @@
         "roomView": "Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 333,
+        "priceFrom": 323,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/barbados/rooms-suites/wgl/"
+      },
+      {
+        "id": 7,
+        "resortCode": "SCR",
+        "resort": "Sandals Royal Curacao",
+        "location": "Santa Barbara, Curaçao",
+        "imgColor": "#1a6878",
+        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/scr/accommodations/large/scr-359.jpg",
+        "imgPath": "images/SCR_SPR.jpg",
+        "imgPaths": [
+          "images/SCR_SPR.jpg",
+          "images/SCR_SPR_2.jpg",
+          "images/SCR_SPR_3.jpg"
+        ],
+        "roomCode": "SPR",
+        "roomName": "Subi Premium",
+        "roomView": "Tropical Garden",
+        "bedding": "1 King Bed",
+        "discount": "7%+ off",
+        "priceFrom": 305,
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/royal-curacao/rooms-suites/spr/"
       }
     ]
   }
