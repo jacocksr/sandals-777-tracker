@@ -274,6 +274,115 @@
       .modal-carousel { height: 200px; }
       .logo img { height: 38px; }
     }
+/* ── EXPANDED TRENDS ──────────────────────────────────────── */
+
+.trend-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+@media (max-width: 768px) { .trend-grid-2 { grid-template-columns: 1fr; } }
+
+/* Show More toggle */
+#trendsExpanded { display: none; }
+.trends-toggle-wrap { text-align: center; margin-top: 1.5rem; }
+.trends-toggle-btn {
+  background: white; border: 1px solid var(--border); color: var(--ocean-deep);
+  padding: 0.6rem 1.6rem; border-radius: 100px; font-size: 0.8rem;
+  letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-weight: 500;
+  transition: all 0.18s;
+}
+.trends-toggle-btn:hover { background: var(--ocean-deep); color: white; border-color: var(--ocean-deep); }
+
+/* Shared card styles */
+.trend-card-subtitle {
+  font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-muted); margin-bottom: 1.2rem;
+}
+.no-data-msg {
+  display: flex; align-items: center; justify-content: center;
+  height: 80px; font-size: 0.82rem; color: var(--text-muted);
+  font-style: italic; text-align: center; line-height: 1.5;
+}
+
+/* Price Over Time — SVG bar chart */
+.price-chart-wrap { width: 100%; overflow: hidden; }
+.price-chart-wrap svg { width: 100%; display: block; }
+
+/* Price Range card */
+.price-range-wrap { padding: 0.5rem 0; }
+.price-range-track-wrap { position: relative; height: 6px; background: var(--sand); border-radius: 100px; margin: 2rem 0 1rem; }
+.price-range-track-fill { position: absolute; top: 0; height: 100%; background: linear-gradient(90deg, var(--ocean), var(--gold-light)); border-radius: 100px; }
+.price-range-dot {
+  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  width: 12px; height: 12px; border-radius: 50%; background: var(--ocean-deep);
+  border: 2px solid white; box-shadow: 0 1px 4px rgba(0,0,0,0.2); cursor: default;
+}
+.price-range-dot:hover .price-range-tooltip { display: block; }
+.price-range-tooltip {
+  display: none; position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+  background: var(--ocean-deep); color: white; font-size: 0.68rem; white-space: nowrap;
+  padding: 0.3rem 0.6rem; border-radius: 3px; pointer-events: none; z-index: 10;
+}
+.price-range-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem; }
+.price-range-labels span { font-weight: 600; color: var(--ocean-deep); }
+
+/* Heatmap */
+.heatmap-wrap { overflow-x: auto; }
+.heatmap-table { border-collapse: collapse; font-size: 0.72rem; min-width: 100%; }
+.heatmap-table th {
+  font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-muted); padding: 0.3rem 0.4rem; font-weight: 500;
+  text-align: center; white-space: nowrap;
+}
+.heatmap-table th.resort-col { text-align: left; min-width: 130px; }
+.heatmap-table td { padding: 0.25rem 0.4rem; text-align: center; }
+.heatmap-table td.resort-name {
+  text-align: left; font-size: 0.72rem; color: var(--text);
+  white-space: nowrap; padding-right: 0.8rem; font-weight: 500;
+}
+.heatmap-cell {
+  display: inline-block; width: 22px; height: 22px; border-radius: 3px;
+  background: var(--sand); transition: background 0.2s;
+}
+.heatmap-cell.active { background: var(--ocean); }
+.heatmap-cell.active-gold { background: var(--gold); }
+
+/* Due Soon */
+.due-soon-list { display: flex; flex-direction: column; gap: 0.7rem; }
+.due-soon-row { display: flex; align-items: center; gap: 0.8rem; }
+.due-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.due-dot-hot  { background: var(--coral); }
+.due-dot-warm { background: var(--gold); }
+.due-dot-cool { background: #4caf7d; }
+.due-soon-resort { flex: 1; font-size: 0.82rem; color: var(--text); }
+.due-soon-meta { font-size: 0.72rem; color: var(--text-muted); text-align: right; line-height: 1.4; }
+
+/* Tier breakdown */
+.tier-bar-wrap { margin-bottom: 1rem; }
+.tier-bar-track { height: 28px; border-radius: 4px; overflow: hidden; display: flex; margin-bottom: 0.6rem; }
+.tier-bar-seg { height: 100%; display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em; color: white;
+  transition: width 0.8s ease; overflow: hidden; white-space: nowrap; }
+.tier-seg-butler  { background: var(--gold); }
+.tier-seg-club    { background: var(--ocean); }
+.tier-seg-luxury  { background: #8a9aaa; }
+.tier-seg-other   { background: var(--border); color: var(--text-muted); }
+.tier-legend { display: flex; gap: 1rem; flex-wrap: wrap; }
+.tier-legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--text-muted); }
+.tier-legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+
+/* Resort Timeline table */
+.timeline-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.timeline-table th {
+  text-align: left; font-size: 0.63rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-muted); padding: 0.6rem 0.8rem; background: var(--sand);
+  border-bottom: 1px solid var(--border); font-weight: 500;
+}
+.timeline-table td { padding: 0.75rem 0.8rem; border-bottom: 1px solid rgba(221,213,196,0.5); vertical-align: middle; }
+.timeline-table tr:hover td { background: rgba(240,230,210,0.3); }
+.freq-tag { font-size: 0.62rem; letter-spacing: 0.08em; padding: 0.2rem 0.55rem; border-radius: 100px; font-weight: 600; }
+.freq-regular   { background: rgba(26,74,92,0.1);  color: var(--ocean); }
+.freq-occasional{ background: rgba(184,146,42,0.12); color: var(--gold); }
+.freq-rare      { background: rgba(201,98,74,0.1);  color: var(--coral); }
+    
   </style>
 </head>
 <body>
@@ -386,21 +495,106 @@
   </section>
 
   <section class="trend-section" id="trends">
-    <div class="section-header">
-      <h2 class="section-title">Trending Insights</h2>
-      <span class="section-meta" id="trendMeta">Based on tracked history</span>
+  <div class="section-header">
+    <h2 class="section-title">Trending Insights</h2>
+    <span class="section-meta" id="trendMeta">Based on tracked history</span>
+  </div>
+
+  <!-- ROW 1 — always visible, existing cards updated -->
+  <div class="trend-grid">
+    <div class="trend-card">
+      <div class="trend-card-title">Most Featured Resorts</div>
+      <div class="mini-chart" id="resortChart">
+        <div class="skeleton" style="height:10px;margin-bottom:8px"></div>
+        <div class="skeleton" style="height:10px;margin-bottom:8px;width:80%"></div>
+        <div class="skeleton" style="height:10px;width:65%"></div>
+      </div>
     </div>
-    <div class="trend-grid">
+    <div class="trend-card">
+      <div class="trend-card-title">Most Featured Room Types</div>
+      <div class="mini-chart" id="roomChart">
+        <div class="skeleton" style="height:10px;margin-bottom:8px"></div>
+        <div class="skeleton" style="height:10px;margin-bottom:8px;width:75%"></div>
+        <div class="skeleton" style="height:10px;width:55%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 2 — pricing, always visible -->
+  <div class="trend-grid-2">
+    <div class="trend-card">
+      <div class="trend-card-title">Average Price Over Time</div>
+      <div class="trend-card-subtitle">Avg. $ per person / per night across all weekly deals</div>
+      <div id="priceOverTimeChart"><div class="no-data-msg">Loading…</div></div>
+    </div>
+    <div class="trend-card">
+      <div class="trend-card-title">This Week's Price Range</div>
+      <div class="trend-card-subtitle">Cheapest to most expensive deal currently active</div>
+      <div id="priceRangeChart"><div class="no-data-msg">Loading…</div></div>
+    </div>
+  </div>
+
+  <!-- SHOW MORE TOGGLE -->
+  <div class="trends-toggle-wrap">
+    <button class="trends-toggle-btn" onclick="toggleTrends(this)">Show More Insights ↓</button>
+  </div>
+
+  <!-- ROWS 3–5 — hidden until toggled -->
+  <div id="trendsExpanded">
+
+    <!-- ROW 3 — Timing & Patterns -->
+    <div class="trend-grid-2" style="margin-top:1.5rem">
       <div class="trend-card">
-        <div class="trend-card-title">Most Featured Resorts</div>
-        <div class="mini-chart" id="resortChart"><div class="skeleton" style="height:10px;margin-bottom:8px"></div><div class="skeleton" style="height:10px;margin-bottom:8px;width:80%"></div><div class="skeleton" style="height:10px;width:65%"></div></div>
+        <div class="trend-card-title">Resort Appearance Heatmap</div>
+        <div class="trend-card-subtitle">Which resorts appeared each week</div>
+        <div class="heatmap-wrap" id="heatmapChart"><div class="no-data-msg">Loading…</div></div>
       </div>
       <div class="trend-card">
-        <div class="trend-card-title">Room Codes Seen Most Often</div>
-        <div class="mini-chart" id="roomChart"><div class="skeleton" style="height:10px;margin-bottom:8px"></div><div class="skeleton" style="height:10px;margin-bottom:8px;width:75%"></div><div class="skeleton" style="height:10px;width:55%"></div></div>
+        <div class="trend-card-title">Due Soon</div>
+        <div class="trend-card-subtitle">Resorts overdue based on their appearance frequency</div>
+        <div class="due-soon-list" id="dueSoonList"><div class="no-data-msg">Loading…</div></div>
       </div>
     </div>
-  </section>
+
+    <!-- ROW 4 — Room Breakdown -->
+    <div class="trend-grid-2" style="margin-top:1.5rem">
+      <div class="trend-card">
+        <div class="trend-card-title">Room Tier Breakdown</div>
+        <div class="trend-card-subtitle">Butler vs. Club vs. Luxury across all history</div>
+        <div id="tierBreakdown"><div class="no-data-msg">Loading…</div></div>
+      </div>
+      <div class="trend-card">
+        <div class="trend-card-title">Most Common Room Views</div>
+        <div class="trend-card-subtitle">What Sandals tends to discount by view type</div>
+        <div class="mini-chart" id="viewChart"><div class="no-data-msg">Loading…</div></div>
+      </div>
+    </div>
+
+    <!-- ROW 5 — Resort Timeline, full width -->
+    <div class="trend-card" style="margin-top:1.5rem">
+      <div class="trend-card-title">Resort Timeline</div>
+      <div class="trend-card-subtitle">Full appearance history for every tracked resort</div>
+      <div style="overflow-x:auto">
+        <table class="timeline-table" id="timelineTable">
+          <thead>
+            <tr>
+              <th>Resort</th>
+              <th>Times Featured</th>
+              <th>First Seen</th>
+              <th>Last Seen</th>
+              <th>Avg. Gap</th>
+              <th>Frequency</th>
+            </tr>
+          </thead>
+          <tbody id="timelineBody">
+            <tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-muted)">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /trendsExpanded -->
+</section>
 
   <section class="how-section">
     <div class="section-header" style="justify-content:center; border:none;">
@@ -747,37 +941,56 @@ document.getElementById('dealModal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 
-// ─── TRENDS ─────────────────────────────────────────────────────────────────
+// ─── TRENDS (FULL) ──────────────────────────────────────────────────────────
+
+function toggleTrends(btn) {
+  const el = document.getElementById('trendsExpanded');
+  const expanded = el.style.display === 'block';
+  el.style.display = expanded ? 'none' : 'block';
+  btn.textContent = expanded ? 'Show More Insights ↓' : 'Show Less ↑';
+}
 
 function renderTrends() {
   if (!historyData.length) return;
 
+  renderRow1();
+  renderPriceOverTime();
+  renderPriceRange();
+  renderHeatmap();
+  renderDueSoon();
+  renderTierBreakdown();
+  renderViewChart();
+  renderTimeline();
+
+  document.getElementById('trendMeta').textContent =
+    `Based on ${historyData.length} weeks of tracked data`;
+}
+
+// ── Row 1: Most Featured Resorts & Room Types ────────────────────────────────
+
+function renderRow1() {
   const resortCount = {};
   const roomCount   = {};
+
   historyData.forEach(week => {
     (week.deals || []).forEach(deal => {
-      resortCount[deal.resort] = (resortCount[deal.resort] || 0) + 1;
-      const key = `${deal.roomCode} (${deal.resortCode})`;
-      roomCount[key] = (roomCount[key] || 0) + 1;
+      const resort = (deal.resort || '').replace('Sandals ', '');
+      resortCount[resort] = (resortCount[resort] || 0) + 1;
+      const roomKey = deal.roomName || deal.roomCode || '–';
+      roomCount[roomKey] = (roomCount[roomKey] || 0) + 1;
     });
   });
 
   const topResorts = Object.entries(resortCount)
     .sort((a,b) => b[1]-a[1]).slice(0,5)
-    .map(([name,count]) => ({ name: name.replace('Sandals ',''), count }));
+    .map(([name,count]) => ({ name, count }));
 
   const topRooms = Object.entries(roomCount)
     .sort((a,b) => b[1]-a[1]).slice(0,5)
     .map(([name,count]) => ({ name, count }));
 
-  const maxResort = Math.max(...topResorts.map(r => r.count), 1);
-  const maxRoom   = Math.max(...topRooms.map(r => r.count), 1);
-
-  document.getElementById('trendMeta').textContent =
-    `Based on ${historyData.length} weeks of tracked data`;
-
-  renderBarChart('resortChart', topResorts, maxResort, 'x');
-  renderBarChart('roomChart',   topRooms,   maxRoom,   'x');
+  renderBarChart('resortChart', topResorts, Math.max(...topResorts.map(r=>r.count),1), 'x');
+  renderBarChart('roomChart',   topRooms,   Math.max(...topRooms.map(r=>r.count),1),   'x');
 }
 
 function renderBarChart(containerId, data, max, suffix) {
@@ -785,11 +998,309 @@ function renderBarChart(containerId, data, max, suffix) {
     <div class="chart-row">
       <span class="chart-label" title="${item.name}">${item.name}</span>
       <div class="chart-bar-wrap">
-        <div class="chart-bar" style="width:${(item.count / max) * 100}%"></div>
+        <div class="chart-bar" style="width:${(item.count/max)*100}%"></div>
       </div>
       <span class="chart-val">${item.count}${suffix}</span>
     </div>
   `).join('');
+}
+
+// ── Row 2: Price Over Time ───────────────────────────────────────────────────
+
+function renderPriceOverTime() {
+  const weeklyAvgs = historyData.map(week => {
+    const prices = (week.deals || [])
+      .map(d => parseFloat(d.priceFrom))
+      .filter(p => !isNaN(p) && p > 0);
+    return {
+      label: (week.weekLabel || '').split('–')[0].trim(),
+      avg: prices.length ? Math.round(prices.reduce((a,b)=>a+b,0)/prices.length) : null
+    };
+  }).filter(w => w.avg !== null);
+
+  const el = document.getElementById('priceOverTimeChart');
+
+  if (weeklyAvgs.length < 2) {
+    el.innerHTML = `<div class="no-data-msg">Not enough price data yet —<br>check back after a few more weeks.</div>`;
+    return;
+  }
+
+  const W = 400, H = 120, PAD = { top:10, right:10, bottom:24, left:36 };
+  const iW = W - PAD.left - PAD.right;
+  const iH = H - PAD.top  - PAD.bottom;
+  const minP = Math.min(...weeklyAvgs.map(w=>w.avg));
+  const maxP = Math.max(...weeklyAvgs.map(w=>w.avg));
+  const range = maxP - minP || 1;
+
+  const x = i => PAD.left + (i / (weeklyAvgs.length-1)) * iW;
+  const y = v => PAD.top  + iH - ((v - minP) / range) * iH;
+
+  const pts = weeklyAvgs.map((w,i) => `${x(i)},${y(w.avg)}`).join(' ');
+
+  const bars = weeklyAvgs.map((w,i) => {
+    const bx   = x(i) - 8;
+    const bh   = ((w.avg - minP) / range) * iH || 4;
+    const by   = PAD.top + iH - bh;
+    return `<rect x="${bx}" y="${by}" width="16" height="${bh}"
+      rx="2" fill="var(--ocean)" opacity="0.25"/>
+    <text x="${x(i)}" y="${H - 4}" text-anchor="middle"
+      font-size="8" fill="var(--text-muted)">${w.label}</text>`;
+  }).join('');
+
+  const linePoints = weeklyAvgs.map((w,i) => `${x(i)} ${y(w.avg)}`).join(' L ');
+
+  el.innerHTML = `
+    <div class="price-chart-wrap">
+      <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet">
+        <text x="${PAD.left - 4}" y="${PAD.top}" text-anchor="end"
+          font-size="9" fill="var(--text-muted)">$${maxP}</text>
+        <text x="${PAD.left - 4}" y="${PAD.top + iH}" text-anchor="end"
+          font-size="9" fill="var(--text-muted)">$${minP}</text>
+        ${bars}
+        <polyline points="${pts}" fill="none" stroke="var(--gold-light)" stroke-width="2"
+          stroke-linejoin="round" stroke-linecap="round"/>
+        ${weeklyAvgs.map((w,i) => `
+          <circle cx="${x(i)}" cy="${y(w.avg)}" r="4"
+            fill="white" stroke="var(--gold)" stroke-width="2"/>
+        `).join('')}
+      </svg>
+    </div>`;
+}
+
+// ── Row 2: This Week's Price Range ───────────────────────────────────────────
+
+function renderPriceRange() {
+  const el = document.getElementById('priceRangeChart');
+  const priced = currentDeals.filter(d => d.priceFrom && !isNaN(parseFloat(d.priceFrom)));
+
+  if (priced.length < 2) {
+    el.innerHTML = `<div class="no-data-msg">Not enough price data for this week —<br>prices may not have loaded yet.</div>`;
+    return;
+  }
+
+  const prices  = priced.map(d => parseFloat(d.priceFrom));
+  const minP    = Math.min(...prices);
+  const maxP    = Math.max(...prices);
+  const range   = maxP - minP || 1;
+
+  const dots = priced.map(d => {
+    const pct = ((parseFloat(d.priceFrom) - minP) / range) * 100;
+    const label = `${d.resort.replace('Sandals ','')} · $${d.priceFrom}`;
+    return `<div class="price-range-dot" style="left:${pct}%">
+      <div class="price-range-tooltip">${label}</div>
+    </div>`;
+  }).join('');
+
+  el.innerHTML = `
+    <div class="price-range-wrap">
+      <div class="price-range-track-wrap">
+        <div class="price-range-track-fill" style="left:0;right:0"></div>
+        ${dots}
+      </div>
+      <div class="price-range-labels">
+        <div>Lowest<br><span>$${minP} pp/pn</span></div>
+        <div style="text-align:right">Highest<br><span>$${maxP} pp/pn</span></div>
+      </div>
+    </div>`;
+}
+
+// ── Row 3: Heatmap ───────────────────────────────────────────────────────────
+
+function renderHeatmap() {
+  const el = document.getElementById('heatmapChart');
+  const recent = historyData.slice(-10);
+
+  if (recent.length < 2) {
+    el.innerHTML = `<div class="no-data-msg">Not enough history yet.</div>`;
+    return;
+  }
+
+  const allResorts = [...new Set(
+    historyData.flatMap(w => (w.deals||[]).map(d => d.resort || ''))
+  )].sort();
+
+  const weekLabels = recent.map(w => {
+    const parts = (w.weekLabel || '').split(' ');
+    return parts[2] ? `${parts[1]} ${parts[2].replace(',','')}` : w.weekLabel;
+  });
+
+  const headerCols = weekLabels.map(l =>
+    `<th>${l}</th>`
+  ).join('');
+
+  const rows = allResorts.map(resort => {
+    const shortName = resort.replace('Sandals ','');
+    const cells = recent.map(week => {
+      const appeared = (week.deals||[]).some(d => d.resort === resort);
+      return `<td><span class="heatmap-cell ${appeared ? 'active' : ''}"></span></td>`;
+    }).join('');
+    return `<tr>
+      <td class="resort-name">${shortName}</td>
+      ${cells}
+    </tr>`;
+  }).join('');
+
+  el.innerHTML = `
+    <table class="heatmap-table">
+      <thead>
+        <tr>
+          <th class="resort-col">Resort</th>
+          ${headerCols}
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+// ── Row 3: Due Soon ───────────────────────────────────────────────────────────
+
+function renderDueSoon() {
+  const el = document.getElementById('dueSoonList');
+
+  if (historyData.length < 3) {
+    el.innerHTML = `<div class="no-data-msg">Not enough history to calculate patterns yet.</div>`;
+    return;
+  }
+
+  const resortWeeks = {};
+  historyData.forEach((week, idx) => {
+    (week.deals||[]).forEach(deal => {
+      const r = deal.resort || '';
+      if (!resortWeeks[r]) resortWeeks[r] = [];
+      resortWeeks[r].push(idx);
+    });
+  });
+
+  const totalWeeks = historyData.length;
+  const results = Object.entries(resortWeeks).map(([resort, indices]) => {
+    const gaps = [];
+    for (let i = 1; i < indices.length; i++) gaps.push(indices[i] - indices[i-1]);
+    const avgGap  = gaps.length ? gaps.reduce((a,b)=>a+b,0)/gaps.length : totalWeeks;
+    const lastSeen = totalWeeks - 1 - indices[indices.length - 1];
+    const overdue  = lastSeen - avgGap;
+    return { resort: resort.replace('Sandals ',''), lastSeen, avgGap: Math.round(avgGap), overdue };
+  }).sort((a,b) => b.overdue - a.overdue).slice(0,8);
+
+  el.innerHTML = results.map(r => {
+    const dotCls = r.overdue > 1 ? 'due-dot-hot' : r.overdue > 0 ? 'due-dot-warm' : 'due-dot-cool';
+    const status = r.overdue > 1
+      ? `${Math.round(r.overdue)}w overdue`
+      : r.overdue > 0 ? 'Due soon' : 'On schedule';
+    return `
+      <div class="due-soon-row">
+        <div class="due-dot ${dotCls}"></div>
+        <div class="due-soon-resort">${r.resort}</div>
+        <div class="due-soon-meta">
+          Last seen ${r.lastSeen}w ago<br>
+          <span style="color:${r.overdue>0?'var(--coral)':'#4caf7d'}">${status}</span>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── Row 4: Tier Breakdown ────────────────────────────────────────────────────
+
+function renderTierBreakdown() {
+  const el = document.getElementById('tierBreakdown');
+  const counts = { Butler: 0, Club: 0, Luxury: 0, Other: 0 };
+
+  historyData.forEach(week => {
+    (week.deals||[]).forEach(deal => {
+      const n = (deal.roomName || '').toLowerCase();
+      if      (n.includes('butler'))    counts.Butler++;
+      else if (n.includes('club level')) counts.Club++;
+      else if (n.includes('luxury'))    counts.Luxury++;
+      else                              counts.Other++;
+    });
+  });
+
+  const total = Object.values(counts).reduce((a,b)=>a+b,0);
+  if (!total) { el.innerHTML = `<div class="no-data-msg">No data yet.</div>`; return; }
+
+  const pct = k => Math.round((counts[k]/total)*100);
+
+  el.innerHTML = `
+    <div class="tier-bar-wrap">
+      <div class="tier-bar-track">
+        ${counts.Butler  ? `<div class="tier-bar-seg tier-seg-butler"  style="width:${pct('Butler')}%">${pct('Butler')}%</div>` : ''}
+        ${counts.Club    ? `<div class="tier-bar-seg tier-seg-club"    style="width:${pct('Club')}%">${pct('Club')}%</div>` : ''}
+        ${counts.Luxury  ? `<div class="tier-bar-seg tier-seg-luxury"  style="width:${pct('Luxury')}%">${pct('Luxury')}%</div>` : ''}
+        ${counts.Other   ? `<div class="tier-bar-seg tier-seg-other"   style="width:${pct('Other')}%">${pct('Other')}%</div>` : ''}
+      </div>
+      <div class="tier-legend">
+        <div class="tier-legend-item"><div class="tier-legend-dot" style="background:var(--gold)"></div>Butler (${counts.Butler})</div>
+        <div class="tier-legend-item"><div class="tier-legend-dot" style="background:var(--ocean)"></div>Club (${counts.Club})</div>
+        <div class="tier-legend-item"><div class="tier-legend-dot" style="background:#8a9aaa"></div>Luxury (${counts.Luxury})</div>
+        <div class="tier-legend-item"><div class="tier-legend-dot" style="background:var(--border)"></div>Other (${counts.Other})</div>
+      </div>
+    </div>`;
+}
+
+// ── Row 4: Room Views ────────────────────────────────────────────────────────
+
+function renderViewChart() {
+  const el = document.getElementById('viewChart');
+  const counts = {};
+
+  historyData.forEach(week => {
+    (week.deals||[]).forEach(deal => {
+      const v = (deal.roomView || 'Unknown').trim();
+      counts[v] = (counts[v]||0) + 1;
+    });
+  });
+
+  const data = Object.entries(counts)
+    .sort((a,b)=>b[1]-a[1]).slice(0,6)
+    .map(([name,count])=>({name,count}));
+
+  if (!data.length) { el.innerHTML = `<div class="no-data-msg">No view data yet.</div>`; return; }
+
+  renderBarChart('viewChart', data, Math.max(...data.map(d=>d.count),1), 'x');
+}
+
+// ── Row 5: Resort Timeline ───────────────────────────────────────────────────
+
+function renderTimeline() {
+  const resortData = {};
+
+  historyData.forEach((week, idx) => {
+    (week.deals||[]).forEach(deal => {
+      const r = deal.resort || '';
+      if (!resortData[r]) resortData[r] = { indices: [], label: r };
+      resortData[r].indices.push(idx);
+    });
+  });
+
+  const totalWeeks = historyData.length;
+
+  const rows = Object.values(resortData).map(r => {
+    const { indices } = r;
+    const gaps = [];
+    for (let i = 1; i < indices.length; i++) gaps.push(indices[i]-indices[i-1]);
+    const avgGap = gaps.length ? (gaps.reduce((a,b)=>a+b,0)/gaps.length).toFixed(1) : '–';
+    const firstIdx = indices[0];
+    const lastIdx  = indices[indices.length-1];
+    const firstLabel = historyData[firstIdx]?.weekLabel?.split('–')[0].trim() || '–';
+    const lastLabel  = historyData[lastIdx]?.weekLabel?.split('–')[0].trim()  || '–';
+    const freq = gaps.length === 0 ? 'rare'
+      : parseFloat(avgGap) <= 2 ? 'regular'
+      : parseFloat(avgGap) <= 4 ? 'occasional'
+      : 'rare';
+    const tagClass = freq === 'regular' ? 'freq-regular' : freq === 'occasional' ? 'freq-occasional' : 'freq-rare';
+    const tagLabel = freq.charAt(0).toUpperCase() + freq.slice(1);
+
+    return { name: r.label.replace('Sandals ',''), count: indices.length, firstLabel, lastLabel, avgGap, tagClass, tagLabel };
+  }).sort((a,b) => b.count - a.count);
+
+  document.getElementById('timelineBody').innerHTML = rows.map(r => `
+    <tr>
+      <td style="font-weight:500">${r.name}</td>
+      <td style="color:var(--text-muted)">${r.count}</td>
+      <td style="color:var(--text-muted);font-size:0.78rem">${r.firstLabel}</td>
+      <td style="color:var(--text-muted);font-size:0.78rem">${r.lastLabel}</td>
+      <td style="color:var(--text-muted)">${r.avgGap === '–' ? '–' : r.avgGap + 'w'}</td>
+      <td><span class="freq-tag ${r.tagClass}">${r.tagLabel}</span></td>
+    </tr>`).join('');
 }
 
 // ─── HISTORY TABLE ───────────────────────────────────────────────────────────
