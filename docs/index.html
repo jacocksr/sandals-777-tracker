@@ -45,8 +45,26 @@
     /* ── Logo image replaces text mark ── */
     .logo {
       display: flex;
-      align-items: center;
-      height: 100%;
+      align-items: baseline;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .logo-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+    .logo-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      line-height: 1;
     }
     .logo img {
       height: 48px;   /* vertically centred with ~10px breathing room top/bottom */
@@ -285,7 +303,8 @@
 <!-- HEADER -->
 <header>
   <div class="logo">
-    <img src="images/Logo3Dark.png" alt="7·7·7 Vacation Tracker" />
+    <span class="logo-mark">7·7·7</span>
+    <span class="logo-sub">Vacation Tracker</span>
   </div>
   <nav>
     <a href="#deals">This Week</a>
