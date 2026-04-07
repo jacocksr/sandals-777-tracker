@@ -172,7 +172,7 @@
     .trend-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--ocean-deep); margin-bottom: 1.2rem; }
     .mini-chart { display: flex; flex-direction: column; gap: 0.6rem; }
     .chart-row { display: flex; align-items: center; gap: 0.8rem; }
-    .chart-label { font-size: 0.75rem; color: var(--text-muted); width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .chart-label { font-size: 0.75rem; color: var(--text-muted); width: 180px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .chart-bar-wrap { flex: 1; height: 10px; background: var(--sand); border-radius: 100px; overflow: hidden; }
     .chart-bar { height: 100%; background: linear-gradient(90deg, var(--ocean), var(--gold-light)); border-radius: 100px; transition: width 0.8s ease; }
     .chart-val { font-size: 0.75rem; font-weight: 500; color: var(--text); width: 32px; text-align: right; }
@@ -763,10 +763,9 @@ function filterDeals(code, btn) {
 
 function getRoomTier(roomName) {
   const n = (roomName || '').toLowerCase();
-  if (n.includes('butler'))      return { label: 'Butler Level', cls: 'tier-butler' };
-  if (n.includes('club level'))  return { label: 'Club Level',   cls: 'tier-club'   };
-  if (n.includes('luxury'))      return { label: 'Luxury Level', cls: 'tier-luxury' };
-  return null;
+  if (n.includes('butler'))     return { label: 'Butler Level', cls: 'tier-butler' };
+  if (n.includes('club level')) return { label: 'Club Level',   cls: 'tier-club'   };
+  return                               { label: 'Luxury Level', cls: 'tier-luxury' };
 }
 
 function renderDeals(filter) {
@@ -1120,8 +1119,10 @@ function renderHeatmap() {
   )].sort();
 
   const weekLabels = recent.map(w => {
-    const parts = (w.weekLabel || '').split(' ');
-    return parts[2] ? `${parts[1]} ${parts[2].replace(',','')}` : w.weekLabel;
+    const raw = (w.weekLabel || '').split('–')[0].trim(); // e.g. "Mar 19, 2025"
+    const d = new Date(raw);
+    if (isNaN(d)) return raw;
+    return `${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
   });
 
   const headerCols = weekLabels.map(l =>
@@ -1202,15 +1203,14 @@ function renderDueSoon() {
 
 function renderTierBreakdown() {
   const el = document.getElementById('tierBreakdown');
-  const counts = { Butler: 0, Club: 0, Luxury: 0, Other: 0 };
+  const counts = { Butler: 0, Club: 0, Luxury: 0 };
 
   historyData.forEach(week => {
     (week.deals||[]).forEach(deal => {
       const n = (deal.roomName || '').toLowerCase();
-      if      (n.includes('butler'))    counts.Butler++;
+      if      (n.includes('butler'))     counts.Butler++;
       else if (n.includes('club level')) counts.Club++;
-      else if (n.includes('luxury'))    counts.Luxury++;
-      else                              counts.Other++;
+      else                               counts.Luxury++;
     });
   });
 
@@ -1225,13 +1225,10 @@ function renderTierBreakdown() {
         ${counts.Butler  ? `<div class="tier-bar-seg tier-seg-butler"  style="width:${pct('Butler')}%">${pct('Butler')}%</div>` : ''}
         ${counts.Club    ? `<div class="tier-bar-seg tier-seg-club"    style="width:${pct('Club')}%">${pct('Club')}%</div>` : ''}
         ${counts.Luxury  ? `<div class="tier-bar-seg tier-seg-luxury"  style="width:${pct('Luxury')}%">${pct('Luxury')}%</div>` : ''}
-        ${counts.Other   ? `<div class="tier-bar-seg tier-seg-other"   style="width:${pct('Other')}%">${pct('Other')}%</div>` : ''}
-      </div>
       <div class="tier-legend">
         <div class="tier-legend-item"><div class="tier-legend-dot" style="background:var(--gold)"></div>Butler (${counts.Butler})</div>
         <div class="tier-legend-item"><div class="tier-legend-dot" style="background:var(--ocean)"></div>Club (${counts.Club})</div>
         <div class="tier-legend-item"><div class="tier-legend-dot" style="background:#8a9aaa"></div>Luxury (${counts.Luxury})</div>
-        <div class="tier-legend-item"><div class="tier-legend-dot" style="background:var(--border)"></div>Other (${counts.Other})</div>
       </div>
     </div>`;
 }
