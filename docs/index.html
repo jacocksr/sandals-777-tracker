@@ -313,8 +313,10 @@
 .price-range-dot {
   position: absolute; top: 50%; transform: translate(-50%, -50%);
   width: 12px; height: 12px; border-radius: 50%; background: var(--ocean-deep);
-  border: 2px solid white; box-shadow: 0 1px 4px rgba(0,0,0,0.2); cursor: default;
+  border: 2px solid white; box-shadow: 0 1px 4px rgba(0,0,0,0.2); cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
 }
+.price-range-dot:hover { transform: translate(-50%, -50%) scale(1.35); box-shadow: 0 0 0 4px rgba(26,74,92,0.18); }
 .price-range-dot:hover .price-range-tooltip { display: block; }
 .price-range-tooltip {
   display: none; position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
@@ -500,27 +502,7 @@
     <span class="section-meta" id="trendMeta">Based on tracked history</span>
   </div>
 
-  <!-- ROW 1 — always visible, existing cards updated -->
-  <div class="trend-grid">
-    <div class="trend-card">
-      <div class="trend-card-title">Most Featured Resorts</div>
-      <div class="mini-chart" id="resortChart">
-        <div class="skeleton" style="height:10px;margin-bottom:8px"></div>
-        <div class="skeleton" style="height:10px;margin-bottom:8px;width:80%"></div>
-        <div class="skeleton" style="height:10px;width:65%"></div>
-      </div>
-    </div>
-    <div class="trend-card">
-      <div class="trend-card-title">Most Featured Room Types</div>
-      <div class="mini-chart" id="roomChart">
-        <div class="skeleton" style="height:10px;margin-bottom:8px"></div>
-        <div class="skeleton" style="height:10px;margin-bottom:8px;width:75%"></div>
-        <div class="skeleton" style="height:10px;width:55%"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ROW 2 — pricing, always visible -->
+  <!-- ROW 1 — pricing, always visible -->
   <div class="trend-grid-2">
     <div class="trend-card">
       <div class="trend-card-title">Average Price Over Time</div>
@@ -557,17 +539,10 @@
     </div>
 
     <!-- ROW 4 — Room Breakdown -->
-    <div class="trend-grid-2" style="margin-top:1.5rem">
-      <div class="trend-card">
-        <div class="trend-card-title">Room Tier Breakdown</div>
-        <div class="trend-card-subtitle">Butler vs. Club vs. Luxury across all history</div>
-        <div id="tierBreakdown"><div class="no-data-msg">Loading…</div></div>
-      </div>
-      <div class="trend-card">
-        <div class="trend-card-title">Most Common Room Views</div>
-        <div class="trend-card-subtitle">What Sandals tends to discount by view type</div>
-        <div class="mini-chart" id="viewChart"><div class="no-data-msg">Loading…</div></div>
-      </div>
+    <div class="trend-card" style="margin-top:1.5rem">
+      <div class="trend-card-title">Room Tier Breakdown</div>
+      <div class="trend-card-subtitle">Butler vs. Club vs. Luxury across all history</div>
+      <div id="tierBreakdown"><div class="no-data-msg">Loading…</div></div>
     </div>
 
     <!-- ROW 5 — Resort Timeline, full width -->
@@ -952,56 +927,15 @@ function toggleTrends(btn) {
 function renderTrends() {
   if (!historyData.length) return;
 
-  renderRow1();
   renderPriceOverTime();
   renderPriceRange();
   renderHeatmap();
   renderDueSoon();
   renderTierBreakdown();
-  renderViewChart();
   renderTimeline();
 
   document.getElementById('trendMeta').textContent =
     `Based on ${historyData.length} weeks of tracked data`;
-}
-
-// ── Row 1: Most Featured Resorts & Room Types ────────────────────────────────
-
-function renderRow1() {
-  const resortCount = {};
-  const roomCount   = {};
-
-  historyData.forEach(week => {
-    (week.deals || []).forEach(deal => {
-      const resort = (deal.resort || '').replace('Sandals ', '');
-      resortCount[resort] = (resortCount[resort] || 0) + 1;
-      const roomKey = deal.roomName || deal.roomCode || '–';
-      roomCount[roomKey] = (roomCount[roomKey] || 0) + 1;
-    });
-  });
-
-  const topResorts = Object.entries(resortCount)
-    .sort((a,b) => b[1]-a[1]).slice(0,5)
-    .map(([name,count]) => ({ name, count }));
-
-  const topRooms = Object.entries(roomCount)
-    .sort((a,b) => b[1]-a[1]).slice(0,5)
-    .map(([name,count]) => ({ name, count }));
-
-  renderBarChart('resortChart', topResorts, Math.max(...topResorts.map(r=>r.count),1), 'x');
-  renderBarChart('roomChart',   topRooms,   Math.max(...topRooms.map(r=>r.count),1),   'x');
-}
-
-function renderBarChart(containerId, data, max, suffix) {
-  document.getElementById(containerId).innerHTML = data.map(item => `
-    <div class="chart-row">
-      <span class="chart-label" title="${item.name}">${item.name}</span>
-      <div class="chart-bar-wrap">
-        <div class="chart-bar" style="width:${(item.count/max)*100}%"></div>
-      </div>
-      <span class="chart-val">${item.count}${suffix}</span>
-    </div>
-  `).join('');
 }
 
 // ── Row 2: Price Over Time ───────────────────────────────────────────────────
@@ -1085,7 +1019,7 @@ function renderPriceRange() {
   const dots = priced.map(d => {
     const pct = ((parseFloat(d.priceFrom) - minP) / range) * 100;
     const label = `${d.resort.replace('Sandals ','')} · $${d.priceFrom}`;
-    return `<div class="price-range-dot" style="left:${pct}%">
+    return `<div class="price-range-dot" style="left:${pct}%;cursor:pointer" onclick="scrollToAndHighlightDeal(${d.id})">
       <div class="price-range-tooltip">${label}</div>
     </div>`;
   }).join('');
@@ -1225,34 +1159,13 @@ function renderTierBreakdown() {
         ${counts.Butler  ? `<div class="tier-bar-seg tier-seg-butler"  style="width:${pct('Butler')}%">${pct('Butler')}%</div>` : ''}
         ${counts.Club    ? `<div class="tier-bar-seg tier-seg-club"    style="width:${pct('Club')}%">${pct('Club')}%</div>` : ''}
         ${counts.Luxury  ? `<div class="tier-bar-seg tier-seg-luxury"  style="width:${pct('Luxury')}%">${pct('Luxury')}%</div>` : ''}
+      </div>
       <div class="tier-legend">
         <div class="tier-legend-item"><div class="tier-legend-dot" style="background:var(--gold)"></div>Butler (${counts.Butler})</div>
         <div class="tier-legend-item"><div class="tier-legend-dot" style="background:var(--ocean)"></div>Club (${counts.Club})</div>
         <div class="tier-legend-item"><div class="tier-legend-dot" style="background:#8a9aaa"></div>Luxury (${counts.Luxury})</div>
       </div>
     </div>`;
-}
-
-// ── Row 4: Room Views ────────────────────────────────────────────────────────
-
-function renderViewChart() {
-  const el = document.getElementById('viewChart');
-  const counts = {};
-
-  historyData.forEach(week => {
-    (week.deals||[]).forEach(deal => {
-      const v = (deal.roomView || 'Unknown').trim();
-      counts[v] = (counts[v]||0) + 1;
-    });
-  });
-
-  const data = Object.entries(counts)
-    .sort((a,b)=>b[1]-a[1]).slice(0,6)
-    .map(([name,count])=>({name,count}));
-
-  if (!data.length) { el.innerHTML = `<div class="no-data-msg">No view data yet.</div>`; return; }
-
-  renderBarChart('viewChart', data, Math.max(...data.map(d=>d.count),1), 'x');
 }
 
 // ── Row 5: Resort Timeline ───────────────────────────────────────────────────
@@ -1358,6 +1271,37 @@ function useFallbackData() {
   document.getElementById('weekLabel').textContent = "Week of Feb 18 – Feb 24, 2026 · 7 deals active";
   buildFilters();
   renderDeals('all');
+}
+
+// ─── PRICE RANGE DOT → DEAL CARD SCROLL ────────────────────────────────────
+
+function scrollToAndHighlightDeal(id) {
+  // Ensure we're showing all deals (reset filter to "all")
+  const allBtn = document.querySelector('#filterBar .filter-btn');
+  if (allBtn && !allBtn.classList.contains('active')) {
+    allBtn.click();
+  }
+
+  // Small delay so any re-render completes, then scroll + flash
+  setTimeout(() => {
+    const grid = document.getElementById('dealGrid');
+    const cards = grid.querySelectorAll('.deal-card');
+    // Cards are rendered in currentDeals order; find index of matching deal
+    const dealIdx = currentDeals.findIndex(d => d.id === id);
+    const card = cards[dealIdx];
+    if (!card) return;
+
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // Flash highlight
+    card.style.transition = 'box-shadow 0.2s, outline 0.2s';
+    card.style.outline = '2.5px solid var(--gold-light)';
+    card.style.boxShadow = '0 0 0 6px rgba(212,170,74,0.18)';
+    setTimeout(() => {
+      card.style.outline = '';
+      card.style.boxShadow = '';
+    }, 1800);
+  }, 50);
 }
 
 // ─── BOOT ───────────────────────────────────────────────────────────────────
