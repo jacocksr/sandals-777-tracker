@@ -958,46 +958,97 @@ function renderPriceOverTime() {
     return;
   }
 
-  const W = 400, H = 120, PAD = { top:10, right:10, bottom:24, left:36 };
+  // Extra top/bottom padding so bars and labels never clip
+  const W = 400, H = 140, PAD = { top: 28, right: 14, bottom: 28, left: 42 };
   const iW = W - PAD.left - PAD.right;
   const iH = H - PAD.top  - PAD.bottom;
-  const minP = Math.min(...weeklyAvgs.map(w=>w.avg));
-  const maxP = Math.max(...weeklyAvgs.map(w=>w.avg));
-  const range = maxP - minP || 1;
 
-  const x = i => PAD.left + (i / (weeklyAvgs.length-1)) * iW;
-  const y = v => PAD.top  + iH - ((v - minP) / range) * iH;
+  const minP = Math.min(...weeklyAvgs.map(w => w.avg));
+  const maxP = Math.max(...weeklyAvgs.map(w => w.avg));
+  // Extend axis range 10% beyond data so bars never kiss the top/bottom
+  const pad  = (maxP - minP) * 0.1 || 50;
+  const axisMin = Math.max(0, Math.floor((minP - pad) / 50) * 50);
+  const axisMax = Math.ceil((maxP + pad) / 50) * 50;
+  const axisRange = axisMax - axisMin || 1;
 
-  const pts = weeklyAvgs.map((w,i) => `${x(i)},${y(w.avg)}`).join(' ');
+  const x = i  => PAD.left + (i / (weeklyAvgs.length - 1)) * iW;
+  const y = v  => PAD.top  + iH - ((v - axisMin) / axisRange) * iH;
 
-  const bars = weeklyAvgs.map((w,i) => {
-    const bx   = x(i) - 8;
-    const bh   = ((w.avg - minP) / range) * iH || 4;
-    const by   = PAD.top + iH - bh;
-    return `<rect x="${bx}" y="${by}" width="16" height="${bh}"
-      rx="2" fill="var(--ocean)" opacity="0.25"/>
-    <text x="${x(i)}" y="${H - 4}" text-anchor="middle"
-      font-size="8" fill="var(--text-muted)">${w.label}</text>`;
+  // ── Horizontal grid lines at ~3 evenly spaced round values ──────────────
+  const gridStep = Math.ceil((axisMax - axisMin) / 3 / 50) * 50;
+  const gridLines = [];
+  for (let gv = axisMin; gv <= axisMax; gv += gridStep) {
+    const gy = y(gv);
+    gridLines.push(`
+      <line x1="${PAD.left}" y1="${gy}" x2="${W - PAD.right}" y2="${gy}"
+        stroke="var(--border)" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>
+      <text x="${PAD.left - 5}" y="${gy + 3.5}" text-anchor="end"
+        font-size="9" fill="var(--text-muted)">$${gv}</text>`);
+  }
+
+  // ── Bars ──────────────────────────────────────────────────────────────────
+  const bars = weeklyAvgs.map((w, i) => {
+    const bw = Math.max(10, Math.min(20, iW / weeklyAvgs.length * 0.55));
+    const bx = x(i) - bw / 2;
+    const bh = Math.max(2, ((w.avg - axisMin) / axisRange) * iH);
+    const by = PAD.top + iH - bh;
+    return `
+      <rect x="${bx.toFixed(1)}" y="${by.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}"
+        rx="2" fill="var(--ocean)" opacity="0.18"/>
+      <text x="${x(i).toFixed(1)}" y="${H - 6}" text-anchor="middle"
+        font-size="8" fill="var(--text-muted)">${w.label}</text>`;
   }).join('');
 
-  const linePoints = weeklyAvgs.map((w,i) => `${x(i)} ${y(w.avg)}`).join(' L ');
+  // ── Line ──────────────────────────────────────────────────────────────────
+  const pts = weeklyAvgs.map((w, i) => `${x(i).toFixed(1)},${y(w.avg).toFixed(1)}`).join(' ');
+
+  // ── Dots with hover tooltips ──────────────────────────────────────────────
+  const dots = weeklyAvgs.map((w, i) => {
+    const cx = x(i).toFixed(1);
+    const cy = y(w.avg).toFixed(1);
+    // Tooltip box: keep it inside the SVG viewport
+    const tipW = 108, tipH = 28, tipR = 4;
+    const rawTipX = parseFloat(cx) - tipW / 2;
+    const tipX = Math.max(PAD.left, Math.min(W - PAD.right - tipW, rawTipX));
+    const tipY = parseFloat(cy) - tipH - 10;
+    return `
+      <g class="chart-dot-group" style="cursor:default">
+        <circle cx="${cx}" cy="${cy}" r="5"
+          fill="white" stroke="var(--gold)" stroke-width="2"/>
+        <!-- Larger invisible hit area -->
+        <circle cx="${cx}" cy="${cy}" r="12" fill="transparent"
+          class="chart-dot-hit"/>
+        <!-- Tooltip -->
+        <g class="chart-tooltip" opacity="0" style="pointer-events:none;transition:opacity 0.15s">
+          <rect x="${tipX}" y="${tipY}" width="${tipW}" height="${tipH}"
+            rx="${tipR}" fill="var(--ocean-deep)"/>
+          <text x="${tipX + tipW/2}" y="${tipY + 11}" text-anchor="middle"
+            font-size="8.5" font-weight="600" fill="white">Avg $${w.avg} pp/pn</text>
+          <text x="${tipX + tipW/2}" y="${tipY + 22}" text-anchor="middle"
+            font-size="7.5" fill="rgba(255,255,255,0.65)">${w.label}</text>
+        </g>
+      </g>`;
+  }).join('');
 
   el.innerHTML = `
     <div class="price-chart-wrap">
-      <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet">
-        <text x="${PAD.left - 4}" y="${PAD.top}" text-anchor="end"
-          font-size="9" fill="var(--text-muted)">$${maxP}</text>
-        <text x="${PAD.left - 4}" y="${PAD.top + iH}" text-anchor="end"
-          font-size="9" fill="var(--text-muted)">$${minP}</text>
+      <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet"
+           style="overflow:visible">
+        ${gridLines.join('')}
         ${bars}
         <polyline points="${pts}" fill="none" stroke="var(--gold-light)" stroke-width="2"
           stroke-linejoin="round" stroke-linecap="round"/>
-        ${weeklyAvgs.map((w,i) => `
-          <circle cx="${x(i)}" cy="${y(w.avg)}" r="4"
-            fill="white" stroke="var(--gold)" stroke-width="2"/>
-        `).join('')}
+        ${dots}
       </svg>
     </div>`;
+
+  // Attach hover listeners after inserting into DOM
+  el.querySelectorAll('.chart-dot-group').forEach(g => {
+    const tip = g.querySelector('.chart-tooltip');
+    const hit = g.querySelector('.chart-dot-hit');
+    hit.addEventListener('mouseenter', () => tip.setAttribute('opacity', '1'));
+    hit.addEventListener('mouseleave', () => tip.setAttribute('opacity', '0'));
+  });
 }
 
 // ── Row 2: This Week's Price Range ───────────────────────────────────────────
@@ -1019,7 +1070,7 @@ function renderPriceRange() {
   const dots = priced.map(d => {
     const pct = ((parseFloat(d.priceFrom) - minP) / range) * 100;
     const label = `${d.resort.replace('Sandals ','')} · $${d.priceFrom}`;
-    return `<div class="price-range-dot" style="left:${pct}%;cursor:pointer" onclick="scrollToAndHighlightDeal(${d.id})">
+    return `<div class="price-range-dot" style="left:${pct}%;cursor:pointer" onclick="openModal(${d.id})">
       <div class="price-range-tooltip">${label}</div>
     </div>`;
   }).join('');
@@ -1101,19 +1152,26 @@ function renderDueSoon() {
   historyData.forEach((week, idx) => {
     (week.deals||[]).forEach(deal => {
       const r = deal.resort || '';
-      if (!resortWeeks[r]) resortWeeks[r] = [];
-      resortWeeks[r].push(idx);
+      if (!resortWeeks[r]) {
+        const loc = deal.location || '';
+        const locParts = loc.split(',').map(s => s.trim());
+        const country = locParts.length >= 2 ? locParts[locParts.length - 1] : loc;
+        resortWeeks[r] = { indices: [], country };
+      }
+      resortWeeks[r].indices.push(idx);
     });
   });
 
   const totalWeeks = historyData.length;
-  const results = Object.entries(resortWeeks).map(([resort, indices]) => {
+  const results = Object.entries(resortWeeks).map(([resort, data]) => {
+    const { indices, country } = data;
     const gaps = [];
     for (let i = 1; i < indices.length; i++) gaps.push(indices[i] - indices[i-1]);
-    const avgGap  = gaps.length ? gaps.reduce((a,b)=>a+b,0)/gaps.length : totalWeeks;
+    const avgGap   = gaps.length ? gaps.reduce((a,b)=>a+b,0)/gaps.length : totalWeeks;
     const lastSeen = totalWeeks - 1 - indices[indices.length - 1];
     const overdue  = lastSeen - avgGap;
-    return { resort: resort.replace('Sandals ',''), lastSeen, avgGap: Math.round(avgGap), overdue };
+    const shortName = resort.replace('Sandals ', '');
+    return { label: `${shortName}, ${country}`, lastSeen, avgGap: Math.round(avgGap), overdue };
   }).sort((a,b) => b.overdue - a.overdue).slice(0,8);
 
   el.innerHTML = results.map(r => {
@@ -1124,7 +1182,7 @@ function renderDueSoon() {
     return `
       <div class="due-soon-row">
         <div class="due-dot ${dotCls}"></div>
-        <div class="due-soon-resort">${r.resort}</div>
+        <div class="due-soon-resort">${r.label}</div>
         <div class="due-soon-meta">
           Last seen ${r.lastSeen}w ago<br>
           <span style="color:${r.overdue>0?'var(--coral)':'#4caf7d'}">${status}</span>
