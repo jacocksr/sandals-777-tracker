@@ -822,7 +822,7 @@
   },
   {
     "weekLabel": "Apr 8 – Apr 14, 2026",
-    "fetchedAt": "2026-04-08T08:17:42.561363+00:00",
+    "fetchedAt": "2026-04-08T09:15:46.387646+00:00",
     "deals": [
       {
         "id": 1,
@@ -843,7 +843,7 @@
         "roomView": "Beachfront, Pool, Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 1044,
+        "priceFrom": 853,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/grande-antigua/rooms-suites/lv/"
       },
@@ -912,7 +912,7 @@
         "roomView": "Oceanview, Pool, Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 493,
+        "priceFrom": 383,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/ochi-beach-resort/rooms-suites/ov1/"
       },
@@ -934,7 +934,7 @@
         "roomView": "Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 462,
+        "priceFrom": 379,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/royal-curacao/rooms-suites/wscl/"
       },
