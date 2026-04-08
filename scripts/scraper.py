@@ -1,5 +1,5 @@
 """
-sandals_777_scraper.py  —  v3.2
+sandals_777_scraper.py  —  v3.3
 ================================
 What we know from testing:
 - Sandals' page is a Next.js React SPA
@@ -87,23 +87,29 @@ RESORT_CDN_SLUG = {
 
 # Maps our resort codes → sandals.com URL slugs for deep booking links
 # Confirmed pattern: sandals.com/{slug}/rooms-suites/{room-code}/
+#
+# Slug rules observed from live site (v3.3):
+#   - "Royal *" resorts keep short slug: royal-plantation, royal-bahamian, etc.
+#   - "Negril" keeps short slug: negril
+#   - All others need "sandals-" prefix to avoid clashing with destination pages
+#   - SGO is special: slug is just "ochi" (not "ochi-beach-resort")
 RESORT_BOOKING_SLUG = {
-    "SAB": "grande-antigua",
+    "SAB": "sandals-grande-antigua",
     "SRP": "royal-plantation",
     "SRB": "royal-bahamian",
-    "SSV": "saint-vincent",
+    "SSV": "sandals-saint-vincent",
     "SNG": "negril",
-    "SGO": "ochi-beach-resort",
+    "SGO": "ochi",
     "SCR": "royal-curacao",
-    "SBR": "barbados",
+    "SBR": "sandals-barbados",
     "SPR": "royal-barbados",
-    "SLU": "regency-la-toc",
-    "SST": "grande-st-lucian",
-    "SSN": "grenada",
-    "SKJ": "south-coast",
-    "SML": "montego-bay",
-    "SMB": "emerald-bay",
-    "SHB": "halcyon-beach",   # v3.1
+    "SLU": "sandals-regency-la-toc",
+    "SST": "sandals-grande-st-lucian",
+    "SSN": "sandals-grenada",
+    "SKJ": "sandals-south-coast",
+    "SML": "sandals-montego-bay",
+    "SMB": "sandals-emerald-bay",
+    "SHB": "sandals-halcyon-beach",
 }
 
 # Resort name fragments → resort code (order matters: more specific first)
@@ -507,9 +513,37 @@ def make_room_url(resort_code: str, room_code: str) -> str:
     return f"https://www.sandals.com/{resort_slug}/rooms-suites/{room_code.lower()}/"
 
 
+def verify_book_url(url: str, fallback: str) -> str:
+    """
+    HEAD-request the generated booking URL.  If Sandals returns a 404 (or we
+    get a redirect to a completely different path) fall back to the suite-deals
+    landing page so the user always lands somewhere useful.
+
+    We accept 200, 301, 302, 403 (bot-block but page exists), 405 as "alive".
+    Only a true 404 (or connection failure) triggers the fallback.
+    """
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "Referer": "https://www.sandals.com/",
+    }
+    try:
+        r = requests.head(url, headers=headers, timeout=10, allow_redirects=True)
+        if r.status_code == 404:
+            print(f"[verify] 404 → falling back: {url}")
+            return fallback
+        print(f"[verify] {r.status_code} OK: {url}")
+        return url
+    except Exception as e:
+        print(f"[verify] Error checking {url}: {e} — keeping URL")
+        return url          # network error: don't discard, keep as-is
+
+
 def save_deals(deals: list[dict]) -> None:
+    FALLBACK = "https://www.sandals.com/specials/suite-deals/"
+    print("[save] Verifying booking URLs…")
     for deal in deals:
-        deal["bookUrl"] = make_room_url(deal["resortCode"], deal["roomCode"])
+        raw_url = make_room_url(deal["resortCode"], deal["roomCode"])
+        deal["bookUrl"] = verify_book_url(raw_url, FALLBACK)
     payload = {
         "weekLabel": get_week_label(),
         "fetchedAt": datetime.now(timezone.utc).isoformat(),
