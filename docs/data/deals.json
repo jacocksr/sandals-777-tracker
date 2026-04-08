@@ -1,6 +1,6 @@
 {
   "weekLabel": "Apr 8 – Apr 14, 2026",
-  "fetchedAt": "2026-04-08T10:58:13.917753+00:00",
+  "fetchedAt": "2026-04-08T11:53:38.388639+00:00",
   "dealCount": 7,
   "deals": [
     {
@@ -24,7 +24,7 @@
       "discount": "7%+ off",
       "priceFrom": 853,
       "priceWas": null,
-      "bookUrl": "https://www.sandals.com/grande-antigua/rooms-suites/lv/"
+      "bookUrl": "https://www.sandals.com/sandals-grande-antigua/rooms-suites/lv/"
     },
     {
       "id": 2,
@@ -70,7 +70,7 @@
       "discount": "7%+ off",
       "priceFrom": 619,
       "priceWas": null,
-      "bookUrl": "https://www.sandals.com/saint-vincent/rooms-suites/vf/"
+      "bookUrl": "https://www.sandals.com/sandals-saint-vincent/rooms-suites/vf/"
     },
     {
       "id": 4,
@@ -93,7 +93,7 @@
       "discount": "7%+ off",
       "priceFrom": 383,
       "priceWas": null,
-      "bookUrl": "https://www.sandals.com/ochi-beach-resort/rooms-suites/ov1/"
+      "bookUrl": "https://www.sandals.com/ochi/rooms-suites/ov1/"
     },
     {
       "id": 5,
@@ -137,7 +137,7 @@
       "discount": "7%+ off",
       "priceFrom": 315,
       "priceWas": null,
-      "bookUrl": "https://www.sandals.com/barbados/rooms-suites/lx/"
+      "bookUrl": "https://www.sandals.com/sandals-barbados/rooms-suites/lx/"
     },
     {
       "id": 7,
@@ -159,7 +159,7 @@
       "discount": "7%+ off",
       "priceFrom": 314,
       "priceWas": null,
-      "bookUrl": "https://www.sandals.com/halcyon-beach/rooms-suites/wglt/"
+      "bookUrl": "https://www.sandals.com/sandals-halcyon-beach/rooms-suites/wglt/"
     }
   ]
 }
