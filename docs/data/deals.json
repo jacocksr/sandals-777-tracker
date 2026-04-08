@@ -1,6 +1,6 @@
 {
   "weekLabel": "Apr 8 – Apr 14, 2026",
-  "fetchedAt": "2026-04-08T07:50:11.384579+00:00",
+  "fetchedAt": "2026-04-08T08:17:42.560633+00:00",
   "dealCount": 7,
   "deals": [
     {
@@ -119,28 +119,6 @@
     },
     {
       "id": 6,
-      "resortCode": "SHB",
-      "resort": "Sandals Halcyon Beach",
-      "location": "Castries, Saint Lucia",
-      "imgColor": "#3a6858",
-      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/shc/accommodations/large/shc-142.jpg",
-      "imgPath": "images/SHB_WGLT.jpg",
-      "imgPaths": [
-        "images/SHB_WGLT.jpg",
-        "images/SHB_WGLT_2.jpg",
-        "images/SHB_WGLT_3.jpg"
-      ],
-      "roomCode": "WGLT",
-      "roomName": "Grand Luxe Club Level Walkout Room w/ Patio Tranquility Soaking Tub",
-      "roomView": "Tropical Garden",
-      "bedding": "1 King Bed",
-      "discount": "7%+ off",
-      "priceFrom": 387,
-      "priceWas": null,
-      "bookUrl": "https://www.sandals.com/halcyon-beach/rooms-suites/wglt/"
-    },
-    {
-      "id": 7,
       "resortCode": "SBR",
       "resort": "Sandals Barbados",
       "location": "Christ Church, Barbados",
@@ -160,6 +138,28 @@
       "priceFrom": 315,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/barbados/rooms-suites/lx/"
+    },
+    {
+      "id": 7,
+      "resortCode": "SHB",
+      "resort": "Sandals Halcyon Beach",
+      "location": "Castries, Saint Lucia",
+      "imgColor": "#3a6858",
+      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/shc/accommodations/large/shc-142.jpg",
+      "imgPath": "images/SHB_WGLT.jpg",
+      "imgPaths": [
+        "images/SHB_WGLT.jpg",
+        "images/SHB_WGLT_2.jpg",
+        "images/SHB_WGLT_3.jpg"
+      ],
+      "roomCode": "WGLT",
+      "roomName": "Grand Luxe Club Level Walkout Room w/ Patio Tranquility Soaking Tub",
+      "roomView": "Tropical Garden",
+      "bedding": "1 King Bed",
+      "discount": "7%+ off",
+      "priceFrom": 314,
+      "priceWas": null,
+      "bookUrl": "https://www.sandals.com/halcyon-beach/rooms-suites/wglt/"
     }
   ]
 }
