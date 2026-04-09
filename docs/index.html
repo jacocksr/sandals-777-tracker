@@ -411,7 +411,7 @@
   display: inline-block; width: 22px; height: 22px; border-radius: 3px;
   background: var(--sand); transition: background 0.2s;
 }
-.heatmap-cell.active { background: var(--ocean); }
+.heatmap-cell.active { background: rgba(26,74,92,0.28); } /* past deals — lighter ocean tint */
 .heatmap-cell.active-gold { background: var(--gold); }
 
 /* Due Soon */
@@ -1318,8 +1318,8 @@ function renderHeatmap() {
         const dealId = liveDeal ? liveDeal.id : null;
         if (dealId) {
           return `<td><span class="heatmap-cell active heatmap-cell-current"
-            onclick="scrollToAndHighlightDeal(${dealId})"
-            title="View ${shortName} deal ↓"></span></td>`;
+            onclick="openModal(${dealId})"
+            title="View ${shortName} deal"></span></td>`;
         }
       }
       return `<td><span class="heatmap-cell ${appeared ? 'active' : ''}"></span></td>`;
@@ -1340,9 +1340,10 @@ function renderHeatmap() {
       </thead>
       <tbody>${rows}</tbody>
     </table>
-    <div style="font-size:0.68rem;color:var(--text-muted);margin-top:0.8rem;letter-spacing:0.06em">
-      ★ = current week &nbsp;·&nbsp; <span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--ocean);vertical-align:middle;margin-right:3px"></span>active
-      &nbsp;·&nbsp; click a ★ cell to view that deal ↓
+    <div style="font-size:0.68rem;color:var(--text-muted);margin-top:0.8rem;letter-spacing:0.06em;display:flex;flex-wrap:wrap;gap:0.8rem;align-items:center">
+      <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(26,74,92,0.28);vertical-align:middle;margin-right:3px"></span>Past Deal</span>
+      <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(26,74,92,0.28);border:2px solid var(--gold-light);vertical-align:middle;margin-right:3px"></span>Current Deal — click to expand</span>
+      <span style="opacity:0.6">★ = this week</span>
     </div>`;
 }
 
