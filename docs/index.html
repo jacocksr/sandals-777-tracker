@@ -1314,16 +1314,19 @@ function renderHeatmap() {
       const isCurrentWeek = colIdx === currentWeekIdx;
 
       if (appeared && isCurrentWeek && deal) {
-        // Find the matching deal in currentDeals by resortCode
-        const liveDeal = currentDeals.find(d => d.resortCode === deal.resortCode);
-        const dealId = liveDeal ? liveDeal.id : null;
-        if (dealId) {
-          return `<td><span class="heatmap-cell active heatmap-cell-current"
-            onclick="openModal(${dealId})"
-            title="View ${shortName} deal"></span></td>`;
-        }
+      const liveDeal = currentDeals.find(d => d.resortCode === deal.resortCode);
+      const dealId = liveDeal ? liveDeal.id : null;
+    
+      if (dealId) {
+        return `<td><span class="heatmap-cell heatmap-cell-current"
+          onclick="openModal(${dealId})"
+          title="View ${shortName} deal"></span></td>`;
       }
-      return `<td><span class="heatmap-cell ${appeared ? 'active' : ''}"></span></td>`;
+    
+      return `<td><span class="heatmap-cell heatmap-cell-current"></span></td>`;
+    }
+    
+    return `<td><span class="heatmap-cell ${appeared ? 'active' : ''}"></span></td>`;
     }).join('');
     return `<tr>
       <td class="resort-name">${shortName}</td>
