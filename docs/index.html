@@ -1317,9 +1317,14 @@ function renderHeatmap() {
         const liveDeal = currentDeals.find(d => d.resortCode === deal.resortCode);
         const dealId = liveDeal ? liveDeal.id : null;
         if (dealId) {
-          return `<td><span class="heatmap-cell active heatmap-cell-current"
-            onclick="scrollToAndHighlightDeal(${dealId})"
-            title="View ${shortName} deal ↓"></span></td>`;
+          return `<tr class="${activeClass}" ${clickAttr} title="${isActive ? 'Click to view this deal ↑' : ''}">
+            <td style="color:var(--text-muted);font-size:0.82rem;white-space:nowrap">${r.week}${activeBadge}</td>
+            <td><span class="resort-tag">${r.resortCode}</span> <span style="font-size:0.82rem">${(r.resort||'').replace('Sandals ','')}</span></td>
+            <td style="font-size:0.84rem;max-width:260px">${r.roomName || '–'}</td>
+            <td style="font-size:0.8rem;color:var(--text-muted)">${r.roomCode || '–'}</td>
+            <td style="font-size:0.8rem;color:var(--text-muted)">${r.priceFrom ? '$'+r.priceFrom+' pp/pn' : '–'}</td>
+            </tr>
+            `;
         }
       }
       return `<td><span class="heatmap-cell ${appeared ? 'active' : ''}"></span></td>`;
@@ -1341,7 +1346,7 @@ function renderHeatmap() {
       <tbody>${rows}</tbody>
     </table>
     <div style="font-size:0.68rem;color:var(--text-muted);margin-top:0.8rem;letter-spacing:0.06em">
-      ★ = current week &nbsp;·&nbsp; <span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--ocean);vertical-align:middle;margin-right:3px"></span>active
+      ★ = current week &nbsp;·&nbsp; <span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--ocean);vertical-align:middle;margin-right:3px"></span>past deal
       &nbsp;·&nbsp; click a ★ cell to view that deal ↓
     </div>`;
 }
