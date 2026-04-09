@@ -483,9 +483,11 @@
 
 /* Heatmap current-week cell clickable */
 .heatmap-cell-current {
-  cursor: pointer; border: 2px solid var(--gold-light) !important;
+  cursor: pointer;
+  border: 2px solid var(--gold-light) !important;
+  background: var(--ocean);
   box-shadow: 0 0 0 2px rgba(212,170,74,0.2);
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
 }
 .heatmap-cell-current:hover {
   transform: scale(1.2);
@@ -1340,11 +1342,11 @@ function renderHeatmap() {
       </thead>
       <tbody>${rows}</tbody>
     </table>
-    <div style="font-size:0.68rem;color:var(--text-muted);margin-top:0.8rem;letter-spacing:0.06em;display:flex;flex-wrap:wrap;gap:0.8rem;align-items:center">
-      <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(26,74,92,0.28);vertical-align:middle;margin-right:3px"></span>Past Deal</span>
-      <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(26,74,92,0.28);border:2px solid var(--gold-light);vertical-align:middle;margin-right:3px"></span>Current Deal — click to expand</span>
-      <span style="opacity:0.6">★ = this week</span>
-    </div>`;
+    <div style="font-size:0.68rem;color:var(--text-muted);margin-top:0.8rem;letter-spacing:0.06em;display:flex;flex-wrap:wrap;gap:0.8rem;align-items:center;">
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(26,74,92,0.28);vertical-align:middle;margin-right:3px;"></span>Past Deal</span>
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--ocean);border:2px solid var(--gold-light);vertical-align:middle;margin-right:3px;"></span>Current Deal (click to expand)</span>
+    <span style="opacity:0.8;">this week</span>
+  </div>`;
 }
 
 // ── Row 3: Due Soon ───────────────────────────────────────────────────────────
