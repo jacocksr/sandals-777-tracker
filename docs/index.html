@@ -451,6 +451,46 @@
 .freq-regular   { background: rgba(26,74,92,0.1);  color: var(--ocean); }
 .freq-occasional{ background: rgba(184,146,42,0.12); color: var(--gold); }
 .freq-rare      { background: rgba(201,98,74,0.1);  color: var(--coral); }
+
+/* Clickable history rows */
+.history-row-active {
+  cursor: pointer;
+}
+.history-row-active:hover td { background: rgba(212,170,74,0.1) !important; }
+.history-row-active td:first-child {
+  border-left: 3px solid var(--gold-light);
+  padding-left: calc(1rem - 3px);
+}
+.active-deal-badge {
+  display: inline-block; font-size: 0.58rem; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 1px 6px; border-radius: 2px;
+  background: rgba(212,170,74,0.18); color: var(--gold);
+  border: 1px solid var(--gold-light); font-weight: 600;
+  vertical-align: middle; margin-left: 0.4rem;
+}
+
+/* Resort timeline name link */
+.resort-sandals-link {
+  color: var(--ocean-deep); text-decoration: none; font-weight: 500;
+  border-bottom: 1px dotted var(--border); transition: color 0.15s, border-color 0.15s;
+  display: inline-flex; align-items: center; gap: 0.3rem;
+}
+.resort-sandals-link:hover { color: var(--ocean); border-color: var(--ocean); }
+.resort-sandals-link::after {
+  content: '↗'; font-size: 0.6rem; opacity: 0.5; transition: opacity 0.15s;
+}
+.resort-sandals-link:hover::after { opacity: 1; }
+
+/* Heatmap current-week cell clickable */
+.heatmap-cell-current {
+  cursor: pointer; border: 2px solid var(--gold-light) !important;
+  box-shadow: 0 0 0 2px rgba(212,170,74,0.2);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.heatmap-cell-current:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 4px rgba(212,170,74,0.3);
+}
     
   </style>
 </head>
@@ -735,6 +775,37 @@
 // ═══════════════════════════════════════════════════════════════════════════
 //  DATA LOADING
 // ═══════════════════════════════════════════════════════════════════════════
+
+// Resort name → sandals.com URL slug (for Timeline links)
+const RESORT_PAGE_SLUG = {
+  "Sandals Grande Antigua":      "grande-antigua",
+  "Sandals Royal Plantation":    "royal-plantation",
+  "Sandals Royal Bahamian":      "royal-bahamian",
+  "Sandals Saint Vincent":       "saint-vincent",
+  "Sandals Negril":              "negril",
+  "Sandals Ochi":                "ochi-beach-resort",
+  "Sandals Royal Curacao":       "royal-curacao",
+  "Sandals Barbados":            "barbados",
+  "Sandals Royal Barbados":      "royal-barbados",
+  "Sandals Regency La Toc":      "regency-la-toc",
+  "Sandals Grande St. Lucian":   "grande-st-lucian",
+  "Sandals Grenada":             "grenada",
+  "Sandals South Coast":         "south-coast",
+  "Sandals Montego Bay":         "montego-bay",
+  "Sandals Emerald Bay":         "emerald-bay",
+  "Sandals Halcyon Beach":       "halcyon-beach",
+  "Sandals Dunns River":         "dunns-river",
+};
+
+function getResortPageUrl(fullResortName) {
+  const slug = RESORT_PAGE_SLUG[fullResortName];
+  return slug ? `https://www.sandals.com/${slug}/` : `https://www.sandals.com/`;
+}
+
+// Returns the full resort name for the current week's active deals
+function getCurrentWeekResortNames() {
+  return new Set(currentDeals.map(d => d.resort));
+}
 
 let currentDeals = [];
 let historyData  = [];
@@ -1223,21 +1294,34 @@ function renderHeatmap() {
     historyData.flatMap(w => (w.deals||[]).map(d => d.resort || ''))
   )].sort();
 
-  const weekLabels = recent.map(w => {
-    const raw = (w.weekLabel || '').split('–')[0].trim(); // e.g. "Mar 19, 2025"
-    const d = new Date(raw);
-    if (isNaN(d)) return raw;
-    return `${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
-  });
+  const currentWeekIdx = recent.length - 1; // last column = this week
 
-  const headerCols = weekLabels.map(l =>
-    `<th>${l}</th>`
-  ).join('');
+  const weekLabels = recent.map((w, i) => {
+    const raw = (w.weekLabel || '').split('–')[0].trim();
+    const d = new Date(raw);
+    const label = isNaN(d) ? raw : `${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
+    return i === currentWeekIdx
+      ? `<th style="color:var(--gold);font-weight:700">${label} ★</th>`
+      : `<th>${label}</th>`;
+  });
 
   const rows = allResorts.map(resort => {
     const shortName = resort.replace('Sandals ','');
-    const cells = recent.map(week => {
-      const appeared = (week.deals||[]).some(d => d.resort === resort);
+    const cells = recent.map((week, colIdx) => {
+      const deal = (week.deals||[]).find(d => d.resort === resort);
+      const appeared = !!deal;
+      const isCurrentWeek = colIdx === currentWeekIdx;
+
+      if (appeared && isCurrentWeek && deal) {
+        // Find the matching deal in currentDeals by resortCode
+        const liveDeal = currentDeals.find(d => d.resortCode === deal.resortCode);
+        const dealId = liveDeal ? liveDeal.id : null;
+        if (dealId) {
+          return `<td><span class="heatmap-cell active heatmap-cell-current"
+            onclick="scrollToAndHighlightDeal(${dealId})"
+            title="View ${shortName} deal ↓"></span></td>`;
+        }
+      }
       return `<td><span class="heatmap-cell ${appeared ? 'active' : ''}"></span></td>`;
     }).join('');
     return `<tr>
@@ -1251,11 +1335,15 @@ function renderHeatmap() {
       <thead>
         <tr>
           <th class="resort-col">Resort</th>
-          ${headerCols}
+          ${weekLabels.join('')}
         </tr>
       </thead>
       <tbody>${rows}</tbody>
-    </table>`;
+    </table>
+    <div style="font-size:0.68rem;color:var(--text-muted);margin-top:0.8rem;letter-spacing:0.06em">
+      ★ = current week &nbsp;·&nbsp; <span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--ocean);vertical-align:middle;margin-right:3px"></span>active
+      &nbsp;·&nbsp; click a ★ cell to view that deal ↓
+    </div>`;
 }
 
 // ── Row 3: Due Soon ───────────────────────────────────────────────────────────
@@ -1299,14 +1387,14 @@ function renderDueSoon() {
     const status = r.overdue > 1
       ? `${Math.round(r.overdue)}w overdue`
       : r.overdue > 0 ? 'Due soon' : 'On schedule';
+    const lastSeenText = r.lastSeen === 0
+      ? `<span style="color:#4caf7d;font-weight:600">Deal currently active</span>`
+      : `Last seen ${r.lastSeen}w ago<br><span style="color:${r.overdue>0?'var(--coral)':'#4caf7d'}">${status}</span>`;
     return `
       <div class="due-soon-row">
         <div class="due-dot ${dotCls}"></div>
         <div class="due-soon-resort">${r.label}</div>
-        <div class="due-soon-meta">
-          Last seen ${r.lastSeen}w ago<br>
-          <span style="color:${r.overdue>0?'var(--coral)':'#4caf7d'}">${status}</span>
-        </div>
+        <div class="due-soon-meta">${lastSeenText}</div>
       </div>`;
   }).join('');
 }
@@ -1348,6 +1436,15 @@ function renderTierBreakdown() {
 
 // ── Row 5: Resort Timeline ───────────────────────────────────────────────────
 
+function classifyFrequency(count, totalWeeks) {
+  // Express how often they appear: appearances per week
+  if (totalWeeks <= 1) return 'rare';
+  const rate = count / totalWeeks; // e.g. 0.9 = nearly every week
+  if (rate >= 0.6)  return 'regular';
+  if (rate >= 0.3)  return 'occasional';
+  return 'rare';
+}
+
 function renderTimeline() {
   const resortData = {};
 
@@ -1370,19 +1467,17 @@ function renderTimeline() {
     const lastIdx  = indices[indices.length-1];
     const firstLabel = historyData[firstIdx]?.weekLabel?.split('–')[0].trim() || '–';
     const lastLabel  = historyData[lastIdx]?.weekLabel?.split('–')[0].trim()  || '–';
-    const freq = gaps.length === 0 ? 'rare'
-      : parseFloat(avgGap) <= 2 ? 'regular'
-      : parseFloat(avgGap) <= 4 ? 'occasional'
-      : 'rare';
+    const freq = classifyFrequency(indices.length, totalWeeks);
     const tagClass = freq === 'regular' ? 'freq-regular' : freq === 'occasional' ? 'freq-occasional' : 'freq-rare';
     const tagLabel = freq.charAt(0).toUpperCase() + freq.slice(1);
+    const pageUrl  = getResortPageUrl(r.label);
 
-    return { name: r.label.replace('Sandals ',''), count: indices.length, firstLabel, lastLabel, avgGap, tagClass, tagLabel };
+    return { name: r.label.replace('Sandals ',''), fullName: r.label, count: indices.length, firstLabel, lastLabel, avgGap, tagClass, tagLabel, pageUrl };
   }).sort((a,b) => b.count - a.count);
 
   document.getElementById('timelineBody').innerHTML = rows.map(r => `
     <tr>
-      <td style="font-weight:500">${r.name}</td>
+      <td><a class="resort-sandals-link" href="${r.pageUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${r.name}</a></td>
       <td style="color:var(--text-muted)">${r.count}</td>
       <td style="color:var(--text-muted);font-size:0.78rem">${r.firstLabel}</td>
       <td style="color:var(--text-muted);font-size:0.78rem">${r.lastLabel}</td>
@@ -1580,11 +1675,13 @@ function renderDueSoonInto(el, data) {
     results.map(r => {
       const dotCls = r.overdue > 1 ? 'due-dot-hot' : r.overdue > 0 ? 'due-dot-warm' : 'due-dot-cool';
       const status = r.overdue > 1 ? `${Math.round(r.overdue)}w overdue` : r.overdue > 0 ? 'Due soon' : 'On schedule';
+      const lastSeenText = r.lastSeen === 0
+        ? `<span style="color:#4caf7d;font-weight:600">Deal currently active</span>`
+        : `Last seen ${r.lastSeen}w ago<br><span style="color:${r.overdue>0?'var(--coral)':'#4caf7d'}">${status}</span>`;
       return `<div class="due-soon-row">
         <div class="due-dot ${dotCls}"></div>
         <div class="due-soon-resort">${r.label}</div>
-        <div class="due-soon-meta">Last seen ${r.lastSeen}w ago<br>
-          <span style="color:${r.overdue>0?'var(--coral)':'#4caf7d'}">${status}</span></div>
+        <div class="due-soon-meta">${lastSeenText}</div>
       </div>`;
     }).join('') + `</div>`;
 }
@@ -1625,6 +1722,8 @@ function renderTimelineInto(el, data) {
     });
   });
 
+  const totalWeeks = data.length;
+
   const rows = Object.values(resortData).map(r => {
     const { indices } = r;
     const gaps = [];
@@ -1632,11 +1731,10 @@ function renderTimelineInto(el, data) {
     const avgGap     = gaps.length ? (gaps.reduce((a,b)=>a+b,0)/gaps.length).toFixed(1) : '–';
     const firstLabel = data[indices[0]]?.weekLabel?.split('–')[0].trim() || '–';
     const lastLabel  = data[indices[indices.length-1]]?.weekLabel?.split('–')[0].trim() || '–';
-    const freq = gaps.length === 0 ? 'rare'
-      : parseFloat(avgGap) <= 2 ? 'regular'
-      : parseFloat(avgGap) <= 4 ? 'occasional' : 'rare';
+    const freq = classifyFrequency(indices.length, totalWeeks);
     const tagClass = freq === 'regular' ? 'freq-regular' : freq === 'occasional' ? 'freq-occasional' : 'freq-rare';
-    return { name: r.label.replace('Sandals ',''), count: indices.length, firstLabel, lastLabel, avgGap, tagClass, tagLabel: freq.charAt(0).toUpperCase()+freq.slice(1) };
+    const pageUrl  = getResortPageUrl(r.label);
+    return { name: r.label.replace('Sandals ',''), count: indices.length, firstLabel, lastLabel, avgGap, tagClass, tagLabel: freq.charAt(0).toUpperCase()+freq.slice(1), pageUrl };
   }).sort((a,b) => b.count - a.count);
 
   el.innerHTML = `<div style="overflow-x:auto"><table class="timeline-table">
@@ -1645,7 +1743,7 @@ function renderTimelineInto(el, data) {
       <th>Last Seen</th><th>Avg. Gap</th><th>Frequency</th>
     </tr></thead>
     <tbody>${rows.map(r => `<tr>
-      <td style="font-weight:500">${r.name}</td>
+      <td><a class="resort-sandals-link" href="${r.pageUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${r.name}</a></td>
       <td style="color:var(--text-muted)">${r.count}</td>
       <td style="color:var(--text-muted);font-size:0.78rem">${r.firstLabel}</td>
       <td style="color:var(--text-muted);font-size:0.78rem">${r.lastLabel}</td>
@@ -1668,15 +1766,27 @@ function renderHistory() {
   document.getElementById('historyMeta').textContent =
     `${historyData.length} weeks · ${rows.length} total deals recorded`;
 
-  document.getElementById('historyBody').innerHTML = rows.map(r => `
-    <tr>
-      <td style="color:var(--text-muted);font-size:0.82rem;white-space:nowrap">${r.week}</td>
-      <td><span class="resort-tag">${r.resortCode}</span> <span style="font-size:0.82rem">${(r.resort||'').replace('Sandals ','')}</span></td>
-      <td style="font-size:0.84rem;max-width:260px">${r.roomName || '–'}</td>
-      <td style="font-size:0.8rem;color:var(--text-muted)">${r.roomCode || '–'}</td>
-      <td style="font-size:0.8rem;color:var(--text-muted)">${r.priceFrom ? '$'+r.priceFrom+' pp/pn' : '–'}</td>
-    </tr>
-  `).join('');
+  // Build a set of currently active room codes + resort codes for matching
+  const activeKeys = new Set(currentDeals.map(d => `${d.resortCode}::${d.roomCode}`));
+
+  document.getElementById('historyBody').innerHTML = rows.map(r => {
+    const key = `${r.resortCode}::${r.roomCode}`;
+    const isActive = activeKeys.has(key);
+    const liveDeal = isActive ? currentDeals.find(d => d.resortCode === r.resortCode && d.roomCode === r.roomCode) : null;
+    const clickAttr = liveDeal ? `onclick="openModal(${liveDeal.id})"` : '';
+    const activeClass = isActive ? 'history-row-active' : '';
+    const activeBadge = isActive ? `<span class="active-deal-badge">Active Now</span>` : '';
+
+    return `
+      <tr class="${activeClass}" ${clickAttr} title="${isActive ? 'Click to view this deal ↑' : ''}">
+        <td style="color:var(--text-muted);font-size:0.82rem;white-space:nowrap">${r.week}${activeBadge}</td>
+        <td><span class="resort-tag">${r.resortCode}</span> <span style="font-size:0.82rem">${(r.resort||'').replace('Sandals ','')}</span></td>
+        <td style="font-size:0.84rem;max-width:260px">${r.roomName || '–'}</td>
+        <td style="font-size:0.8rem;color:var(--text-muted)">${r.roomCode || '–'}</td>
+        <td style="font-size:0.8rem;color:var(--text-muted)">${r.priceFrom ? '$'+r.priceFrom+' pp/pn' : '–'}</td>
+      </tr>
+    `;
+  }).join('');
 }
 
 // ─── HERO STATS ─────────────────────────────────────────────────────────────
