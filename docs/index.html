@@ -412,7 +412,6 @@
   background: var(--sand); transition: background 0.2s;
 }
 .heatmap-cell.active { background: rgba(26,74,92,0.28); } /* past deals — lighter ocean tint */
-.heatmap-cell.active-gold { background: var(--gold); }
 
 /* Due Soon */
 .due-soon-list { display: flex; flex-direction: column; gap: 0.7rem; }
@@ -1620,30 +1619,78 @@ document.getElementById('trendModal').addEventListener('click', function(e) {
 
 function renderHeatmapInto(el, data) {
   const recent = data.slice(-Math.min(data.length, 20));
-  if (recent.length < 2) { el.innerHTML = `<div class="no-data-msg">Not enough history yet.</div>`; return; }
+  if (recent.length < 2) {
+    el.innerHTML = `<div class="no-data-msg">Not enough history yet.</div>`;
+    return;
+  }
 
   const allResorts = [...new Set(
-    data.flatMap(w => (w.deals||[]).map(d => d.resort || ''))
+    data.flatMap(w => w.deals.map(d => d.resort))
   )].sort();
 
-  const weekLabels = recent.map(w => {
-    const raw = (w.weekLabel || '').split('–')[0].trim();
+  const currentWeekIdx = recent.length - 1;
+
+  const weekLabels = recent.map((w, i) => {
+    const raw = w.weekLabel.split('–')[0].trim();
     const d = new Date(raw);
-    return isNaN(d) ? raw : `${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
+    const label = isNaN(d)
+      ? raw
+      : `${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}`;
+
+    return i === currentWeekIdx
+      ? `<th style="color:var(--gold);font-weight:700">${label} ★</th>`
+      : `<th>${label}</th>`;
   });
 
   const rows = allResorts.map(resort => {
-    const shortName = resort.replace('Sandals ','');
-    const cells = recent.map(week => {
-      const appeared = (week.deals||[]).some(d => d.resort === resort);
+    const shortName = resort.replace('Sandals ', '');
+
+    const cells = recent.map((week, colIdx) => {
+      const deal = week.deals.find(d => d.resort === resort);
+      const appeared = !!deal;
+      const isCurrentWeek = colIdx === currentWeekIdx;
+
+      if (appeared && isCurrentWeek && deal) {
+        const liveDeal = currentDeals.find(d => d.resortCode === deal.resortCode);
+        const dealId = liveDeal ? liveDeal.id : null;
+
+        if (dealId) {
+          return `<td><span class="heatmap-cell heatmap-cell-current" onclick="openModal(${dealId})" title="View ${shortName} deal"></span></td>`;
+        }
+
+        return `<td><span class="heatmap-cell heatmap-cell-current"></span></td>`;
+      }
+
       return `<td><span class="heatmap-cell ${appeared ? 'active' : ''}"></span></td>`;
     }).join('');
+
     return `<tr><td class="resort-name">${shortName}</td>${cells}</tr>`;
   }).join('');
 
-  el.innerHTML = `<div class="heatmap-wrap"><table class="heatmap-table">
-    <thead><tr><th class="resort-col">Resort</th>${weekLabels.map(l=>`<th>${l}</th>`).join('')}</tr></thead>
-    <tbody>${rows}</tbody></table></div>`;
+  el.innerHTML = `
+    <div class="heatmap-wrap">
+      <table class="heatmap-table">
+        <thead>
+          <tr>
+            <th class="resort-col">Resort</th>
+            ${weekLabels.join('')}
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+    <div style="font-size:0.68rem;color:var(--text-muted);margin-top:0.8rem;letter-spacing:0.06em;display:flex;flex-wrap:wrap;gap:0.8rem;align-items:center">
+      <span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(26,74,92,0.28);vertical-align:middle;margin-right:3px"></span>
+        Past Deal
+      </span>
+      <span>
+        <span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--ocean);border:2px solid var(--gold-light);vertical-align:middle;margin-right:3px"></span>
+        Current Deal (click to expand)
+      </span>
+      <span style="opacity:0.8">this week</span>
+    </div>
+  `;
 }
 
 function renderDueSoonInto(el, data) {
