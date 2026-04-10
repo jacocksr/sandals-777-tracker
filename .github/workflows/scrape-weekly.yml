@@ -27,6 +27,9 @@ on:
         required: false
         default: "Manual test run"
 
+permissions:
+  contents: write
+
 jobs:
   scrape:
     name: "Fetch & Save Deals"
