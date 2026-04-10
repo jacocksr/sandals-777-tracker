@@ -375,13 +375,13 @@
 
 /* Price Range card */
 .price-range-wrap { padding: 0.5rem 0; }
-.price-range-track-wrap { position: relative; height: 6px; background: var(--sand); border-radius: 100px; margin: 2rem 0 1rem; }
+.price-range-track-wrap { position: relative; height: 6px; background: var(--sand); border-radius: 100px; margin: 2rem 0 1rem; overflow: visible;  }
 .price-range-track-fill { position: absolute; top: 0; height: 100%; background: linear-gradient(90deg, var(--ocean), var(--gold-light)); border-radius: 100px; }
 .price-range-dot {
   position: absolute; top: 50%; transform: translate(-50%, -50%);
   width: 12px; height: 12px; border-radius: 50%; background: var(--ocean-deep);
   border: 2px solid white; box-shadow: 0 1px 4px rgba(0,0,0,0.2); cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition: transform 0.15s, box-shadow 0.15s; z-index: 2;
 }
 .price-range-dot:hover { transform: translate(-50%, -50%) scale(1.35); box-shadow: 0 0 0 4px rgba(26,74,92,0.18); }
 .price-range-dot:hover .price-range-tooltip { display: block; }
@@ -1304,10 +1304,29 @@ function renderPriceRange() {
   const maxP = Math.max(...prices);
   const range = maxP - minP || 1;
 
-  const dots = sorted.map(d => {
-    const pct = ((parseFloat(d.priceFrom) - minP) / range) * 100;
-    const label = `${d.resort.replace('Sandals ', '')} — ${d.priceFrom}`;
-    return `<div class="price-range-dot" style="left:${pct}%;cursor:pointer;" onclick="openModal(${d.id})">
+  const dotData = sorted.map(d => ({
+    ...d,
+    price: parseFloat(d.priceFrom),
+    pct: ((parseFloat(d.priceFrom) - minP) / range) * 100
+  }));
+
+  const minGap = 2.2;
+
+  for (let i = 1; i < dotData.length; i++) {
+    if (dotData[i].pct - dotData[i - 1].pct < minGap) {
+      const midpoint = (dotData[i].pct + dotData[i - 1].pct) / 2;
+      dotData[i - 1].pct = midpoint - (minGap / 2);
+      dotData[i].pct = midpoint + (minGap / 2);
+    }
+  }
+
+  dotData.forEach(d => {
+    d.pct = Math.max(0, Math.min(100, d.pct));
+  });
+
+  const dots = dotData.map(d => {
+    const label = `${d.resort.replace('Sandals ', '')} — $${d.price}`;
+    return `<div class="price-range-dot" style="left:${d.pct}%;cursor:pointer;z-index:2;" onclick="openModal(${d.id})">
       <div class="price-range-tooltip">${label}</div>
     </div>`;
   }).join('');
