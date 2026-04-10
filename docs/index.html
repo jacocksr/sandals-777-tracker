@@ -393,6 +393,47 @@
 .price-range-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem; }
 .price-range-labels span { font-weight: 600; color: var(--ocean-deep); }
 
+ .price-range-endpoints {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 1.1rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid rgba(221,213,196,0.7);
+}
+
+.price-range-endpoint-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.price-range-endpoint-resort {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ocean-deep);
+  line-height: 1.35;
+}
+
+.price-range-endpoint-room {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin-top: 0.15rem;
+}
+
+@media (max-width: 640px) {
+  .price-range-endpoints {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+
+  .price-range-endpoint:last-child {
+    text-align: left !important;
+  }
+}   
 /* Heatmap */
 .heatmap-wrap { overflow-x: auto; }
 .heatmap-table { border-collapse: collapse; font-size: 0.72rem; min-width: 100%; }
@@ -1250,19 +1291,23 @@ function renderPriceRange() {
   const priced = currentDeals.filter(d => d.priceFrom && !isNaN(parseFloat(d.priceFrom)));
 
   if (priced.length < 2) {
-    el.innerHTML = `<div class="no-data-msg">Not enough price data for this week —<br>prices may not have loaded yet.</div>`;
+    el.innerHTML = `<div class="no-data-msg">Not enough price data for this week.<br>Prices may not have loaded yet.</div>`;
     return;
   }
 
-  const prices  = priced.map(d => parseFloat(d.priceFrom));
-  const minP    = Math.min(...prices);
-  const maxP    = Math.max(...prices);
-  const range   = maxP - minP || 1;
+  const sorted = [...priced].sort((a, b) => parseFloat(a.priceFrom) - parseFloat(b.priceFrom));
+  const cheapestDeal = sorted[0];
+  const priciestDeal = sorted[sorted.length - 1];
 
-  const dots = priced.map(d => {
+  const prices = sorted.map(d => parseFloat(d.priceFrom));
+  const minP = Math.min(...prices);
+  const maxP = Math.max(...prices);
+  const range = maxP - minP || 1;
+
+  const dots = sorted.map(d => {
     const pct = ((parseFloat(d.priceFrom) - minP) / range) * 100;
-    const label = `${d.resort.replace('Sandals ','')} · $${d.priceFrom}`;
-    return `<div class="price-range-dot" style="left:${pct}%;cursor:pointer" onclick="openModal(${d.id})">
+    const label = `${d.resort.replace('Sandals ', '')} — ${d.priceFrom}`;
+    return `<div class="price-range-dot" style="left:${pct}%;cursor:pointer;" onclick="openModal(${d.id})">
       <div class="price-range-tooltip">${label}</div>
     </div>`;
   }).join('');
@@ -1270,21 +1315,36 @@ function renderPriceRange() {
   el.innerHTML = `
     <div class="price-range-wrap">
       <div class="price-range-track-wrap">
-        <div class="price-range-track-fill" style="left:0;right:0"></div>
+        <div class="price-range-track-fill" style="left:0;right:0;"></div>
         ${dots}
       </div>
+
       <div class="price-range-labels">
         <div>Lowest<br><span>$${minP} pp/pn</span></div>
-        <div style="text-align:right">Highest<br><span>$${maxP} pp/pn</span></div>
+        <div style="text-align:right;">Highest<br><span>$${maxP} pp/pn</span></div>
       </div>
-    </div>`;
-}
 
+      <div class="price-range-endpoints">
+        <div class="price-range-endpoint">
+          <div class="price-range-endpoint-label">Cheapest deal</div>
+          <div class="price-range-endpoint-resort">${cheapestDeal.resort.replace('Sandals ', '')}</div>
+          <div class="price-range-endpoint-room">${cheapestDeal.roomName}</div>
+        </div>
+
+        <div class="price-range-endpoint" style="text-align:right;">
+          <div class="price-range-endpoint-label">Priciest deal</div>
+          <div class="price-range-endpoint-resort">${priciestDeal.resort.replace('Sandals ', '')}</div>
+          <div class="price-range-endpoint-room">${priciestDeal.roomName}</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
 // ── Row 3: Heatmap ───────────────────────────────────────────────────────────
 
 function renderHeatmap() {
   const el = document.getElementById('heatmapChart');
-  const recent = historyData.slice(-10);
+  const recent = historyData.slice(-4);
 
   if (recent.length < 2) {
     el.innerHTML = `<div class="no-data-msg">Not enough history yet.</div>`;
