@@ -767,27 +767,40 @@
   </section>
 
   <section class="history-section" id="history">
-    <div class="section-header">
-      <h2 class="section-title">Deal History</h2>
-      <span class="section-meta" id="historyMeta">Loading…</span>
-    </div>
-    <div style="background:white; border:1px solid var(--border); border-radius:8px; overflow:hidden; overflow-x:auto;">
-      <table class="history-table">
-        <thead>
-          <tr>
-            <th>Week Of</th>
-            <th>Resort</th>
-            <th>Room Category</th>
-            <th>Code</th>
-            <th>Price From</th>
-          </tr>
-        </thead>
-        <tbody id="historyBody">
-          <tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-muted)">Loading history…</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
+  <div class="section-header">
+    <h2 class="section-title">Deal History</h2>
+    <span class="section-meta" id="historyMeta">Loading…</span>
+  </div>
+
+  <div class="filter-bar" id="historyFilterBar">
+    <button class="filter-btn active" onclick="setHistoryRange(2, this)">Recent</button>
+    <button class="filter-btn" onclick="setHistoryRange(13, this)">3 Months</button>
+    <button class="filter-btn" onclick="setHistoryRange(26, this)">6 Months</button>
+    <button class="filter-btn" onclick="setHistoryRange(52, this)">1 Year</button>
+    <button class="filter-btn" onclick="setHistoryRange(0, this)">All</button>
+  </div>
+
+  <div style="background:white; border:1px solid var(--border); border-radius:8px; overflow:hidden; overflow-x:auto;">
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Week Of</th>
+          <th>Resort</th>
+          <th>Room Category</th>
+          <th>Code</th>
+          <th>Price From</th>
+        </tr>
+      </thead>
+      <tbody id="historyBody">
+        <tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-muted)">Loading history…</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="trends-toggle-wrap" id="historyToggleWrap" style="display:none;">
+    <button class="trends-toggle-btn" id="historyToggleBtn" onclick="toggleHistoryRange(this)">Show More History</button>
+  </div>
+</section>
 
   <section class="alert-section" id="alerts">
     <div class="alert-text">
@@ -851,7 +864,9 @@ function getCurrentWeekResortNames() {
 
 let currentDeals = [];
 let historyData  = [];
-
+let historyRangeWeeks = 2;
+let historyExpanded = false;
+  
 async function loadData() {
   try {
     const [dealsRes, histRes] = await Promise.all([
@@ -1886,39 +1901,92 @@ function renderTimelineInto(el, data) {
 
 // ─── HISTORY TABLE ───────────────────────────────────────────────────────────
 
+function setHistoryRange(weeks, btn) {
+  historyRangeWeeks = weeks;
+  historyExpanded = false;
+
+  document
+    .querySelectorAll('#historyFilterBar .filter-btn')
+    .forEach(b => b.classList.remove('active'));
+
+  if (btn) btn.classList.add('active');
+
+  renderHistory();
+}
+
+function toggleHistoryRange() {
+  historyExpanded = !historyExpanded;
+  renderHistory();
+}
+
 function renderHistory() {
+  const weeksToUse = historyRangeWeeks === 0
+    ? historyData
+    : historyData.slice(-historyRangeWeeks);
+
+  const sortedWeeks = [...weeksToUse].reverse();
   const rows = [];
-  const sorted = [...historyData].reverse();
-  sorted.forEach(week => {
+
+  sortedWeeks.forEach(week => {
     (week.deals || []).forEach(deal => {
-      rows.push({ week: week.weekLabel, ...deal });
+      rows.push({
+        week: week.weekLabel,
+        ...deal
+      });
     });
   });
 
+  const visibleRows = historyExpanded ? rows : rows.slice(0, 14);
+
   document.getElementById('historyMeta').textContent =
-    `${historyData.length} weeks · ${rows.length} total deals recorded`;
+    historyRangeWeeks === 0
+      ? `${historyData.length} weeks tracked · ${rows.length} deals shown`
+      : `${weeksToUse.length} weeks shown · ${rows.length} deals in range`;
 
-  // Build a set of currently active room codes + resort codes for matching
-  const activeKeys = new Set(currentDeals.map(d => `${d.resortCode}::${d.roomCode}`));
+  const activeKeys = new Set(
+    currentDeals.map(d => `${d.resortCode}|${d.roomCode}`)
+  );
 
-  document.getElementById('historyBody').innerHTML = rows.map(r => {
-    const key = `${r.resortCode}::${r.roomCode}`;
-    const isActive = activeKeys.has(key);
-    const liveDeal = isActive ? currentDeals.find(d => d.resortCode === r.resortCode && d.roomCode === r.roomCode) : null;
-    const clickAttr = liveDeal ? `onclick="openModal(${liveDeal.id})"` : '';
-    const activeClass = isActive ? 'history-row-active' : '';
-    const activeBadge = isActive ? `<span class="active-deal-badge">Active Now</span>` : '';
+  document.getElementById('historyBody').innerHTML = visibleRows.length
+    ? visibleRows.map(r => {
+        const key = `${r.resortCode}|${r.roomCode}`;
+        const isActive = activeKeys.has(key);
+        const liveDeal = isActive
+          ? currentDeals.find(d => d.resortCode === r.resortCode && d.roomCode === r.roomCode)
+          : null;
 
-    return `
-      <tr class="${activeClass}" ${clickAttr} title="${isActive ? 'Click to view this deal ↑' : ''}">
-        <td style="color:var(--text-muted);font-size:0.82rem;white-space:nowrap">${r.week}${activeBadge}</td>
-        <td><span class="resort-tag">${r.resortCode}</span> <span style="font-size:0.82rem">${(r.resort||'').replace('Sandals ','')}</span></td>
-        <td style="font-size:0.84rem;max-width:260px">${r.roomName || '–'}</td>
-        <td style="font-size:0.8rem;color:var(--text-muted)">${r.roomCode || '–'}</td>
-        <td style="font-size:0.8rem;color:var(--text-muted)">${r.priceFrom ? '$'+r.priceFrom+' pp/pn' : '–'}</td>
-      </tr>
-    `;
-  }).join('');
+        const clickAttr = liveDeal ? `onclick="openModal(${liveDeal.id})"` : '';
+        const activeClass = isActive ? 'history-row-active' : '';
+        const activeBadge = isActive ? `<span class="active-deal-badge">Active Now</span>` : '';
+
+        return `
+          <tr class="${activeClass}" ${clickAttr} ${isActive ? 'title="Click to view this deal"' : ''}>
+            <td style="color:var(--text-muted);font-size:0.82rem;white-space:nowrap">
+              ${r.week}${activeBadge}
+            </td>
+            <td>
+              <span class="resort-tag">${r.resortCode}</span>
+              <span style="font-size:0.82rem">${r.resort.replace('Sandals ', '')}</span>
+            </td>
+            <td style="font-size:0.84rem;max-width:260px">${r.roomName}</td>
+            <td style="font-size:0.8rem;color:var(--text-muted)">${r.roomCode || '–'}</td>
+            <td style="font-size:0.8rem;color:var(--text-muted)">
+              ${r.priceFrom ? '$' + r.priceFrom + ' pp/pn' : '–'}
+            </td>
+          </tr>
+        `;
+      }).join('')
+    : `<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-muted)">No history available for this range.</td></tr>`;
+
+  const toggleWrap = document.getElementById('historyToggleWrap');
+  const toggleBtn = document.getElementById('historyToggleBtn');
+
+  if (rows.length > 14) {
+    toggleWrap.style.display = 'block';
+    toggleBtn.textContent = historyExpanded ? 'Show Less History' : 'Show More History';
+  } else {
+    toggleWrap.style.display = 'none';
+  }
 }
 
 // ─── HERO STATS ─────────────────────────────────────────────────────────────
