@@ -1,0 +1,112 @@
+# .github/workflows/beaches-scrape-weekly.yml
+#
+# Runs every Wednesday starting at 04:10 UTC (offset by 5 min from Sandals workflow)
+# and retries hourly until 10:10 UTC in case Beaches updates late.
+# Max 7 attempts total. Once deals are successfully updated, later
+# runs that same day will detect no change and skip the commit.
+
+name: "Scrape Beaches 7·7·7 Deals"
+
+on:
+  # ── Attempt 1: 04:10 UTC (midnight ET) ──
+  # ── Attempts 2–7: every hour until 10:10 UTC ──
+  schedule:
+    - cron: "10 4 * * 3"   # 04:10 UTC — attempt 1
+    - cron: "10 5 * * 3"   # 05:10 UTC — attempt 2
+    - cron: "10 6 * * 3"   # 06:10 UTC — attempt 3
+    - cron: "10 7 * * 3"   # 07:10 UTC — attempt 4
+    - cron: "10 8 * * 3"   # 08:10 UTC — attempt 5
+    - cron: "10 9 * * 3"   # 09:10 UTC — attempt 6
+    - cron: "10 10 * * 3"  # 10:10 UTC — attempt 7 (final)
+
+  # ── Manual trigger ──
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Why are you running this manually?"
+        required: false
+        default: "Manual test run"
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    name: "Fetch & Save Beaches Deals"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: "Set up Python 3.12"
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: "Install dependencies"
+        run: |
+          pip install playwright beautifulsoup4 requests
+          playwright install chromium
+
+      # Skip if beaches-deals.json was updated in the last 6 days
+      - name: "Check if already up to date"
+        id: freshcheck
+        run: |
+          python3 - <<'PYEOF'
+          import json, sys
+          from pathlib import Path
+          from datetime import datetime, timezone, timedelta
+
+          deals_file = Path("docs/data/beaches-deals.json")
+          if not deals_file.exists():
+              with open("$GITHUB_OUTPUT", "a") as f:
+                  f.write("fresh=false\n")
+              sys.exit(0)
+
+          data = json.loads(deals_file.read_text())
+          fetched_at = datetime.fromisoformat(data.get("fetchedAt", "2000-01-01T00:00:00+00:00"))
+          age_hours = (datetime.now(timezone.utc) - fetched_at).total_seconds() / 3600
+
+          is_fresh = age_hours < 144
+          result = "true" if is_fresh else "false"
+          print(f"Age: {age_hours:.1f}h — fresh={result}")
+          with open("$GITHUB_OUTPUT", "a") as f:
+              f.write(f"fresh={result}\n")
+          PYEOF
+        env:
+          GITHUB_OUTPUT: ${{ runner.temp }}/github_output.txt
+
+      - name: "Run Beaches scraper"
+        if: steps.freshcheck.outputs.fresh != 'true'
+        run: python scripts/beaches-scraper.py
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: /home/runner/.cache/ms-playwright
+
+      - name: "Check for changes"
+        id: changes
+        run: |
+          git diff --quiet docs/ && echo "changed=false" >> $GITHUB_OUTPUT || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: "Commit updated Beaches deal data"
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name  "777-Watch Bot"
+          git config user.email "bot@777watch.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git add docs/data/beaches-deals.json docs/data/beaches-history.json docs/images/B*.jpg
+          git commit -m "🏖️ Beaches Weekly 7·7·7 deals update — $(date +'%Y-%m-%d %H:%M UTC')"
+          git push origin main
+
+      - name: "Log result"
+        run: |
+          if [ "${{ steps.changes.outputs.changed }}" = "true" ]; then
+            echo "✅ Beaches deals updated and committed successfully."
+          elif [ "${{ steps.freshcheck.outputs.fresh }}" = "true" ]; then
+            echo "⏭️  Already up to date — skipping scrape."
+          else
+            echo "⚠️  Scraper ran but no changes detected. Beaches may not have updated yet."
+          fi
