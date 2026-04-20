@@ -97,7 +97,7 @@ jobs:
           git config user.name  "777-Watch Bot"
           git config user.email "bot@777watch.com"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git add docs/data/beaches-deals.json docs/data/beaches-history.json docs/images/B*.jpg
+          git add docs/data/beaches-deals.json docs/data/beaches-history.json docs/images/
           git commit -m "🏖️ Beaches Weekly 7·7·7 deals update — $(date +'%Y-%m-%d %H:%M UTC')"
           git push origin main
 
