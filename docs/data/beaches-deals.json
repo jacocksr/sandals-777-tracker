@@ -1,0 +1,7 @@
+{
+  "weekLabel": "Apr 15 – Apr 21, 2026",
+  "fetchedAt": "2026-04-17T14:40:00.000000+00:00",
+  "dealCount": 0,
+  "deals": [],
+  "_note": "Placeholder — will be overwritten by beaches-scraper.py on first Wednesday run. Until then the dashboard will show the fallback example cards."
+}
