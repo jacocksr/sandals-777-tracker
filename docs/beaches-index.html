@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="images/favicon-beaches.ico" />
+  <title>7·7·7 Watch — Beaches Deal Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sky: #e8f6ff;
+      --sky-light: #f4fbff;
+      --ocean: #0077b6;
+      --ocean-deep: #023e6e;
+      --ocean-mid: #0096c7;
+      --teal: #00b4d8;
+      --teal-light: #48cae4;
+      --coral: #f77f5e;
+      --coral-light: #ff9a80;
+      --sun: #f9c74f;
+      --sun-bright: #ffdd57;
+      --lime: #52b788;
+      --lime-light: #74c69d;
+      --text: #1a2e3a;
+      --text-muted: #5a7080;
+      --border: #c8e6f5;
+      --white: #ffffff;
+      --sand: #fff8e8;
+      --sand-border: #ffe5a0;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--sky-light);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    html { scroll-behavior: smooth; }
+    section { scroll-margin-top: 90px; }
+
+    header {
+      background: var(--ocean-deep);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .logo {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .logo-mark {
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--sun-bright);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+    .logo-sub {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      line-height: 1;
+    }
+    .logo-brand-pill {
+      background: rgba(0,180,216,0.22);
+      border: 1px solid rgba(72,202,228,0.4);
+      color: var(--teal-light);
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 100px;
+      font-weight: 600;
+      margin-left: 0.3rem;
+      vertical-align: middle;
+    }
+
+    nav { display: flex; gap: 2rem; align-items: center; }
+    nav a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; font-weight: 500; }
+    nav a:hover { color: var(--sun-bright); }
+    .nav-cta { background: var(--coral) !important; color: white !important; padding: 0.45rem 1.1rem; border-radius: 20px; font-weight: 600 !important; }
+    .nav-sandals-link {
+      color: rgba(255,255,255,0.4) !important;
+      font-size: 0.72rem !important;
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+      transition: all 0.18s !important;
+    }
+    .nav-sandals-link:hover { color: rgba(255,255,255,0.8) !important; border-color: rgba(255,255,255,0.4) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(150deg, var(--ocean-deep) 0%, var(--ocean) 45%, var(--ocean-mid) 70%, var(--teal) 100%);
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 60% 40% at 20% 80%, rgba(249,199,79,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 80% 20%, rgba(0,180,216,0.18) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    /* Wave SVG at bottom */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 48px;
+      background: var(--sky-light);
+      clip-path: ellipse(55% 100% at 50% 100%);
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(249,199,79,0.18); border: 1px solid rgba(255,221,87,0.35);
+      color: var(--sun-bright); font-size: 0.72rem; letter-spacing: 0.18em;
+      text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 100px;
+      margin-bottom: 1.8rem; font-weight: 600;
+    }
+    .pulse { width: 6px; height: 6px; background: #52b788; border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.5; transform:scale(1.4); } }
+
+    .hero h1 {
+      font-family: 'Nunito', sans-serif;
+      font-size: clamp(2.6rem, 5.5vw, 4.5rem);
+      font-weight: 800;
+      color: white; line-height: 1.15; letter-spacing: 0.01em;
+      margin-bottom: 0.3rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--sun-bright);
+      font-size: clamp(4.2rem, 8.5vw, 7rem);
+      display: block;
+      line-height: 1;
+    }
+    .hero-sub {
+      font-size: 1.05rem; color: rgba(255,255,255,0.65); font-weight: 400;
+      margin: 1.2rem auto 2.5rem; max-width: 500px; line-height: 1.65;
+    }
+    .hero-family-badges {
+      display: flex; justify-content: center; gap: 0.7rem;
+      flex-wrap: wrap; margin-bottom: 2rem;
+    }
+    .family-badge {
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.8); font-size: 0.72rem; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 100px;
+      font-weight: 600;
+    }
+
+    .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .hero-stat-num {
+      font-family: 'Nunito', sans-serif;
+      font-size: 2.8rem; font-weight: 800; color: var(--sun-bright); line-height: 1;
+    }
+    .hero-stat-label { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-top: 4px; }
+
+    /* ── COUNTDOWN ── */
+    .countdown-bar {
+      background: linear-gradient(90deg, var(--teal) 0%, var(--ocean-mid) 100%);
+      padding: 0.7rem 2rem;
+      display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+    }
+    .countdown-bar-label { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.85); font-weight: 600; }
+    .countdown-units { display: flex; gap: 0.6rem; align-items: center; }
+    .countdown-unit { background: rgba(0,0,0,0.18); border-radius: 6px; padding: 0.3rem 0.55rem; min-width: 48px; text-align: center; }
+    .countdown-unit-val { font-family: 'Nunito', sans-serif; font-size: 1.5rem; font-weight: 800; color: white; line-height: 1; display: block; }
+    .countdown-unit-label { font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+    .countdown-sep { color: rgba(255,255,255,0.5); font-size: 1.2rem; font-weight: 800; }
+    .beaches-direct-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.4);
+      color: white; text-decoration: none; font-size: 0.72rem;
+      letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;
+      padding: 0.42rem 1rem; border-radius: 100px;
+      transition: background 0.18s;
+    }
+    .beaches-direct-link:hover { background: rgba(255,255,255,0.3); }
+
+    /* ── MAIN ── */
+    .main-content { max-width: 1280px; margin: 0 auto; padding: 3rem 2rem; }
+
+    .section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 2rem; border-bottom: 2px solid var(--border); padding-bottom: 1rem; }
+    .section-title { font-family: 'Nunito', sans-serif; font-size: 1.9rem; font-weight: 800; color: var(--ocean-deep); }
+    .section-meta { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 0.06em; }
+
+    .filter-bar { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .filter-btn {
+      padding: 0.42rem 1.1rem; border: 1.5px solid var(--border);
+      background: white; border-radius: 100px; font-size: 0.78rem; cursor: pointer;
+      transition: all 0.18s; color: var(--text-muted);
+      font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--ocean-deep); border-color: var(--ocean-deep); color: white;
+    }
+
+    .deal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; }
+
+    .deal-card {
+      background: white; border-radius: 16px; overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,119,182,0.08), 0 6px 20px rgba(0,119,182,0.05);
+      transition: transform 0.22s, box-shadow 0.22s; border: 1.5px solid var(--border);
+      cursor: pointer; animation: fadeUp 0.4s ease both;
+    }
+    .deal-card:hover { transform: translateY(-5px); box-shadow: 0 12px 36px rgba(0,119,182,0.15); }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+
+    .deal-card-img { height: 190px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .deal-card-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+    .deal-card:hover .deal-card-img img { transform: scale(1.04); }
+    .deal-card-img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(2,62,110,0.3) 0%, transparent 60%); pointer-events: none; }
+
+    .tier-badge { display: inline-block; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 8px; border-radius: 20px; font-weight: 700; margin-bottom: 0.5rem; }
+    .tier-butler  { background: rgba(249,199,79,0.15); color: #b8861a; border: 1px solid var(--sun); }
+    .tier-club    { background: rgba(0,119,182,0.1); color: var(--ocean); border: 1px solid var(--teal); }
+    .tier-luxury  { background: rgba(82,183,136,0.12); color: #2d8a5e; border: 1px solid var(--lime); }
+
+    .deal-badge { position: absolute; top: 12px; left: 12px; background: var(--coral); color: white; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.28rem 0.8rem; border-radius: 100px; font-weight: 700; }
+    .deal-discount-bubble { position: absolute; top: 12px; right: 12px; background: white; border-radius: 50%; width: 54px; height: 54px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+    .deal-discount-pct { font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 800; color: var(--coral); line-height: 1; text-align: center; }
+    .deal-discount-off { font-size: 0.52rem; letter-spacing: 0.06em; color: var(--text-muted); text-transform: uppercase; }
+
+    .family-icons { position: absolute; bottom: 12px; left: 12px; display: flex; gap: 4px; }
+    .family-icon { background: rgba(255,255,255,0.9); border-radius: 100px; padding: 2px 8px; font-size: 0.62rem; font-weight: 700; color: var(--ocean-deep); }
+
+    .deal-card-body { padding: 1.2rem 1.4rem 1.4rem; }
+    .deal-resort { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ocean-mid); font-weight: 700; margin-bottom: 0.3rem; }
+    .deal-room-name { font-family: 'Nunito', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--ocean-deep); line-height: 1.3; margin-bottom: 0.8rem; }
+
+    .deal-meta-row { display: flex; gap: 0; margin-bottom: 1rem; }
+    .deal-meta-item { display: flex; flex-direction: column; gap: 3px; flex: 1; padding: 0 1rem; }
+    .deal-meta-item:first-child { padding-left: 0; border-right: 1.5px solid var(--border); }
+    .deal-meta-item:last-child { padding-right: 0; }
+    .deal-meta-key { font-size: 0.63rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+    .deal-meta-val { font-size: 0.85rem; color: var(--text); font-weight: 600; line-height: 1.3; }
+
+    .deal-price-row { display: flex; align-items: flex-end; justify-content: space-between; padding-top: 0.9rem; border-top: 1.5px solid var(--border); }
+    .deal-price-from { font-size: 0.72rem; color: var(--text-muted); }
+    .deal-price { font-family: 'Nunito', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--ocean-deep); line-height: 1; }
+    .deal-price-night { font-size: 0.68rem; color: var(--text-muted); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 400; }
+    .deal-price-na { font-size: 0.82rem; color: var(--text-muted); font-style: italic; }
+
+    .deal-book-btn { background: var(--ocean); color: white; border: none; padding: 0.55rem 1.2rem; border-radius: 20px; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; transition: background 0.18s; white-space: nowrap; }
+    .deal-book-btn:hover { background: var(--ocean-mid); }
+
+    /* ── TREND SECTION ── */
+    .trend-section { margin-top: 4rem; }
+    .trend-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+    @media (max-width: 768px) { .trend-grid-2 { grid-template-columns: 1fr; } }
+
+    #trendsExpanded { display: none; }
+    .trends-toggle-wrap { text-align: center; margin-top: 1.5rem; }
+    .trends-toggle-btn {
+      background: white; border: 1.5px solid var(--border); color: var(--ocean-deep);
+      padding: 0.6rem 1.6rem; border-radius: 100px; font-size: 0.8rem;
+      letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; transition: all 0.18s;
+    }
+    .trends-toggle-btn:hover { background: var(--ocean-deep); color: white; border-color: var(--ocean-deep); }
+
+    .trend-card { background: white; border: 1.5px solid var(--border); border-radius: 14px; padding: 1.6rem; }
+    .trend-card-title { font-family: 'Nunito', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--ocean-deep); margin-bottom: 0.4rem; }
+    .trend-card-subtitle { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.2rem; font-weight: 500; }
+    .no-data-msg { display: flex; align-items: center; justify-content: center; height: 80px; font-size: 0.82rem; color: var(--text-muted); font-style: italic; text-align: center; line-height: 1.5; }
+    .trend-card-footer { display: flex; justify-content: flex-end; margin-top: 1.1rem; padding-top: 0.9rem; border-top: 1.5px solid var(--border); }
+    .trend-expand-btn {
+      background: none; border: 1.5px solid var(--border); color: var(--text-muted);
+      font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.35rem 0.9rem; border-radius: 100px; cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600;
+      transition: all 0.18s; display: flex; align-items: center; gap: 0.4rem;
+    }
+    .trend-expand-btn:hover { background: var(--ocean-deep); color: white; border-color: var(--ocean-deep); }
+
+    /* Price chart */
+    .price-chart-wrap { width: 100%; overflow: hidden; }
+    .price-chart-wrap svg { width: 100%; display: block; }
+
+    /* Price range */
+    .price-range-wrap { padding: 0.5rem 0; }
+    .price-range-track-wrap { position: relative; height: 8px; background: var(--sky); border-radius: 100px; margin: 2rem 0 1rem; overflow: visible; }
+    .price-range-track-fill { position: absolute; top: 0; height: 100%; background: linear-gradient(90deg, var(--teal), var(--sun)); border-radius: 100px; }
+    .price-range-dot {
+      position: absolute; top: 50%; transform: translate(-50%, -50%);
+      width: 14px; height: 14px; border-radius: 50%; background: var(--ocean-deep);
+      border: 2px solid white; box-shadow: 0 1px 4px rgba(0,0,0,0.2); cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s; z-index: 2;
+    }
+    .price-range-dot:hover { transform: translate(-50%, -50%) scale(1.35); box-shadow: 0 0 0 4px rgba(0,119,182,0.2); }
+    .price-range-dot:hover .price-range-tooltip { display: block; }
+    .price-range-tooltip { display: none; position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--ocean-deep); color: white; font-size: 0.68rem; white-space: nowrap; padding: 0.3rem 0.6rem; border-radius: 6px; pointer-events: none; z-index: 10; }
+    .price-range-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem; }
+    .price-range-labels span { font-weight: 700; color: var(--ocean-deep); }
+    .price-range-endpoints { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 1.1rem; padding-top: 0.95rem; border-top: 1.5px solid rgba(200,230,245,0.7); }
+    .price-range-endpoint-label { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem; font-weight: 600; }
+    .price-range-endpoint-resort { font-size: 0.82rem; font-weight: 700; color: var(--ocean-deep); line-height: 1.35; }
+    .price-range-endpoint-room { font-size: 0.72rem; color: var(--text-muted); line-height: 1.45; margin-top: 0.15rem; }
+
+    /* Heatmap */
+    .heatmap-wrap { overflow-x: auto; }
+    .heatmap-table { border-collapse: collapse; font-size: 0.72rem; min-width: 100%; }
+    .heatmap-table th { font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); padding: 0.3rem 0.4rem; font-weight: 600; text-align: center; white-space: nowrap; }
+    .heatmap-table th.resort-col { text-align: left; min-width: 130px; }
+    .heatmap-table td { padding: 0.25rem 0.4rem; text-align: center; }
+    .heatmap-table td.resort-name { text-align: left; font-size: 0.72rem; color: var(--text); white-space: nowrap; padding-right: 0.8rem; font-weight: 600; }
+    .heatmap-cell { display: inline-block; width: 22px; height: 22px; border-radius: 5px; background: var(--sky); transition: background 0.2s; }
+    .heatmap-cell.active { background: rgba(0,150,199,0.25); }
+    .heatmap-cell-current { cursor: pointer; border: 2px solid var(--sun) !important; background: var(--ocean-mid); box-shadow: 0 0 0 2px rgba(249,199,79,0.25); transition: background 0.2s, transform 0.15s; }
+    .heatmap-cell-current:hover { transform: scale(1.2); box-shadow: 0 0 0 4px rgba(249,199,79,0.35); }
+
+    /* Due soon */
+    .due-soon-list { display: flex; flex-direction: column; gap: 0.7rem; }
+    .due-soon-row { display: flex; align-items: center; gap: 0.8rem; }
+    .due-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .due-dot-hot  { background: var(--coral); }
+    .due-dot-warm { background: var(--sun); }
+    .due-dot-cool { background: var(--lime); }
+    .due-soon-resort { flex: 1; font-size: 0.82rem; color: var(--text); font-weight: 500; }
+    .due-soon-meta { font-size: 0.72rem; color: var(--text-muted); text-align: right; line-height: 1.4; }
+
+    /* Tier breakdown */
+    .tier-bar-wrap { margin-bottom: 1rem; }
+    .tier-bar-track { height: 28px; border-radius: 6px; overflow: hidden; display: flex; margin-bottom: 0.6rem; }
+    .tier-bar-seg { height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; color: white; transition: width 0.8s ease; overflow: hidden; white-space: nowrap; }
+    .tier-seg-butler  { background: var(--sun); color: var(--text); }
+    .tier-seg-club    { background: var(--ocean-mid); }
+    .tier-seg-luxury  { background: var(--lime); }
+    .tier-seg-other   { background: var(--border); color: var(--text-muted); }
+    .tier-legend { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .tier-legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--text-muted); font-weight: 500; }
+    .tier-legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+    /* Resort Timeline */
+    .timeline-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .timeline-table th { text-align: left; font-size: 0.63rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); padding: 0.6rem 0.8rem; background: var(--sky); border-bottom: 1.5px solid var(--border); font-weight: 600; }
+    .timeline-table td { padding: 0.75rem 0.8rem; border-bottom: 1px solid rgba(200,230,245,0.5); vertical-align: middle; }
+    .timeline-table tr:hover td { background: rgba(232,246,255,0.5); }
+    .freq-tag { font-size: 0.62rem; letter-spacing: 0.08em; padding: 0.2rem 0.55rem; border-radius: 100px; font-weight: 700; }
+    .freq-regular   { background: rgba(0,150,199,0.12); color: var(--ocean-mid); }
+    .freq-occasional{ background: rgba(249,199,79,0.18); color: #9a7800; }
+    .freq-rare      { background: rgba(247,127,94,0.12); color: var(--coral); }
+
+    .resort-beaches-link { color: var(--ocean-deep); text-decoration: none; font-weight: 600; border-bottom: 1px dotted var(--border); transition: color 0.15s; display: inline-flex; align-items: center; gap: 0.3rem; }
+    .resort-beaches-link:hover { color: var(--ocean-mid); }
+    .resort-beaches-link::after { content: '↗'; font-size: 0.6rem; opacity: 0.5; transition: opacity 0.15s; }
+    .resort-beaches-link:hover::after { opacity: 1; }
+
+    /* ── HOW IT WORKS ── */
+    .how-section { margin-top: 4rem; text-align: center; }
+    .how-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .how-step { padding: 1.8rem 1.2rem; background: white; border: 1.5px solid var(--border); border-radius: 14px; }
+    .how-step-num { font-family: 'Nunito', sans-serif; font-size: 3.5rem; font-weight: 800; color: var(--sky); line-height: 1; margin-bottom: 0.8rem; }
+    .how-step-title { font-family: 'Nunito', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--ocean-deep); margin-bottom: 0.5rem; }
+    .how-step-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ── HISTORY ── */
+    .history-section { margin-top: 4rem; }
+    .history-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+    .history-table th { text-align: left; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); padding: 0.6rem 1rem; background: var(--sky); border-bottom: 1.5px solid var(--border); font-weight: 600; }
+    .history-table td { padding: 0.85rem 1rem; border-bottom: 1px solid rgba(200,230,245,0.5); vertical-align: middle; }
+    .history-table tr:hover td { background: rgba(232,246,255,0.4); }
+    .resort-tag { background: var(--ocean-deep); color: white; font-size: 0.62rem; letter-spacing: 0.08em; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 700; }
+    .discount-tag { background: rgba(247,127,94,0.1); color: var(--coral); font-size: 0.75rem; font-weight: 700; padding: 0.18rem 0.45rem; border-radius: 4px; }
+
+    .history-row-active { cursor: pointer; }
+    .history-row-active:hover td { background: rgba(249,199,79,0.1) !important; }
+    .history-row-active td:first-child { border-left: 3px solid var(--sun); padding-left: calc(1rem - 3px); }
+    .active-deal-badge { display: inline-block; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 1px 6px; border-radius: 20px; background: rgba(249,199,79,0.2); color: #9a7800; border: 1px solid var(--sun); font-weight: 700; vertical-align: middle; margin-left: 0.4rem; }
+
+    /* ── TREND MODAL ── */
+    .trend-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(2,62,110,0.7); z-index: 200; align-items: center; justify-content: center; padding: 1.5rem; }
+    .trend-modal-overlay.active { display: flex; }
+    .trend-modal { background: white; border-radius: 16px; width: 100%; max-width: 820px; max-height: 90vh; overflow-y: auto; animation: modalIn 0.22s ease; position: relative; }
+    .trend-modal-header { padding: 1.6rem 2rem 1.2rem; border-bottom: 1.5px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+    .trend-modal-title { font-family: 'Nunito', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--ocean-deep); }
+    .trend-modal-subtitle { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.2rem; font-weight: 500; }
+    .trend-modal-close { background: var(--sky); border: none; color: var(--text-muted); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.18s; }
+    .trend-modal-close:hover { background: var(--border); }
+    .trend-modal-body { padding: 1.6rem 2rem 2rem; }
+    .time-range-tabs { display: flex; gap: 0.4rem; margin-bottom: 1.6rem; flex-wrap: wrap; }
+    .time-range-tab { background: var(--sky); border: 1.5px solid var(--border); color: var(--text-muted); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 100px; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; transition: all 0.15s; }
+    .time-range-tab:hover { border-color: var(--ocean-mid); color: var(--ocean-mid); }
+    .time-range-tab.active { background: var(--ocean-deep); border-color: var(--ocean-deep); color: white; }
+    .trend-modal-chart { min-height: 200px; }
+
+    /* ── DEAL MODAL ── */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(2,62,110,0.7); z-index: 200; align-items: center; justify-content: center; padding: 1.5rem; }
+    .modal-overlay.active { display: flex; }
+    .modal { background: white; border-radius: 16px; max-width: 580px; width: 100%; overflow: hidden; animation: modalIn 0.22s ease; position: relative; }
+    @keyframes modalIn { from { opacity:0; transform:scale(0.96) translateY(12px); } to { opacity:1; transform:scale(1) translateY(0); } }
+    .modal-carousel { position: relative; height: 240px; background: #ccc; overflow: hidden; }
+    .modal-carousel-track { display: flex; height: 100%; transition: transform 0.35s cubic-bezier(.4,0,.2,1); }
+    .modal-carousel-slide { flex: 0 0 100%; height: 100%; }
+    .modal-carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .modal-carousel-slide.placeholder { display: flex; align-items: center; justify-content: center; font-family: "Nunito", sans-serif; font-size: 5rem; color: rgba(255,255,255,0.15); }
+    .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.18); border: 1.5px solid rgba(255,255,255,0.5); color: white; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: background 0.18s; z-index: 2; backdrop-filter: blur(4px); }
+    .carousel-btn:hover { background: rgba(255,255,255,0.35); }
+    .carousel-btn.prev { left: 12px; }
+    .carousel-btn.next { right: 12px; }
+    .carousel-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; z-index: 2; }
+    .carousel-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.45); transition: background 0.2s, transform 0.2s; cursor: pointer; }
+    .carousel-dot.active { background: white; transform: scale(1.25); }
+    .modal-close { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.18); border: 1.5px solid rgba(255,255,255,0.5); color: white; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 0.9rem; z-index: 3; display: flex; align-items: center; justify-content: center; transition: background 0.18s; backdrop-filter: blur(4px); }
+    .modal-close:hover { background: rgba(255,255,255,0.35); }
+    .modal-body { padding: 1.6rem 2rem 2rem; }
+    .modal-eyebrow { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ocean-mid); margin-bottom: 0.4rem; font-weight: 700; }
+    .modal-title { font-family: 'Nunito', sans-serif; font-size: 1.45rem; font-weight: 800; color: var(--ocean-deep); margin-bottom: 1rem; line-height: 1.2; }
+    .modal-details { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.4rem; }
+    .modal-detail-key { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px; font-weight: 600; }
+    .modal-detail-val { font-size: 0.9rem; color: var(--text); font-weight: 600; }
+    .modal-actions { display: flex; gap: 0.8rem; }
+    .modal-btn-primary { flex: 1; background: var(--ocean-deep); color: white; border: none; padding: 0.85rem; border-radius: 8px; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; transition: background 0.18s; }
+    .modal-btn-primary:hover { background: var(--ocean-mid); }
+    .modal-btn-secondary { background: var(--sky); color: var(--text); border: none; padding: 0.85rem 1.2rem; border-radius: 8px; font-size: 0.82rem; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.18s; font-weight: 500; }
+    .modal-btn-secondary:hover { background: var(--border); }
+
+    /* ── ALERTS ── */
+    .alert-section { margin-top: 4rem; background: linear-gradient(135deg, var(--ocean-deep) 0%, var(--ocean-mid) 100%); border-radius: 16px; padding: 3rem; display: flex; align-items: center; gap: 3rem; flex-wrap: wrap; }
+    .alert-text { flex: 1; min-width: 240px; }
+    .alert-eyebrow { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 0.6rem; font-weight: 700; }
+    .alert-title { font-family: 'Nunito', sans-serif; font-size: 2rem; font-weight: 800; color: white; margin-bottom: 0.6rem; line-height: 1.2; }
+    .alert-desc { font-size: 0.88rem; color: rgba(255,255,255,0.6); line-height: 1.6; }
+    .alert-form { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+    .alert-form input { background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.22); color: white; padding: 0.7rem 1rem; border-radius: 8px; font-size: 0.88rem; width: 240px; font-family: 'Plus Jakarta Sans', sans-serif; outline: none; }
+    .alert-form input::placeholder { color: rgba(255,255,255,0.4); }
+    .alert-form input:focus { border-color: var(--sun-bright); }
+    .alert-form button { background: var(--sun); color: var(--text); border: none; padding: 0.7rem 1.4rem; border-radius: 8px; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.18s; }
+    .alert-form button:hover { background: var(--sun-bright); }
+
+    /* ── LOADING ── */
+    .skeleton { background: linear-gradient(90deg, #e8f6ff 25%, #f4fbff 50%, #e8f6ff 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .stale-banner { background: rgba(249,199,79,0.15); border: 1.5px solid var(--sun); color: #9a7800; padding: 0.9rem 1.2rem; border-radius: 10px; margin-bottom: 1.5rem; font-size: 0.88rem; line-height: 1.6; }
+    .stale-banner a { color: var(--ocean-mid); font-weight: 700; }
+    .error-banner { background: #fff0ed; border: 1.5px solid #ffb8a8; color: var(--coral); padding: 1rem 1.4rem; border-radius: 10px; font-size: 0.88rem; margin-bottom: 1.5rem; }
+
+    /* ── FOOTER ── */
+    footer { margin-top: 5rem; background: var(--ocean-deep); color: rgba(255,255,255,0.5); padding: 2.5rem; text-align: center; font-size: 0.78rem; line-height: 1.8; }
+    footer a { color: var(--teal-light); text-decoration: none; }
+
+    /* ── SISTER SITE BANNER ── */
+    .sister-banner {
+      background: linear-gradient(90deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 0.7rem 2rem;
+      display: flex; align-items: center; justify-content: center; gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .sister-banner-text { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); font-weight: 500; }
+    .sister-banner-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: rgba(255,255,255,0.65); text-decoration: none;
+      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+      font-weight: 600; border: 1px solid rgba(255,255,255,0.2);
+      padding: 0.3rem 0.8rem; border-radius: 100px; transition: all 0.18s;
+    }
+    .sister-banner-link:hover { color: var(--sun-bright); border-color: rgba(255,255,255,0.4); }
+
+    @media (max-width: 640px) {
+      .hero { padding: 4rem 1.5rem 3rem; }
+      .hero h1 { font-size: 2.4rem; }
+      .hero h1 em { font-size: 3.8rem; }
+      nav { display: none; }
+      .deal-grid { grid-template-columns: 1fr; }
+      .modal { margin: 0.5rem; }
+      .modal-carousel { height: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TREND EXPAND MODAL -->
+<div class="trend-modal-overlay" id="trendModal">
+  <div class="trend-modal" id="trendModalContent">
+    <div class="trend-modal-header">
+      <div>
+        <div class="trend-modal-title" id="trendModalTitle"></div>
+        <div class="trend-modal-subtitle" id="trendModalSubtitle"></div>
+      </div>
+      <button class="trend-modal-close" onclick="closeTrendModal()">✕</button>
+    </div>
+    <div class="trend-modal-body">
+      <div class="time-range-tabs" id="trendModalTabs"></div>
+      <div class="trend-modal-chart" id="trendModalChart"></div>
+    </div>
+  </div>
+</div>
+
+<!-- DEAL MODAL -->
+<div class="modal-overlay" id="dealModal">
+  <div class="modal" id="modalContent">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-carousel" id="modalCarousel">
+      <div class="modal-carousel-track" id="carouselTrack"></div>
+      <button class="carousel-btn prev" id="carouselPrev" onclick="carouselNav(-1)">&#8249;</button>
+      <button class="carousel-btn next" id="carouselNext" onclick="carouselNav(1)">&#8250;</button>
+      <div class="carousel-dots" id="carouselDots"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-eyebrow" id="modalResort"></div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-details" id="modalDetails"></div>
+      <div class="modal-actions">
+        <button class="modal-btn-primary" id="modalBookBtn">Book at Beaches.com →</button>
+        <button class="modal-btn-secondary" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<body id="top">
+<header>
+  <a href="#top" class="logo" aria-label="Back to top">
+    <span class="logo-mark">7·7·7 Watch</span>
+    <span class="logo-brand-pill">Beaches</span>
+  </a>
+  <nav>
+    <a href="#deals">This Week</a>
+    <a href="#trends">Trends</a>
+    <a href="#history">History</a>
+    <a href="index.html" class="nav-sandals-link">Sandals ↗</a>
+    <a href="#alerts" class="nav-cta">Get Alerts</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">
+    <div class="pulse"></div>
+    Auto-updated every Wednesday
+  </div>
+  <h1>Beaches <em>7·7·7</em><br>Deal Tracker</h1>
+  <p class="hero-sub">The only independent tracker for Beaches Resorts' family-friendly weekly secret — 7 rooms, 7% extra off, for exactly 7 days.</p>
+  <div class="hero-family-badges">
+    <span class="family-badge">👨‍👩‍👧‍👦 Family-Friendly</span>
+    <span class="family-badge">🏖️ Turks &amp; Caicos</span>
+    <span class="family-badge">🌴 Jamaica</span>
+    <span class="family-badge">🎢 Waterslides &amp; More</span>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num" id="statWeeks">–</div>
+      <div class="hero-stat-label">Weeks tracked</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num" id="statResorts">–</div>
+      <div class="hero-stat-label">Resorts seen</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">7</div>
+      <div class="hero-stat-label">Deals per week</div>
+    </div>
+  </div>
+</div>
+
+<!-- COUNTDOWN -->
+<div class="countdown-bar">
+  <span class="countdown-bar-label">This week's deals expire in</span>
+  <div class="countdown-units">
+    <div class="countdown-unit"><span class="countdown-unit-val" id="cdDays">--</span><span class="countdown-unit-label">days</span></div>
+    <span class="countdown-sep">:</span>
+    <div class="countdown-unit"><span class="countdown-unit-val" id="cdHours">--</span><span class="countdown-unit-label">hrs</span></div>
+    <span class="countdown-sep">:</span>
+    <div class="countdown-unit"><span class="countdown-unit-val" id="cdMins">--</span><span class="countdown-unit-label">min</span></div>
+    <span class="countdown-sep">:</span>
+    <div class="countdown-unit"><span class="countdown-unit-val" id="cdSecs">--</span><span class="countdown-unit-label">sec</span></div>
+  </div>
+  <a href="https://www.beaches.com/specials/suite-deals/" target="_blank" class="beaches-direct-link">
+    View on Beaches.com →
+  </a>
+</div>
+
+<!-- MAIN -->
+<div class="main-content">
+
+  <section id="deals">
+    <div class="section-header">
+      <h2 class="section-title">This Week's 7·7·7 Deals</h2>
+      <span class="section-meta" id="weekLabel">Loading…</span>
+    </div>
+    <div id="errorBanner" style="display:none" class="error-banner"></div>
+    <div id="staleBanner" style="display:none" class="stale-banner">
+      ⏳ This week's deals are still loading — Beaches updates their site late on Tuesday night.
+      Check back later today, or <a href="https://www.beaches.com/specials/suite-deals/" target="_blank">view them directly on Beaches.com</a>.
+    </div>
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" onclick="filterDeals('all', this)">All Resorts</button>
+    </div>
+    <div class="deal-grid" id="dealGrid">
+      <div class="deal-card" style="pointer-events:none">
+        <div class="deal-card-img skeleton" style="background:none"></div>
+        <div class="deal-card-body"><div class="skeleton" style="height:12px;width:60%;margin-bottom:12px"></div><div class="skeleton" style="height:20px;width:90%;margin-bottom:16px"></div><div class="skeleton" style="height:12px;width:40%"></div></div>
+      </div>
+      <div class="deal-card" style="pointer-events:none">
+        <div class="deal-card-img skeleton" style="background:none"></div>
+        <div class="deal-card-body"><div class="skeleton" style="height:12px;width:60%;margin-bottom:12px"></div><div class="skeleton" style="height:20px;width:90%;margin-bottom:16px"></div><div class="skeleton" style="height:12px;width:40%"></div></div>
+      </div>
+      <div class="deal-card" style="pointer-events:none">
+        <div class="deal-card-img skeleton" style="background:none"></div>
+        <div class="deal-card-body"><div class="skeleton" style="height:12px;width:60%;margin-bottom:12px"></div><div class="skeleton" style="height:20px;width:90%;margin-bottom:16px"></div><div class="skeleton" style="height:12px;width:40%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="trend-section" id="trends">
+    <div class="section-header">
+      <h2 class="section-title">Trending Insights</h2>
+      <span class="section-meta" id="trendMeta">Based on tracked history</span>
+    </div>
+    <div class="trend-grid-2">
+      <div class="trend-card" id="trendCardPrice">
+        <div class="trend-card-title">Average Price Over Time</div>
+        <div class="trend-card-subtitle">Avg. $ per person / per night across all weekly deals</div>
+        <div id="priceOverTimeChart"><div class="no-data-msg">Loading…</div></div>
+        <div class="trend-card-footer">
+          <button class="trend-expand-btn" onclick="openTrendModal('price')">⤢ Expand</button>
+        </div>
+      </div>
+      <div class="trend-card" id="trendCardRange">
+        <div class="trend-card-title">This Week's Price Range</div>
+        <div class="trend-card-subtitle">Cheapest to most expensive deal currently active</div>
+        <div id="priceRangeChart"><div class="no-data-msg">Loading…</div></div>
+      </div>
+    </div>
+    <div class="trends-toggle-wrap">
+      <button class="trends-toggle-btn" onclick="toggleTrends(this)">Show More Insights ↓</button>
+    </div>
+    <div id="trendsExpanded">
+      <div class="trend-grid-2" style="margin-top:1.5rem">
+        <div class="trend-card" id="trendCardHeatmap">
+          <div class="trend-card-title">Resort Appearance Heatmap</div>
+          <div class="trend-card-subtitle">Which resorts appeared each week</div>
+          <div class="heatmap-wrap" id="heatmapChart"><div class="no-data-msg">Loading…</div></div>
+          <div class="trend-card-footer">
+            <button class="trend-expand-btn" onclick="openTrendModal('heatmap')">⤢ Expand</button>
+          </div>
+        </div>
+        <div class="trend-card" id="trendCardDueSoon">
+          <div class="trend-card-title">Due Soon</div>
+          <div class="trend-card-subtitle">Resorts overdue based on their appearance frequency</div>
+          <div class="due-soon-list" id="dueSoonList"><div class="no-data-msg">Loading…</div></div>
+          <div class="trend-card-footer">
+            <button class="trend-expand-btn" onclick="openTrendModal('duesoon')">⤢ Expand</button>
+          </div>
+        </div>
+      </div>
+      <div class="trend-card" style="margin-top:1.5rem" id="trendCardTier">
+        <div class="trend-card-title">Room Tier Breakdown</div>
+        <div class="trend-card-subtitle">Butler vs. Club vs. Luxury across all history</div>
+        <div id="tierBreakdown"><div class="no-data-msg">Loading…</div></div>
+        <div class="trend-card-footer">
+          <button class="trend-expand-btn" onclick="openTrendModal('tier')">⤢ Expand</button>
+        </div>
+      </div>
+      <div class="trend-card" style="margin-top:1.5rem" id="trendCardTimeline">
+        <div class="trend-card-title">Resort Timeline</div>
+        <div class="trend-card-subtitle">Full appearance history for every tracked resort</div>
+        <div style="overflow-x:auto">
+          <table class="timeline-table" id="timelineTable">
+            <thead>
+              <tr>
+                <th>Resort</th><th>Times Featured</th><th>First Seen</th><th>Last Seen</th><th>Avg. Gap</th><th>Frequency</th>
+              </tr>
+            </thead>
+            <tbody id="timelineBody">
+              <tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-muted)">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="trend-card-footer">
+          <button class="trend-expand-btn" onclick="openTrendModal('timeline')">⤢ Expand</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how-section">
+    <div class="section-header" style="justify-content:center;border:none;">
+      <h2 class="section-title">How the 7·7·7 Works at Beaches</h2>
+    </div>
+    <div class="how-steps">
+      <div class="how-step"><div class="how-step-num">7</div><div class="how-step-title">Seven Rooms</div><div class="how-step-desc">Only 7 specific room categories are included each week — across all Beaches properties in Turks &amp; Caicos and Jamaica.</div></div>
+      <div class="how-step"><div class="how-step-num">7</div><div class="how-step-title">Seven Percent Off</div><div class="how-step-desc">An additional 7% stacks on top of all current promotions — bringing total family savings even higher.</div></div>
+      <div class="how-step"><div class="how-step-num">7</div><div class="how-step-title">Seven Days Only</div><div class="how-step-desc">Every Wednesday the deals reset. Popular family suites and connecting rooms sell out fast.</div></div>
+      <div class="how-step"><div class="how-step-num">+</div><div class="how-step-title">Family Inclusive</div><div class="how-step-desc">Kids stay, eat, and play free. Combine with military discounts, early booking deals, and loyalty rewards.</div></div>
+    </div>
+  </section>
+
+  <section class="history-section" id="history">
+    <div class="section-header">
+      <h2 class="section-title">Deal History</h2>
+      <span class="section-meta" id="historyMeta">Loading…</span>
+    </div>
+    <div class="filter-bar" id="historyFilterBar">
+      <button class="filter-btn active" onclick="setHistoryRange(2, this)">Recent</button>
+      <button class="filter-btn" onclick="setHistoryRange(13, this)">3 Months</button>
+      <button class="filter-btn" onclick="setHistoryRange(26, this)">6 Months</button>
+      <button class="filter-btn" onclick="setHistoryRange(52, this)">1 Year</button>
+      <button class="filter-btn" onclick="setHistoryRange(0, this)">All</button>
+    </div>
+    <div style="background:white;border:1.5px solid var(--border);border-radius:12px;overflow:hidden;overflow-x:auto;">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Week Of</th><th>Resort</th><th>Room Category</th><th>Code</th><th>Price From</th>
+          </tr>
+        </thead>
+        <tbody id="historyBody">
+          <tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-muted)">Loading history…</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="trends-toggle-wrap" id="historyToggleWrap" style="display:none;">
+      <button class="trends-toggle-btn" id="historyToggleBtn" onclick="toggleHistoryRange(this)">Show More History</button>
+    </div>
+  </section>
+
+  <section class="alert-section" id="alerts">
+    <div class="alert-text">
+      <div class="alert-eyebrow">Never miss a family deal</div>
+      <div class="alert-title">Weekly 7·7·7<br>Email Alerts</div>
+      <div class="alert-desc">Get notified every Wednesday when new Beaches 7·7·7 deals drop. Perfect for planning the ultimate family vacation.</div>
+    </div>
+    <div>
+      <div class="alert-form">
+        <input type="email" placeholder="your@email.com" id="alertEmail" />
+        <button onclick="subscribeAlert()">Subscribe Free</button>
+      </div>
+      <p style="font-size:0.72rem;color:rgba(255,255,255,0.3);margin-top:0.8rem;">No spam. Independent of Beaches Resorts International.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p style="font-family:'Nunito',sans-serif;font-size:1.3rem;color:rgba(255,255,255,0.6);font-weight:800;margin-bottom:0.4rem;">7·7·7 Watch — Beaches</p>
+  <p>An independent deal tracker. Not affiliated with Beaches Resorts International.</p>
+  <p style="margin-top:0.5rem;">Deal data sourced weekly from <a href="https://www.beaches.com/specials/suite-deals/" target="_blank">beaches.com</a> · Built for families, by travelers.</p>
+  <p style="margin-top:0.8rem;">Also track <a href="index.html">Sandals 7·7·7 deals →</a></p>
+  <p style="margin-top:1rem;font-size:0.68rem;opacity:0.5;">© 2025 777Watch · Always verify pricing at Beaches.com before booking.</p>
+  <p style="margin-top:1rem;font-size:0.68rem;opacity:0.45;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.7;">
+    <strong style="opacity:0.7">Affiliate Disclosure:</strong> This site contains affiliate links. If you click through and complete a booking, we may earn a commission at no extra cost to you. This helps keep 7·7·7 Watch free and independent.
+  </p>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════
+//  BEACHES RESORT DATA
+// ═══════════════════════════════════════════════════════════════════════
+
+const RESORT_PAGE_SLUG = {
+  "Beaches Turks & Caicos": "turks-caicos",
+  "Beaches Negril":          "negril",
+};
+
+function getResortPageUrl(fullResortName) {
+  const slug = RESORT_PAGE_SLUG[fullResortName];
+  return slug ? `https://www.beaches.com/resorts/${slug}/` : `https://www.beaches.com/`;
+}
+
+let currentDeals = [];
+let historyData  = [];
+let historyRangeWeeks = 2;
+let historyExpanded = false;
+
+// ── DATA LOADING ─────────────────────────────────────────────────────────────
+
+async function loadData() {
+  try {
+    const [dealsRes, histRes] = await Promise.all([
+      fetch('data/beaches-deals.json'),
+      fetch('data/beaches-history.json'),
+    ]);
+    if (!dealsRes.ok) throw new Error(`beaches-deals.json: ${dealsRes.status}`);
+    if (!histRes.ok)  throw new Error(`beaches-history.json: ${histRes.status}`);
+
+    const dealsPayload = await dealsRes.json();
+    historyData        = await histRes.json();
+    currentDeals       = dealsPayload.deals || [];
+
+    const fetchedAt = new Date(dealsPayload.fetchedAt);
+    const ageHours  = (Date.now() - fetchedAt) / (1000 * 60 * 60);
+    const isWedOrLater = new Date().getUTCDay() >= 3;
+    if (ageHours > 9 * 24 || (isWedOrLater && ageHours > 36)) {
+      document.getElementById('staleBanner').style.display = 'block';
+    }
+
+    document.getElementById('weekLabel').textContent =
+      `Week of ${dealsPayload.weekLabel} · ${currentDeals.length} deals active`;
+
+    buildFilters();
+    renderDeals('all');
+    renderTrends();
+    renderHistory();
+    updateHeroStats();
+
+  } catch (err) {
+    console.error('[777Watch-Beaches] Data load error:', err);
+    document.getElementById('errorBanner').style.display = 'block';
+    document.getElementById('errorBanner').textContent =
+      '⚠ Could not load live deal data. Showing example deals. ' +
+      'If running locally, try a local server (see README).';
+    useFallbackData();
+  }
+}
+
+// ── COUNTDOWN ────────────────────────────────────────────────────────────────
+
+function getNextWednesdayMidnight() {
+  const now = new Date();
+  const utcDay = now.getUTCDay();
+  let daysUntilWed = (3 - utcDay + 7) % 7;
+  if (daysUntilWed === 0 && now.getUTCHours() >= 4) daysUntilWed = 7;
+  return new Date(Date.UTC(
+    now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + daysUntilWed, 4, 0, 0, 0
+  ));
+}
+
+const EXPIRY = getNextWednesdayMidnight();
+
+function updateCountdown() {
+  const diff = EXPIRY - new Date();
+  if (diff <= 0) return;
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cdDays').textContent  = String(d).padStart(2,'0');
+  document.getElementById('cdHours').textContent = String(h).padStart(2,'0');
+  document.getElementById('cdMins').textContent  = String(m).padStart(2,'0');
+  document.getElementById('cdSecs').textContent  = String(s).padStart(2,'0');
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// ── FILTERS ──────────────────────────────────────────────────────────────────
+
+function buildFilters() {
+  const bar = document.getElementById('filterBar');
+  bar.innerHTML = '<button class="filter-btn active" onclick="filterDeals(\'all\', this)">All Resorts</button>';
+  const codes = [...new Set(currentDeals.map(d => d.resortCode))];
+  codes.forEach(code => {
+    const deal = currentDeals.find(d => d.resortCode === code);
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.textContent = deal.resort.replace('Beaches ', '');
+    btn.onclick = function() { filterDeals(code, this); };
+    bar.appendChild(btn);
+  });
+}
+
+function filterDeals(code, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDeals(code);
+}
+
+// ── DEAL CARDS ───────────────────────────────────────────────────────────────
+
+function getRoomTier(roomName) {
+  const n = (roomName || '').toLowerCase();
+  if (n.includes('butler'))     return { label: 'Butler Level', cls: 'tier-butler' };
+  if (n.includes('club level')) return { label: 'Club Level',   cls: 'tier-club'   };
+  return                               { label: 'Luxury Level', cls: 'tier-luxury' };
+}
+
+function renderDeals(filter) {
+  const grid = document.getElementById('dealGrid');
+  const deals = filter === 'all' ? currentDeals : currentDeals.filter(d => d.resortCode === filter);
+
+  if (!deals.length) {
+    grid.innerHTML = '<p style="color:var(--text-muted);grid-column:1/-1;padding:2rem 0;">No deals match this filter.</p>';
+    return;
+  }
+
+  grid.innerHTML = deals.map((d, i) => {
+    const priceHtml = d.priceFrom
+      ? `<div>
+           <div class="deal-price-from">From</div>
+           <div class="deal-price">$${d.priceFrom}<span class="deal-price-night"> pp/pn</span></div>
+         </div>`
+      : `<div><div class="deal-price-na">Price: visit Beaches.com</div></div>`;
+
+    const imgSrc = d.imgPath
+      ? `https://jacocksr.github.io/sandals-777-tracker/${d.imgPath}`
+      : (d.imgUrl || '');
+
+    return `
+      <div class="deal-card" style="animation-delay:${i * 0.07}s" onclick="openModal(${d.id})">
+        <div class="deal-card-img" style="background:linear-gradient(135deg,${d.imgColor} 0%,${d.imgColor}bb 100%)">
+          ${imgSrc ? `<img src="${imgSrc}" alt="${d.roomName}" loading="lazy" onerror="this.style.display='none'">` : ''}
+          <div class="deal-card-img-overlay"></div>
+          <div class="deal-badge">7·7·7 Deal</div>
+          <div class="deal-discount-bubble">
+            <span class="deal-discount-pct">+7%</span>
+            <span class="deal-discount-off">extra off</span>
+          </div>
+          <div class="family-icons">
+            <span class="family-icon">👨‍👩‍👧</span>
+          </div>
+        </div>
+        <div class="deal-card-body">
+          <div class="deal-resort">${d.resort} · ${d.location}</div>
+          ${(t => t ? `<span class="tier-badge ${t.cls}">${t.label}</span>` : '')(getRoomTier(d.roomName))}
+          <div class="deal-room-name">${d.roomName}</div>
+          <div class="deal-meta-row">
+            <div class="deal-meta-item">
+              <span class="deal-meta-key">Room Code</span>
+              <span class="deal-meta-val">${d.roomCode || '–'}</span>
+            </div>
+            <div class="deal-meta-item">
+              <span class="deal-meta-key">Room View</span>
+              <span class="deal-meta-val" style="font-size:0.78rem">${d.roomView || '–'}</span>
+            </div>
+          </div>
+          <div class="deal-price-row">
+            ${priceHtml}
+            <button class="deal-book-btn" onclick="event.stopPropagation(); window.open('${d.bookUrl || 'https://www.beaches.com/specials/suite-deals/'}', '_blank')">Book Now</button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── MODAL ────────────────────────────────────────────────────────────────────
+
+let carouselIndex = 0;
+let carouselTotal = 0;
+
+function buildCarousel(deal) {
+  const BASE = 'https://jacocksr.github.io/sandals-777-tracker/';
+  const track = document.getElementById('carouselTrack');
+  const dots  = document.getElementById('carouselDots');
+  const prev  = document.getElementById('carouselPrev');
+  const next  = document.getElementById('carouselNext');
+  track.innerHTML = dots.innerHTML = '';
+  carouselIndex = 0;
+
+  const paths = (deal.imgPaths && deal.imgPaths.length)
+    ? deal.imgPaths
+    : (deal.imgPath ? [deal.imgPath] : []);
+
+  if (paths.length === 0) {
+    track.innerHTML = `<div class="modal-carousel-slide placeholder" style="background:linear-gradient(135deg,${deal.imgColor} 0%,${deal.imgColor}99 100%)">🌊</div>`;
+    prev.style.display = next.style.display = dots.style.display = 'none';
+    carouselTotal = 1;
+    return;
+  }
+
+  paths.forEach((p, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'modal-carousel-slide';
+    const img = document.createElement('img');
+    img.src = BASE + p;
+    img.alt = deal.roomName;
+    img.onerror = function() {
+      this.parentElement.className = 'modal-carousel-slide placeholder';
+      this.parentElement.style.background = `linear-gradient(135deg,${deal.imgColor} 0%,${deal.imgColor}99 100%)`;
+      this.parentElement.innerHTML = '🌊';
+    };
+    slide.appendChild(img);
+    track.appendChild(slide);
+    const dot = document.createElement('div');
+    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    dots.appendChild(dot);
+  });
+
+  carouselTotal = paths.length;
+  prev.style.display = next.style.display = carouselTotal > 1 ? 'flex' : 'none';
+  dots.style.display = carouselTotal > 1 ? 'flex' : 'none';
+  updateCarouselPosition();
+}
+
+function carouselNav(dir) {
+  carouselIndex = (carouselIndex + dir + carouselTotal) % carouselTotal;
+  updateCarouselPosition();
+}
+
+function goToSlide(idx) { carouselIndex = idx; updateCarouselPosition(); }
+
+function updateCarouselPosition() {
+  document.getElementById('carouselTrack').style.transform = `translateX(-${carouselIndex * 100}%)`;
+  document.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === carouselIndex));
+}
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('dealModal').classList.contains('active')) return;
+  if (e.key === 'ArrowLeft')  carouselNav(-1);
+  if (e.key === 'ArrowRight') carouselNav(1);
+  if (e.key === 'Escape')     closeModal();
+});
+
+function openModal(id) {
+  const d = currentDeals.find(x => x.id === id);
+  if (!d) return;
+  buildCarousel(d);
+  document.getElementById('modalResort').textContent = `${d.resort} · ${d.location}`;
+  document.getElementById('modalTitle').textContent  = d.roomName;
+  const tier = getRoomTier(d.roomName);
+  const existing = document.getElementById('modalTierBadge');
+  if (existing) existing.remove();
+  if (tier) {
+    const badge = document.createElement('span');
+    badge.id = 'modalTierBadge';
+    badge.className = `tier-badge ${tier.cls}`;
+    badge.textContent = tier.label;
+    badge.style.display = 'inline-block';
+    badge.style.marginBottom = '0.5rem';
+    document.getElementById('modalTitle').before(badge);
+  }
+  document.getElementById('modalDetails').innerHTML = `
+    <div><div class="modal-detail-key">Room Code</div><div class="modal-detail-val">${d.roomCode || '–'}</div></div>
+    <div><div class="modal-detail-key">Room View</div><div class="modal-detail-val">${d.roomView || '–'}</div></div>
+    <div><div class="modal-detail-key">Bedding</div><div class="modal-detail-val">${d.bedding || '–'}</div></div>
+    <div><div class="modal-detail-key">Extra Discount</div><div class="modal-detail-val" style="color:var(--coral);font-size:1.1rem">+7% on top of current deals</div></div>
+    <div><div class="modal-detail-key">Price From</div><div class="modal-detail-val" style="font-size:1.1rem;font-weight:700;color:var(--ocean-deep)">${d.priceFrom ? '$'+d.priceFrom+' <span style="font-size:0.75rem;font-weight:400;color:var(--text-muted)">per person / per night</span>' : 'See Beaches.com'}</div></div>
+  `;
+  document.getElementById('modalBookBtn').onclick = () => window.open(d.bookUrl || 'https://www.beaches.com/specials/suite-deals/', '_blank');
+  document.getElementById('dealModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('dealModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('dealModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+
+// ── TRENDS ───────────────────────────────────────────────────────────────────
+
+function toggleTrends(btn) {
+  const el = document.getElementById('trendsExpanded');
+  const expanded = el.style.display === 'block';
+  el.style.display = expanded ? 'none' : 'block';
+  btn.textContent = expanded ? 'Show More Insights ↓' : 'Show Less ↑';
+}
+
+function renderTrends() {
+  if (!historyData.length) return;
+  renderPriceOverTime();
+  renderPriceRange();
+  renderHeatmap();
+  renderDueSoon();
+  renderTierBreakdown();
+  renderTimeline();
+  document.getElementById('trendMeta').textContent = `Based on ${historyData.length} weeks of tracked data`;
+}
+
+// ── Price Over Time chart (shared) ────────────────────────────────────────────
+
+function buildPriceOverTimeChart(container, weeklyAvgs, isExpanded) {
+  if (weeklyAvgs.length < 2) {
+    container.innerHTML = `<div class="no-data-msg">Not enough price data yet —<br>check back after a few more weeks.</div>`;
+    return;
+  }
+  const W = isExpanded ? 700 : 400;
+  const H = isExpanded ? 220 : 150;
+  const PAD = { top: 30, right: 16, bottom: 30, left: 52 };
+  const iW = W - PAD.left - PAD.right;
+  const iH = H - PAD.top  - PAD.bottom;
+  const minP = Math.min(...weeklyAvgs.map(w => w.avg));
+  const maxP = Math.max(...weeklyAvgs.map(w => w.avg));
+  const pad  = (maxP - minP) * 0.12 || 60;
+  const axisMin = Math.max(0, Math.floor((minP - pad) / 50) * 50);
+  const axisMax = Math.ceil((maxP + pad) / 50) * 50;
+  const axisRange = axisMax - axisMin || 1;
+  const x = i => PAD.left + (weeklyAvgs.length > 1 ? (i / (weeklyAvgs.length - 1)) * iW : iW / 2);
+  const y = v => PAD.top + iH - ((v - axisMin) / axisRange) * iH;
+  const gridStep = Math.ceil((axisMax - axisMin) / 3 / 50) * 50;
+  const gridLines = [];
+  for (let gv = axisMin; gv <= axisMax; gv += gridStep) {
+    const gy = y(gv);
+    gridLines.push(`<line x1="${PAD.left}" y1="${gy}" x2="${W - PAD.right}" y2="${gy}" stroke="var(--border)" stroke-width="1" stroke-dasharray="4 3" opacity="0.9"/>
+      <text x="${PAD.left - 8}" y="${gy + 3.5}" text-anchor="end" font-size="9" fill="var(--text-muted)">$${gv}</text>`);
+  }
+  const barW = Math.max(8, Math.min(24, iW / weeklyAvgs.length * 0.5));
+  const bars = weeklyAvgs.map((w, i) => {
+    const bx = x(i) - barW / 2;
+    const bh = Math.max(2, ((w.avg - axisMin) / axisRange) * iH);
+    const by = PAD.top + iH - bh;
+    return `<rect x="${bx.toFixed(1)}" y="${by.toFixed(1)}" width="${barW.toFixed(1)}" height="${bh.toFixed(1)}" rx="3" fill="var(--ocean-mid)" opacity="0.18"/>
+      <text x="${x(i).toFixed(1)}" y="${H - 8}" text-anchor="middle" font-size="${isExpanded ? 9 : 8}" fill="var(--text-muted)">${w.label}</text>`;
+  }).join('');
+  const pts = weeklyAvgs.map((w, i) => `${x(i).toFixed(1)},${y(w.avg).toFixed(1)}`).join(' ');
+  const tipW = 160, tipH = 52, tipR = 8;
+  const dotData = weeklyAvgs.map((w, i) => {
+    const cx = x(i), cy = y(w.avg);
+    const tipX = Math.max(PAD.left, Math.min(W - PAD.right - tipW, cx - tipW / 2));
+    const tipY = cy - tipH - 14 < 0 ? cy + 14 : cy - tipH - 14;
+    return { cx, cy, tipX, tipY, avg: w.avg, label: w.label };
+  });
+  const dotHitAreas = dotData.map((d, i) => `<circle cx="${d.cx.toFixed(1)}" cy="${d.cy.toFixed(1)}" r="16" fill="transparent" class="chart-dot-hit" data-idx="${i}" style="cursor:default"/>`).join('');
+  const dotTooltips = dotData.map(d => `
+    <g class="chart-tooltip" opacity="0" style="pointer-events:none;transition:opacity 0.15s">
+      <rect x="${d.tipX.toFixed(1)}" y="${d.tipY.toFixed(1)}" width="${tipW}" height="${tipH}" rx="${tipR}" fill="var(--ocean-deep)"/>
+      <text x="${(d.tipX + tipW/2).toFixed(1)}" y="${(d.tipY + 19).toFixed(1)}" text-anchor="middle" font-size="14" font-weight="700" fill="white">Avg $${d.avg} pp/pn</text>
+      <text x="${(d.tipX + tipW/2).toFixed(1)}" y="${(d.tipY + 37).toFixed(1)}" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.65)">${d.label}</text>
+      <circle cx="${d.cx.toFixed(1)}" cy="${d.cy.toFixed(1)}" r="${isExpanded ? 6 : 5}" fill="white" stroke="var(--teal)" stroke-width="2"/>
+    </g>`).join('');
+  container.innerHTML = `<div class="price-chart-wrap"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="overflow:visible">
+    ${gridLines.join('')}${bars}
+    <polyline points="${pts}" fill="none" stroke="var(--teal-light)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <g class="chart-dots-base">${dotData.map(d => `<circle cx="${d.cx.toFixed(1)}" cy="${d.cy.toFixed(1)}" r="${isExpanded ? 6 : 5}" fill="white" stroke="var(--teal)" stroke-width="2"/>`).join('')}</g>
+    ${dotHitAreas}${dotTooltips}
+  </svg></div>`;
+  const hits = container.querySelectorAll('.chart-dot-hit');
+  const tips = container.querySelectorAll('.chart-tooltip');
+  hits.forEach((h, i) => {
+    h.addEventListener('mouseenter', () => tips[i]?.setAttribute('opacity', '1'));
+    h.addEventListener('mouseleave', () => tips[i]?.setAttribute('opacity', '0'));
+  });
+}
+
+function getWeeklyAvgs(data) {
+  return data.map(week => {
+    const prices = (week.deals||[]).map(d => parseFloat(d.priceFrom)).filter(p => !isNaN(p) && p > 0);
+    return { label: (week.weekLabel||'').split('–')[0].trim(), avg: prices.length ? Math.round(prices.reduce((a,b)=>a+b,0)/prices.length) : null };
+  }).filter(w => w.avg !== null);
+}
+
+function renderPriceOverTime() {
+  buildPriceOverTimeChart(document.getElementById('priceOverTimeChart'), getWeeklyAvgs(historyData.slice(-6)), false);
+}
+
+function renderPriceRange() {
+  const el = document.getElementById('priceRangeChart');
+  const priced = currentDeals.filter(d => d.priceFrom && !isNaN(parseFloat(d.priceFrom)));
+  if (priced.length < 2) { el.innerHTML = `<div class="no-data-msg">Not enough price data for this week.</div>`; return; }
+  const sorted = [...priced].sort((a,b) => parseFloat(a.priceFrom) - parseFloat(b.priceFrom));
+  const cheapest = sorted[0], priciest = sorted[sorted.length-1];
+  const prices = sorted.map(d => parseFloat(d.priceFrom));
+  const minP = Math.min(...prices), maxP = Math.max(...prices), range = maxP - minP || 1;
+  const dotData = sorted.map(d => ({ ...d, price: parseFloat(d.priceFrom), pct: ((parseFloat(d.priceFrom) - minP) / range) * 100 }));
+  const minGap = 2.2;
+  for (let i = 1; i < dotData.length; i++) {
+    if (dotData[i].pct - dotData[i-1].pct < minGap) {
+      const mid = (dotData[i].pct + dotData[i-1].pct) / 2;
+      dotData[i-1].pct = mid - minGap/2;
+      dotData[i].pct = mid + minGap/2;
+    }
+  }
+  dotData.forEach(d => d.pct = Math.max(0, Math.min(100, d.pct)));
+  const dots = dotData.map(d => `
+    <div class="price-range-dot" style="left:${d.pct}%;cursor:pointer" onclick="openModal(${d.id})">
+      <div class="price-range-tooltip">${d.resort.replace('Beaches ','')} — $${d.price}</div>
+    </div>`).join('');
+  el.innerHTML = `<div class="price-range-wrap">
+    <div class="price-range-track-wrap">
+      <div class="price-range-track-fill" style="left:0;right:0"></div>
+      ${dots}
+    </div>
+    <div class="price-range-labels">
+      <div>Lowest<br><span>$${minP} pp/pn</span></div>
+      <div style="text-align:right">Highest<br><span>$${maxP} pp/pn</span></div>
+    </div>
+    <div class="price-range-endpoints">
+      <div class="price-range-endpoint">
+        <div class="price-range-endpoint-label">Cheapest deal</div>
+        <div class="price-range-endpoint-resort">${cheapest.resort.replace('Beaches ','')}</div>
+        <div class="price-range-endpoint-room">${cheapest.roomName}</div>
+      </div>
+      <div class="price-range-endpoint" style="text-align:right">
+        <div class="price-range-endpoint-label">Priciest deal</div>
+        <div class="price-range-endpoint-resort">${priciest.resort.replace('Beaches ','')}</div>
+        <div class="price-range-endpoint-room">${priciest.roomName}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderHeatmap() { renderHeatmapInto(document.getElementById('heatmapChart'), historyData.slice(-4)); }
+
+function renderHeatmapInto(el, data) {
+  const recent = data.slice(-Math.min(data.length, 20));
+  if (recent.length < 2) { el.innerHTML = `<div class="no-data-msg">Not enough history yet.</div>`; return; }
+  const allResorts = [...new Set(data.flatMap(w => (w.deals||[]).map(d => d.resort)))].sort();
+  const curIdx = recent.length - 1;
+  const weekLabels = recent.map((w, i) => {
+    const raw = (w.weekLabel||'').split('–')[0].trim();
+    const d = new Date(raw);
+    const label = isNaN(d) ? raw : `${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
+    return i === curIdx ? `<th style="color:var(--sun);font-weight:700">${label} ★</th>` : `<th>${label}</th>`;
+  });
+  const rows = allResorts.map(resort => {
+    const shortName = resort.replace('Beaches ','');
+    const cells = recent.map((week, colIdx) => {
+      const deal = (week.deals||[]).find(d => d.resort === resort);
+      const appeared = !!deal, isCurrent = colIdx === curIdx;
+      if (appeared && isCurrent && deal) {
+        const liveDeal = currentDeals.find(d => d.resortCode === deal.resortCode);
+        const dealId = liveDeal ? liveDeal.id : null;
+        if (dealId) return `<td><span class="heatmap-cell heatmap-cell-current" onclick="openModal(${dealId})" title="View ${shortName} deal"></span></td>`;
+        return `<td><span class="heatmap-cell heatmap-cell-current"></span></td>`;
+      }
+      return `<td><span class="heatmap-cell ${appeared ? 'active' : ''}"></span></td>`;
+    }).join('');
+    return `<tr><td class="resort-name">${shortName}</td>${cells}</tr>`;
+  }).join('');
+  el.innerHTML = `<div class="heatmap-wrap"><table class="heatmap-table">
+    <thead><tr><th class="resort-col">Resort</th>${weekLabels.join('')}</tr></thead>
+    <tbody>${rows}</tbody>
+  </table></div>
+  <div style="font-size:0.68rem;color:var(--text-muted);margin-top:0.8rem;display:flex;flex-wrap:wrap;gap:0.8rem;align-items:center">
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:3px;background:rgba(0,150,199,0.25);vertical-align:middle;margin-right:3px"></span>Past Deal</span>
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:3px;background:var(--ocean-mid);border:2px solid var(--sun);vertical-align:middle;margin-right:3px"></span>Current Deal (click to expand)</span>
+  </div>`;
+}
+
+function renderDueSoon() { renderDueSoonInto(document.getElementById('dueSoonList'), historyData); }
+
+function renderDueSoonInto(el, data) {
+  if (data.length < 3) { el.innerHTML = `<div class="no-data-msg">Not enough history yet.</div>`; return; }
+  const resortWeeks = {};
+  data.forEach((week, idx) => {
+    (week.deals||[]).forEach(deal => {
+      const r = deal.resort || '';
+      if (!resortWeeks[r]) {
+        const loc = deal.location || '';
+        const locParts = loc.split(',').map(s => s.trim());
+        const country = locParts.length >= 2 ? locParts[locParts.length-1] : loc;
+        resortWeeks[r] = { indices: [], country };
+      }
+      resortWeeks[r].indices.push(idx);
+    });
+  });
+  const totalWeeks = data.length;
+  const results = Object.entries(resortWeeks).map(([resort, d]) => {
+    const { indices, country } = d;
+    const gaps = [];
+    for (let i = 1; i < indices.length; i++) gaps.push(indices[i] - indices[i-1]);
+    const avgGap   = gaps.length ? gaps.reduce((a,b)=>a+b,0)/gaps.length : totalWeeks;
+    const lastSeen = totalWeeks - 1 - indices[indices.length-1];
+    const overdue  = lastSeen - avgGap;
+    return { label: `${resort.replace('Beaches ','')} , ${country}`, lastSeen, avgGap: Math.round(avgGap), overdue };
+  }).sort((a,b) => b.overdue - a.overdue);
+  el.innerHTML = `<div class="due-soon-list" style="display:flex;flex-direction:column;gap:0.7rem">` +
+    results.map(r => {
+      const dotCls = r.overdue > 1 ? 'due-dot-hot' : r.overdue > 0 ? 'due-dot-warm' : 'due-dot-cool';
+      const status = r.overdue > 1 ? `${Math.round(r.overdue)}w overdue` : r.overdue > 0 ? 'Due soon' : 'On schedule';
+      const meta = r.lastSeen === 0
+        ? `<span style="color:var(--lime);font-weight:700">Deal currently active</span>`
+        : `Last seen ${r.lastSeen}w ago<br><span style="color:${r.overdue>0?'var(--coral)':'var(--lime)'}">${status}</span>`;
+      return `<div class="due-soon-row"><div class="due-dot ${dotCls}"></div><div class="due-soon-resort">${r.label}</div><div class="due-soon-meta">${meta}</div></div>`;
+    }).join('') + `</div>`;
+}
+
+function renderTierBreakdown() { renderTierBreakdownInto(document.getElementById('tierBreakdown'), historyData); }
+
+function renderTierBreakdownInto(el, data) {
+  const counts = { Butler: 0, Club: 0, Luxury: 0 };
+  data.forEach(week => {
+    (week.deals||[]).forEach(deal => {
+      const n = (deal.roomName||'').toLowerCase();
+      if      (n.includes('butler'))     counts.Butler++;
+      else if (n.includes('club level')) counts.Club++;
+      else                               counts.Luxury++;
+    });
+  });
+  const total = Object.values(counts).reduce((a,b)=>a+b,0);
+  if (!total) { el.innerHTML = `<div class="no-data-msg">No data yet.</div>`; return; }
+  const pct = k => Math.round((counts[k]/total)*100);
+  el.innerHTML = `<div class="tier-bar-wrap">
+    <div class="tier-bar-track">
+      ${counts.Butler ? `<div class="tier-bar-seg tier-seg-butler" style="width:${pct('Butler')}%">${pct('Butler')}%</div>` : ''}
+      ${counts.Club   ? `<div class="tier-bar-seg tier-seg-club"   style="width:${pct('Club')}%">${pct('Club')}%</div>` : ''}
+      ${counts.Luxury ? `<div class="tier-bar-seg tier-seg-luxury" style="width:${pct('Luxury')}%">${pct('Luxury')}%</div>` : ''}
+    </div>
+    <div class="tier-legend">
+      <div class="tier-legend-item"><div class="tier-legend-dot" style="background:var(--sun)"></div>Butler (${counts.Butler})</div>
+      <div class="tier-legend-item"><div class="tier-legend-dot" style="background:var(--ocean-mid)"></div>Club (${counts.Club})</div>
+      <div class="tier-legend-item"><div class="tier-legend-dot" style="background:var(--lime)"></div>Luxury (${counts.Luxury})</div>
+    </div>
+  </div>`;
+}
+
+function classifyFrequency(count, totalWeeks) {
+  if (totalWeeks <= 1) return 'rare';
+  const rate = count / totalWeeks;
+  if (rate >= 0.6)  return 'regular';
+  if (rate >= 0.3)  return 'occasional';
+  return 'rare';
+}
+
+function renderTimeline() { renderTimelineInto(document.getElementById('timelineBody'), historyData); }
+
+function renderTimelineInto(el, data) {
+  const resortData = {};
+  data.forEach((week, idx) => {
+    (week.deals||[]).forEach(deal => {
+      const r = deal.resort||'';
+      if (!resortData[r]) resortData[r] = { indices: [], label: r };
+      resortData[r].indices.push(idx);
+    });
+  });
+  const totalWeeks = data.length;
+  const rows = Object.values(resortData).map(r => {
+    const { indices } = r;
+    const gaps = [];
+    for (let i = 1; i < indices.length; i++) gaps.push(indices[i]-indices[i-1]);
+    const avgGap     = gaps.length ? (gaps.reduce((a,b)=>a+b,0)/gaps.length).toFixed(1) : '–';
+    const firstLabel = data[indices[0]]?.weekLabel?.split('–')[0].trim() || '–';
+    const lastLabel  = data[indices[indices.length-1]]?.weekLabel?.split('–')[0].trim() || '–';
+    const freq = classifyFrequency(indices.length, totalWeeks);
+    const tagClass = freq === 'regular' ? 'freq-regular' : freq === 'occasional' ? 'freq-occasional' : 'freq-rare';
+    const pageUrl  = getResortPageUrl(r.label);
+    return { name: r.label.replace('Beaches ',''), count: indices.length, firstLabel, lastLabel, avgGap, tagClass, tagLabel: freq.charAt(0).toUpperCase()+freq.slice(1), pageUrl };
+  }).sort((a,b) => b.count - a.count);
+  const container = typeof el.innerHTML !== 'undefined' ? el : document.getElementById('timelineBody');
+  const rowHtml = rows.map(r => `<tr>
+    <td><a class="resort-beaches-link" href="${r.pageUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${r.name}</a></td>
+    <td style="color:var(--text-muted)">${r.count}</td>
+    <td style="color:var(--text-muted);font-size:0.78rem">${r.firstLabel}</td>
+    <td style="color:var(--text-muted);font-size:0.78rem">${r.lastLabel}</td>
+    <td style="color:var(--text-muted)">${r.avgGap === '–' ? '–' : r.avgGap+'w'}</td>
+    <td><span class="freq-tag ${r.tagClass}">${r.tagLabel}</span></td>
+  </tr>`).join('');
+  if (el.tagName === 'TBODY' || el.id === 'timelineBody') {
+    el.innerHTML = rowHtml;
+  } else {
+    el.innerHTML = `<div style="overflow-x:auto"><table class="timeline-table">
+      <thead><tr><th>Resort</th><th>Times Featured</th><th>First Seen</th><th>Last Seen</th><th>Avg. Gap</th><th>Frequency</th></tr></thead>
+      <tbody>${rowHtml}</tbody>
+    </table></div>`;
+  }
+}
+
+// ── TREND MODAL ───────────────────────────────────────────────────────────────
+
+const TREND_MODAL_CONFIG = {
+  price:    { title: 'Average Price Over Time', subtitle: 'Avg. $ per person / per night across all weekly deals', tabs: [{label:'3 Months',weeks:13},{label:'6 Months',weeks:26},{label:'1 Year',weeks:52},{label:'All',weeks:0}] },
+  heatmap:  { title: 'Resort Appearance Heatmap', subtitle: 'Which resorts appeared in each weekly deal cycle', tabs: [{label:'3 Months',weeks:13},{label:'6 Months',weeks:26},{label:'1 Year',weeks:52},{label:'All',weeks:0}] },
+  duesoon:  { title: 'Due Soon', subtitle: 'Resorts overdue based on historical appearance frequency', tabs: [{label:'3 Months',weeks:13},{label:'6 Months',weeks:26},{label:'All',weeks:0}] },
+  tier:     { title: 'Room Tier Breakdown', subtitle: 'Butler vs. Club vs. Luxury split across selected period', tabs: [{label:'3 Months',weeks:13},{label:'6 Months',weeks:26},{label:'1 Year',weeks:52},{label:'All',weeks:0}] },
+  timeline: { title: 'Resort Timeline', subtitle: 'Full appearance history for every tracked resort', tabs: [{label:'3 Months',weeks:13},{label:'6 Months',weeks:26},{label:'1 Year',weeks:52},{label:'All',weeks:0}] },
+};
+
+let activeTrendType = null, activeTrendWeeks = 0;
+
+function openTrendModal(type) {
+  const cfg = TREND_MODAL_CONFIG[type];
+  if (!cfg) return;
+  activeTrendType = type;
+  document.getElementById('trendModalTitle').textContent    = cfg.title;
+  document.getElementById('trendModalSubtitle').textContent = cfg.subtitle;
+  const defaultTab = cfg.tabs[cfg.tabs.length-1];
+  activeTrendWeeks = defaultTab.weeks;
+  document.getElementById('trendModalTabs').innerHTML = cfg.tabs.map((t, i) =>
+    `<button class="time-range-tab${i === cfg.tabs.length-1 ? ' active' : ''}" onclick="selectTrendTab(this, ${t.weeks})">${t.label}</button>`
+  ).join('');
+  renderTrendModalChart(type, activeTrendWeeks);
+  document.getElementById('trendModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function selectTrendTab(btn, weeks) {
+  document.querySelectorAll('#trendModalTabs .time-range-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeTrendWeeks = weeks;
+  renderTrendModalChart(activeTrendType, weeks);
+}
+
+function renderTrendModalChart(type, weeks) {
+  const container = document.getElementById('trendModalChart');
+  const slice = weeks === 0 ? historyData : historyData.slice(-weeks);
+  if (type === 'price')    buildPriceOverTimeChart(container, getWeeklyAvgs(slice), true);
+  else if (type === 'heatmap')  renderHeatmapInto(container, slice);
+  else if (type === 'duesoon')  renderDueSoonInto(container, slice);
+  else if (type === 'tier')     renderTierBreakdownInto(container, slice);
+  else if (type === 'timeline') renderTimelineInto(container, slice);
+}
+
+function closeTrendModal() {
+  document.getElementById('trendModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('trendModal').classList.contains('active')) closeTrendModal();
+});
+document.getElementById('trendModal').addEventListener('click', function(e) { if (e.target === this) closeTrendModal(); });
+
+// ── HISTORY TABLE ─────────────────────────────────────────────────────────────
+
+function setHistoryRange(weeks, btn) {
+  historyRangeWeeks = weeks;
+  historyExpanded = false;
+  document.querySelectorAll('#historyFilterBar .filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderHistory();
+}
+
+function toggleHistoryRange() { historyExpanded = !historyExpanded; renderHistory(); }
+
+function renderHistory() {
+  const weeksToUse = historyRangeWeeks === 0 ? historyData : historyData.slice(-historyRangeWeeks);
+  const sortedWeeks = [...weeksToUse].reverse();
+  const rows = [];
+  sortedWeeks.forEach(week => (week.deals||[]).forEach(deal => rows.push({ week: week.weekLabel, ...deal })));
+  const visibleRows = historyExpanded ? rows : rows.slice(0, 14);
+  document.getElementById('historyMeta').textContent = historyRangeWeeks === 0
+    ? `${historyData.length} weeks tracked · ${rows.length} deals shown`
+    : `${weeksToUse.length} weeks shown · ${rows.length} deals in range`;
+  const activeKeys = new Set(currentDeals.map(d => `${d.resortCode}|${d.roomCode}`));
+  document.getElementById('historyBody').innerHTML = visibleRows.length
+    ? visibleRows.map(r => {
+        const key = `${r.resortCode}|${r.roomCode}`;
+        const isActive = activeKeys.has(key);
+        const liveDeal = isActive ? currentDeals.find(d => d.resortCode === r.resortCode && d.roomCode === r.roomCode) : null;
+        const clickAttr = liveDeal ? `onclick="openModal(${liveDeal.id})"` : '';
+        const activeClass = isActive ? 'history-row-active' : '';
+        const activeBadge = isActive ? `<span class="active-deal-badge">Active Now</span>` : '';
+        return `<tr class="${activeClass}" ${clickAttr} ${isActive ? 'title="Click to view this deal"' : ''}>
+          <td style="color:var(--text-muted);font-size:0.82rem;white-space:nowrap">${r.week}${activeBadge}</td>
+          <td><span class="resort-tag">${r.resortCode}</span> <span style="font-size:0.82rem">${r.resort.replace('Beaches ','')}</span></td>
+          <td style="font-size:0.84rem;max-width:260px">${r.roomName}</td>
+          <td style="font-size:0.8rem;color:var(--text-muted)">${r.roomCode||'–'}</td>
+          <td style="font-size:0.8rem;color:var(--text-muted)">${r.priceFrom ? '$'+r.priceFrom+' pp/pn' : '–'}</td>
+        </tr>`;
+      }).join('')
+    : `<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-muted)">No history available for this range.</td></tr>`;
+  const tw = document.getElementById('historyToggleWrap');
+  const tb = document.getElementById('historyToggleBtn');
+  if (rows.length > 14) { tw.style.display = 'block'; tb.textContent = historyExpanded ? 'Show Less History' : 'Show More History'; }
+  else tw.style.display = 'none';
+}
+
+// ── HERO STATS ────────────────────────────────────────────────────────────────
+
+function updateHeroStats() {
+  document.getElementById('statWeeks').textContent = historyData.length || '–';
+  const allResorts = new Set();
+  historyData.forEach(w => (w.deals||[]).forEach(d => allResorts.add(d.resortCode)));
+  document.getElementById('statResorts').textContent = allResorts.size || '–';
+}
+
+// ── ALERT SIGNUP ──────────────────────────────────────────────────────────────
+
+function subscribeAlert() {
+  const email = document.getElementById('alertEmail').value;
+  if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
+  document.getElementById('alertEmail').value = '';
+  alert(`You're on the list! We'll alert ${email} every Wednesday when new Beaches 7·7·7 deals drop.`);
+}
+
+// ── FALLBACK DATA ─────────────────────────────────────────────────────────────
+
+function useFallbackData() {
+  currentDeals = [
+    { id:1, resortCode:"BTC", resort:"Beaches Turks & Caicos", location:"Providenciales, Turks & Caicos", imgColor:"#0077b6", roomCode:"CFB1", roomName:"Caribbean Family Butler Suite", priceFrom:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
+    { id:2, resortCode:"BTC", resort:"Beaches Turks & Caicos", location:"Providenciales, Turks & Caicos", imgColor:"#0096c7", roomCode:"ITV",  roomName:"Italian Village Club Level Two Bedroom Family Suite", priceFrom:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
+    { id:3, resortCode:"BTC", resort:"Beaches Turks & Caicos", location:"Providenciales, Turks & Caicos", imgColor:"#023e6e", roomCode:"KWL",  roomName:"Key West Village Luxury Room with Garden View", priceFrom:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
+    { id:4, resortCode:"BNG", resort:"Beaches Negril", location:"Negril, Jamaica", imgColor:"#00b4d8", roomCode:"FCL1", roomName:"Family Club Level One Bedroom Suite", priceFrom:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
+    { id:5, resortCode:"BNG", resort:"Beaches Negril", location:"Negril, Jamaica", imgColor:"#48cae4", roomCode:"BFS",  roomName:"Beachfront Luxury Suite with Soaking Tub", priceFrom:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
+    { id:6, resortCode:"BNG", resort:"Beaches Negril", location:"Negril, Jamaica", imgColor:"#0077b6", roomCode:"GLX",  roomName:"Grand Luxe Oceanview Room", priceFrom:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
+    { id:7, resortCode:"BTC", resort:"Beaches Turks & Caicos", location:"Providenciales, Turks & Caicos", imgColor:"#52b788", roomCode:"FPB",  roomName:"French Village Poolside Butler Suite", priceFrom:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
+  ];
+  document.getElementById('weekLabel').textContent = "Example data — scraper not yet run";
+  buildFilters();
+  renderDeals('all');
+}
+
+loadData();
+</script>
+</body>
+</html>
