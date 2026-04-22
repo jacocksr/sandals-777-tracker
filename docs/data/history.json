@@ -1149,7 +1149,7 @@
   },
   {
     "weekLabel": "Apr 22 – Apr 28, 2026",
-    "fetchedAt": "2026-04-22T08:03:34.356961+00:00",
+    "fetchedAt": "2026-04-22T08:54:33.956594+00:00",
     "deals": [
       {
         "id": 1,
@@ -1170,7 +1170,7 @@
         "roomView": "Pool, Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 903,
+        "priceFrom": 761,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/sandals-saint-vincent/rooms-suites/vhp/"
       },
@@ -1193,7 +1193,7 @@
         "roomView": "Beachfront, Oceanfront, Oceanview, Pool",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 857,
+        "priceFrom": 679,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/sandals-halcyon-beach/rooms-suites/jbp/"
       },
@@ -1216,34 +1216,12 @@
         "roomView": "Pool",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 479,
+        "priceFrom": 426,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/sandals-barbados/rooms-suites/1b/"
       },
       {
         "id": 4,
-        "resortCode": "SCR",
-        "resort": "Sandals Royal Curacao",
-        "location": "Santa Barbara, Curaçao",
-        "imgColor": "#1a6878",
-        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/scr/accommodations/large/scr-347.jpg",
-        "imgPath": "images/SCR_BLX.jpg",
-        "imgPaths": [
-          "images/SCR_BLX.jpg",
-          "images/SCR_BLX_2.jpg",
-          "images/SCR_BLX_3.jpg"
-        ],
-        "roomCode": "BLX",
-        "roomName": "Sunchi Beachside Club Level Room",
-        "roomView": "Partial Oceanview, Tropical Garden",
-        "bedding": "1 King Bed",
-        "discount": "7%+ off",
-        "priceFrom": 404,
-        "priceWas": null,
-        "bookUrl": "https://www.sandals.com/royal-curacao/rooms-suites/blx/"
-      },
-      {
-        "id": 5,
         "resortCode": "SRB",
         "resort": "Sandals Royal Bahamian",
         "location": "Nassau, Bahamas",
@@ -1261,12 +1239,12 @@
         "roomView": "Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 396,
+        "priceFrom": 394,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/elx/"
       },
       {
-        "id": 6,
+        "id": 5,
         "resortCode": "SAB",
         "resort": "Sandals Grande Antigua",
         "location": "St. John's, Antigua",
@@ -1288,6 +1266,28 @@
         "bookUrl": "https://www.sandals.com/sandals-grande-antigua/rooms-suites/mo/"
       },
       {
+        "id": 6,
+        "resortCode": "SCR",
+        "resort": "Sandals Royal Curacao",
+        "location": "Santa Barbara, Curaçao",
+        "imgColor": "#1a6878",
+        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/scr/accommodations/large/scr-347.jpg",
+        "imgPath": "images/SCR_BLX.jpg",
+        "imgPaths": [
+          "images/SCR_BLX.jpg",
+          "images/SCR_BLX_2.jpg",
+          "images/SCR_BLX_3.jpg"
+        ],
+        "roomCode": "BLX",
+        "roomName": "Sunchi Beachside Club Level Room",
+        "roomView": "Partial Oceanview, Tropical Garden",
+        "bedding": "1 King Bed",
+        "discount": "7%+ off",
+        "priceFrom": 360,
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/royal-curacao/rooms-suites/blx/"
+      },
+      {
         "id": 7,
         "resortCode": "SGO",
         "resort": "Sandals Ochi",
@@ -1305,7 +1305,7 @@
         "roomView": "Pool, Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 327,
+        "priceFrom": 299,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/ochi/rooms-suites/npv/"
       }
