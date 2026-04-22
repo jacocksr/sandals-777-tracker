@@ -86,7 +86,20 @@
     nav { display: flex; gap: 2rem; align-items: center; }
     nav a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
     nav a:hover { color: var(--gold-light); }
-    .nav-cta { background: var(--coral) !important; color: white !important; padding: 0.45rem 1.1rem; border-radius: 2px; font-weight: 500 !important; }
+    .nav-cta { background: var(--coral) !important; color: white !important; padding: 0.45rem 1.1rem; border-radius: 2px; font-weight: 550 !important; transition: all 0.18s !important }
+	
+.nav-cta:hover {background: rgba(185,90,65,1)!important; color: white !important; padding: 0.45rem 1.1rem; border-radius: 2px; font-weight: 550 !important; }
+
+.nav-beaches-link {
+      color: rgba(255,255,255,0.5) !important;
+      font-size: 0.80rem !important;
+	font-weight: 500 !important;
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+      transition: all 0.18s !important;
+    }
+    .nav-beaches-link:hover { color: rgba(212,170,74,1) !important; border-color: rgba(212,170,74,1) !important; }
 
     .hero {
       background: linear-gradient(160deg, var(--ocean-deep) 0%, var(--ocean) 55%, #2a6878 100%);
@@ -103,7 +116,7 @@
       pointer-events: none;
     }
 
-    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(184,146,42,0.18); border: 1px solid rgba(212,170,74,0.35); color: var(--gold-light); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 1.8rem; font-weight: 500; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(184,146,42,0.18); border: 1px solid rgba(212,170,74,0.35); color: var(--gold-light); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 0rem; font-weight: 500; }
     .pulse { width: 6px; height: 6px; background: #4caf7d; border-radius: 50%; animation: pulse 2s infinite; }
     @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.4); } }
 
@@ -542,7 +555,22 @@
   transform: scale(1.2);
   box-shadow: 0 0 0 4px rgba(212,170,74,0.3);
 }
-    
+    .footer-brand {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.4rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 0.4rem;
+}
+.footer-brand-777 {
+  color: var(--gold-light);
+  font-style: italic;
+  position: relative;
+  top: 0.1em; /* nudges the italic down to optically align with Watch */
+}
   </style>
 </head>
 <body>
@@ -592,10 +620,11 @@
 <header>
   <a href="#top" class="logo" aria-label="Back to top">
     <span class="logo-mark">7·7·7 Watch</span>
+	<span class="logo-mark">-Sandals-</span>
   </a>
 
   <nav>
-    <a href="beaches-index.html" class="nav-toggle-btn">BEACHES ↗</a>
+    <a href="beaches-index.html" class="nav-beaches-link">BEACHES ↗</a>
     <a href="#deals">This Week</a>
     <a href="#trends">Trends</a>
     <a href="#history">History</a>
@@ -833,12 +862,15 @@
 </div>
 
 <footer>
-  <p style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:rgba(255,255,255,0.6);margin-bottom:0.4rem;">7·7·7 Watch</p>
+  <div class="footer-brand">
+  <span class="footer-brand-777">7·7·7</span>
+  <span>Watch</span>
+</div>
   <p>An independent deal tracker. Not affiliated with Sandals Resorts International.</p>
   <p style="margin-top:0.5rem;">Deal data sourced weekly from <a href="https://www.sandals.com/specials/suite-deals/" target="_blank">sandals.com</a> · Built for travelers, by travelers.</p>
-  <p style="margin-top:1rem;font-size:0.68rem;opacity:0.5;">© 2025 777Watch · Always verify pricing at Sandals.com before booking.</p>
-  <p style="margin-top:1rem;font-size:0.68rem;opacity:0.45;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.7;">
-    <strong style="opacity:0.7">Affiliate Disclosure:</strong> This site contains affiliate links. If you click through and complete a booking, we may earn a commission at no extra cost to you. This helps keep 7·7·7 Watch free and independent.
+  <p style="margin-top:1rem;font-size:0.68rem;opacity:0.8;">© 2026 777Watch · Always verify pricing at Sandals.com before booking.</p>
+  <p style="margin-top:1rem;font-size:0.68rem;opacity:0.8;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.7;">
+    <strong style="opacity:0.8">Affiliate Disclosure:</strong> This site contains affiliate links. If you click through and complete a booking, we may earn a commission at no extra cost to you. This helps keep 7·7·7 Watch free and independent.
   </p>
 </footer>
 
