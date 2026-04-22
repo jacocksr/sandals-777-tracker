@@ -94,16 +94,18 @@
     nav { display: flex; gap: 2rem; align-items: center; }
     nav a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; font-weight: 500; }
     nav a:hover { color: var(--sun-bright); }
-    .nav-cta { background: var(--coral) !important; color: white !important; padding: 0.45rem 1.1rem; border-radius: 20px; font-weight: 600 !important; }
+    .nav-cta { background: var(--coral) !important; color: white !important; padding: 0.45rem 1.1rem; border-radius: 20px; font-weight: 600 !important; transition: all 0.18s !important}
+	.nav-cta:hover {background: rgba(185,90,65,1)!important; color: white !important; padding: 0.45rem 1.1rem; border-radius: 20px; font-weight: 600 !important; }
     .nav-sandals-link {
-      color: rgba(255,255,255,0.4) !important;
-      font-size: 0.72rem !important;
-      border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.5) !important;
+      font-size: 0.80rem !important;
+	font-weight: 500 !important;
+      border: 1px solid rgba(255,255,255,0.5);
       padding: 0.3rem 0.8rem;
       border-radius: 100px;
       transition: all 0.18s !important;
     }
-    .nav-sandals-link:hover { color: rgba(255,255,255,0.8) !important; border-color: rgba(255,255,255,0.4) !important; }
+    .nav-sandals-link:hover { color: rgba(255,221,87,1) !important; border-color: rgba(255,221,87,1) !important; }
 
     /* ── HERO ── */
     .hero {
@@ -552,10 +554,10 @@
     <span class="logo-mark">7·7·7 Watch</span>
   </a>
   <nav>
-    <a href="#deals">This Week</a>
+    <a href="index.html" class="nav-sandals-link">Sandals ↗</a>
+	<a href="#deals">This Week</a>
     <a href="#trends">Trends</a>
     <a href="#history">History</a>
-    <a href="index.html" class="nav-sandals-link">Sandals ↗</a>
     <a href="#alerts" class="nav-cta">Get Alerts</a>
   </nav>
  
@@ -775,7 +777,7 @@
   <p>An independent deal tracker. Not affiliated with Beaches Resorts International.</p>
   <p style="margin-top:0.5rem;">Deal data sourced weekly from <a href="https://www.beaches.com/specials/suite-deals/" target="_blank">beaches.com</a> · Built for families, by travelers.</p>
   <p style="margin-top:0.8rem;">Also track <a href="index.html">Sandals 7·7·7 deals →</a></p>
-  <p style="margin-top:1rem;font-size:0.68rem;opacity:0.5;">© 2025 777Watch · Always verify pricing at Beaches.com before booking.</p>
+  <p style="margin-top:1rem;font-size:0.68rem;opacity:0.5;">© 2026 777Watch · Always verify pricing at Beaches.com before booking.</p>
   <p style="margin-top:1rem;font-size:0.68rem;opacity:0.45;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.7;">
     <strong style="opacity:0.7">Affiliate Disclosure:</strong> This site contains affiliate links. If you click through and complete a booking, we may earn a commission at no extra cost to you. This helps keep 7·7·7 Watch free and independent.
   </p>
