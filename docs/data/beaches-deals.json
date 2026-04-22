@@ -1,6 +1,6 @@
 {
   "weekLabel": "Apr 22 – Apr 28, 2026",
-  "fetchedAt": "2026-04-22T08:05:14.102593+00:00",
+  "fetchedAt": "2026-04-22T08:55:53.524601+00:00",
   "dealCount": 7,
   "deals": [
     {
@@ -59,24 +59,6 @@
     },
     {
       "id": 4,
-      "resortCode": "BTC",
-      "resort": "Beaches Turks & Caicos",
-      "location": "Providenciales, Turks & Caicos",
-      "imgColor": "#0077b6",
-      "imgUrl": "",
-      "imgPath": "",
-      "imgPaths": [],
-      "roomCode": "G1",
-      "roomName": "Seaside One Bedroom Concierge Suite",
-      "roomView": "Pool, Tropical Garden",
-      "bedding": "1 King Bed, 1 Queen Sleeper Sofa Bed, Can Accomodate Rollaway",
-      "discount": "7%+ off",
-      "priceFrom": null,
-      "priceWas": null,
-      "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/g1/"
-    },
-    {
-      "id": 5,
       "resortCode": "BNG",
       "resort": "Beaches Negril",
       "location": "Negril, Jamaica",
@@ -94,7 +76,7 @@
       "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/bcc/"
     },
     {
-      "id": 6,
+      "id": 5,
       "resortCode": "BNG",
       "resort": "Beaches Negril",
       "location": "Negril, Jamaica",
@@ -110,6 +92,24 @@
       "priceFrom": null,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/glc/"
+    },
+    {
+      "id": 6,
+      "resortCode": "BTC",
+      "resort": "Beaches Turks & Caicos",
+      "location": "Providenciales, Turks & Caicos",
+      "imgColor": "#0077b6",
+      "imgUrl": "",
+      "imgPath": "",
+      "imgPaths": [],
+      "roomCode": "G1",
+      "roomName": "Seaside One Bedroom Concierge Suite",
+      "roomView": "Pool, Tropical Garden",
+      "bedding": "1 King Bed, 1 Queen Sleeper Sofa Bed, Can Accomodate Rollaway",
+      "discount": "7%+ off",
+      "priceFrom": null,
+      "priceWas": null,
+      "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/g1/"
     },
     {
       "id": 7,
