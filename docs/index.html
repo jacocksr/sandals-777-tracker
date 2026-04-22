@@ -557,19 +557,20 @@
 }
     .footer-brand {
   display: flex;
-  align-items: baseline;
+  align-items: center;          /* ← was "baseline" */
   justify-content: center;
   gap: 0.4rem;
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.3rem;
   color: rgba(255,255,255,0.6);
   margin-bottom: 0.4rem;
+  line-height: 1;               /* ← remove the bogus "line-height: -1" */
 }
+
 .footer-brand-777 {
   color: var(--gold-light);
   font-style: italic;
-  position: relative;
-  top: 0.1em; /* nudges the italic down to optically align with Watch */
+  /* remove position: relative and top: 0.1em entirely */
 }
   </style>
 </head>
@@ -862,10 +863,9 @@
 </div>
 
 <footer>
-  <div class="footer-brand">
-  <span class="footer-brand-777">7·7·7</span>
-  <span>Watch</span>
-</div>
+  <p style="font-family:'Cormorant Garamond',serif; font-size:1.3rem; color:rgba(255,255,255,0.6); margin-bottom:0.4rem; line-height:1;">
+  <em style="color:var(--gold-light); vertical-align:0.25em;">7·7·7</em> Watch
+</p>
   <p>An independent deal tracker. Not affiliated with Sandals Resorts International.</p>
   <p style="margin-top:0.5rem;">Deal data sourced weekly from <a href="https://www.sandals.com/specials/suite-deals/" target="_blank">sandals.com</a> · Built for travelers, by travelers.</p>
   <p style="margin-top:1rem;font-size:0.68rem;opacity:0.8;">© 2026 777Watch · Always verify pricing at Sandals.com before booking.</p>
