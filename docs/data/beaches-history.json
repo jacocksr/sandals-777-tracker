@@ -133,7 +133,7 @@
   },
   {
     "weekLabel": "Apr 22 – Apr 28, 2026",
-    "fetchedAt": "2026-04-22T06:08:13.029998+00:00",
+    "fetchedAt": "2026-04-22T07:02:31.870335+00:00",
     "deals": [
       {
         "id": 1,
@@ -234,14 +234,14 @@
         "imgUrl": "",
         "imgPath": "",
         "imgPaths": [],
-        "roomCode": "GS",
-        "roomName": "Tropical Oversized Concierge Family Suite",
+        "roomCode": "GLC",
+        "roomName": "Grand Luxe Family Rooms",
         "roomView": "Tropical Garden",
-        "bedding": "",
+        "bedding": "1 King Bed, 2 Double Beds, and a Twin Daybed with Trundle.",
         "discount": "7%+ off",
         "priceFrom": null,
         "priceWas": null,
-        "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gs/"
+        "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/glc/"
       },
       {
         "id": 7,
@@ -252,14 +252,14 @@
         "imgUrl": "",
         "imgPath": "",
         "imgPaths": [],
-        "roomCode": "GCK",
-        "roomName": "Tropical Concierge King",
+        "roomCode": "GS",
+        "roomName": "Tropical Oversized Concierge Family Suite",
         "roomView": "Tropical Garden",
-        "bedding": "1 King Bed & a Twin-Size Daybed with Trundle",
+        "bedding": "",
         "discount": "7%+ off",
         "priceFrom": null,
         "priceWas": null,
-        "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gck/"
+        "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gs/"
       }
     ]
   }
