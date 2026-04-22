@@ -151,16 +151,27 @@
       color: white; line-height: 1.15; letter-spacing: 0.01em;
       margin-bottom: 0.3rem;
     }
-    .hero h1 em {
-      font-style: italic;
-      color: var(--sun-bright);
-      font-size: clamp(4.2rem, 8.5vw, 7rem);
-      display: block;
-      line-height: 1;
-    }
+
+    /* Add this new class to align the text vertically */
+	.title-flex-container {
+  	display: inline-flex;
+  	align-items: center; /* Aligns items to the middle axis */
+  	justify-content: center; /* Keeps it centered horizontally */
+  	gap: 15px; /* Adjust this to control the space between 'Beaches' and '7.7.7' */
+	}
+
+/* Update your existing em style slightly */
+.hero h1 em {
+  font-style: italic;
+  color: var(--sun-bright); /* Make sure this variable is defined in your CSS */
+  font-size: clamp(4.8rem, 9.5vw, 8rem);
+  line-height: 1.0;
+  display: inline-block; /* Helps flexbox calculate height correctly */
+  margin-bottom: 5px; /* Tweak this slightly up or down if it still looks slightly off-center visually */
+}
     .hero-sub {
       font-size: 1.05rem; color: rgba(255,255,255,0.65); font-weight: 400;
-      margin: 1.2rem auto 2.5rem; max-width: 500px; line-height: 1.65;
+      margin: 1.2rem auto 2.5rem; max-width: 550px; line-height: 1.65;
     }
     .hero-family-badges {
       display: flex; justify-content: center; gap: 0.7rem;
@@ -556,7 +567,7 @@
     <div class="pulse"></div>
     Auto-updated every Wednesday
   </div>
-  <h1>Beaches <em>7·7·7</em><br>Deal Tracker</h1>
+  <h1><span class="title-flex-container">Beaches <em>7·7·7</em></span><br>Deal Tracker</h1>
   <p class="hero-sub">The only independent tracker for Beaches Resorts' family-friendly weekly secret — 7 rooms, 7% extra off, for exactly 7 days.</p>
   <div class="hero-family-badges">
     <span class="family-badge">👨‍👩‍👧‍👦 Family-Friendly</span>
