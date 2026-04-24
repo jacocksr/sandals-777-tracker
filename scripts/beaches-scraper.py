@@ -245,6 +245,9 @@ def scrape_deals() -> list[dict]:
                 return imgs;
             }""")
             print(f"[scraper] Found {len(img_urls_raw)} CDN image URLs total")
+          print(f"[DEBUG] Total raw CDN URLs found: {len(img_urls_raw)}")
+for u in img_urls_raw:
+    print(f"[DEBUG] URL: {u}")
             for u in img_urls_raw:
                 print(f"[scraper] CDN: {u[:100]}")
         except Exception as e:
