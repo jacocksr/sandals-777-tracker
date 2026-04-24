@@ -47,8 +47,8 @@ RESORT_COLORS = {
 
 # Beaches CDN folder slugs (same cdn.sandals.com CDN as Sandals)
 RESORT_CDN_SLUG = {
-    "BTC": "turks-caicos",
-    "BNG": "negril",
+    "BTC": "btc",
+    "BNG": "bng",
 }
 
 # Booking URL slugs: beaches.com/resorts/{slug}/rooms-suites/{room-code}/
@@ -262,7 +262,7 @@ def scrape_deals() -> list[dict]:
 
     for deal in deals:
         slug = RESORT_CDN_SLUG.get(deal["resortCode"], "").lower()
-        matched = [u for u in img_urls_raw if f"/resorts/{slug}/" in u.lower()] if slug else []
+        matched = [u for u in img_urls_raw if f"/media/{slug}/" in u.lower()] if slug else []
         deal["imgUrl"]    = matched[0] if matched else ""
         deal["_cdn_urls"] = matched[:4]
         if deal["imgUrl"]:
