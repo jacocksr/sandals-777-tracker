@@ -47,8 +47,8 @@ RESORT_COLORS = {
 
 # Beaches CDN folder slugs (same cdn.sandals.com CDN as Sandals)
 RESORT_CDN_SLUG = {
-    "BTC": "btc",
-    "BNG": "bng",
+    "BTC": "turks-caicos",
+    "BNG": "negril",
 }
 
 # Booking URL slugs: beaches.com/resorts/{slug}/rooms-suites/{room-code}/
