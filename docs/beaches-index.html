@@ -1110,10 +1110,12 @@ function toggleTrends(btn) {
   btn.textContent = expanded ? 'Show More Insights ↓' : 'Show Less ↑';
 }
 
+// AFTER (fixed):
 function renderTrends() {
+  renderPriceRange();           // ← always runs; only needs currentDeals
+
   if (!historyData.length) return;
   renderPriceOverTime();
-  renderPriceRange();
   renderHeatmap();
   renderDueSoon();
   renderTierBreakdown();
