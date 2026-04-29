@@ -1,6 +1,6 @@
 {
   "weekLabel": "Apr 29 – May 5, 2026",
-  "fetchedAt": "2026-04-29T07:27:44.586070+00:00",
+  "fetchedAt": "2026-04-29T08:30:53.800780+00:00",
   "dealCount": 7,
   "deals": [
     {
@@ -51,29 +51,6 @@
     },
     {
       "id": 3,
-      "resortCode": "SAB",
-      "resort": "Sandals Grande Antigua",
-      "location": "St. John's, Antigua",
-      "imgColor": "#5a6848",
-      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sat/accommodations/large/sat-219.jpg",
-      "imgPath": "images/SAB_GA.jpg",
-      "imgPaths": [
-        "images/SAB_GA.jpg",
-        "images/SAB_GA_2.jpg",
-        "images/SAB_GA_3.jpg",
-        "images/SAB_GA_4.jpg"
-      ],
-      "roomCode": "GA",
-      "roomName": "Mediterranean Oceanview Penthouse One Bedroom Butler Suite",
-      "roomView": "Oceanview, Pool, Tropical Garden",
-      "bedding": "1 King Bed",
-      "discount": "7%+ off",
-      "priceFrom": 635,
-      "priceWas": null,
-      "bookUrl": "https://www.sandals.com/sandals-grande-antigua/rooms-suites/ga/"
-    },
-    {
-      "id": 4,
       "resortCode": "SRB",
       "resort": "Sandals Royal Bahamian",
       "location": "Nassau, Bahamas",
@@ -96,6 +73,29 @@
       "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/hsup/"
     },
     {
+      "id": 4,
+      "resortCode": "SAB",
+      "resort": "Sandals Grande Antigua",
+      "location": "St. John's, Antigua",
+      "imgColor": "#5a6848",
+      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sat/accommodations/large/sat-219.jpg",
+      "imgPath": "images/SAB_GA.jpg",
+      "imgPaths": [
+        "images/SAB_GA.jpg",
+        "images/SAB_GA_2.jpg",
+        "images/SAB_GA_3.jpg",
+        "images/SAB_GA_4.jpg"
+      ],
+      "roomCode": "GA",
+      "roomName": "Mediterranean Oceanview Penthouse One Bedroom Butler Suite",
+      "roomView": "Oceanview, Pool, Tropical Garden",
+      "bedding": "1 King Bed",
+      "discount": "7%+ off",
+      "priceFrom": 505,
+      "priceWas": null,
+      "bookUrl": "https://www.sandals.com/sandals-grande-antigua/rooms-suites/ga/"
+    },
+    {
       "id": 5,
       "resortCode": "SGO",
       "resort": "Sandals Ochi",
@@ -110,7 +110,7 @@
         "images/SGO_NG1_4.jpg"
       ],
       "roomCode": "NG1",
-      "roomName": "NEW ROOM",
+      "roomName": "One Bedroom Poolside Butler Villa Estate Suite",
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
