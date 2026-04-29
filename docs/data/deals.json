@@ -1,6 +1,6 @@
 {
   "weekLabel": "Apr 29 – May 5, 2026",
-  "fetchedAt": "2026-04-29T08:30:53.800780+00:00",
+  "fetchedAt": "2026-04-29T09:20:33.729967+00:00",
   "dealCount": 7,
   "deals": [
     {
@@ -18,7 +18,7 @@
         "images/SSV_VGP_4.jpg"
       ],
       "roomCode": "VGP",
-      "roomName": "Butler Villa Suite with Private Pool",
+      "roomName": "NEW ROOM",
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
@@ -45,7 +45,7 @@
       "roomView": "Beachfront, Oceanfront, Oceanview",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 712,
+      "priceFrom": 563,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/sandals-halcyon-beach/rooms-suites/jb/"
     },
@@ -114,7 +114,7 @@
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 452,
+      "priceFrom": 359,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/ochi/rooms-suites/ng1/"
     },
