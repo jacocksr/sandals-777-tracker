@@ -326,7 +326,7 @@ def parse_rendered_text(text: str) -> list[dict]:
         resort_code = resolve_resort_code(resort_display)
 
         price_from = None
-        price_match = re.search(r'[Ss]tarting\s+from\s+\$\s*([\d,]+)', part[:600])
+        price_match = re.search(r'[Ss]tarting\s+from\s+\$\s*([\d,]+)', part)
         if price_match:
             price_from = int(price_match.group(1).replace(",", ""))
 
