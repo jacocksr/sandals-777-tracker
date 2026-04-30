@@ -300,7 +300,7 @@
   },
   {
     "weekLabel": "Apr 29 – May 5, 2026",
-    "fetchedAt": "2026-04-29T17:07:55.323654+00:00",
+    "fetchedAt": "2026-04-30T12:26:43.264608+00:00",
     "deals": [
       {
         "id": 1,
@@ -321,7 +321,8 @@
         "roomView": "Oceanview, Pool, Tropical Garden",
         "bedding": "1 King, 1 Queen, 2 Sleeper Sofa",
         "discount": "7%+ off",
-        "priceFrom": null,
+        "priceFrom": 1422,
+        "priceChild": 38,
         "priceWas": null,
         "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/x2ob/"
       },
@@ -344,7 +345,8 @@
         "roomView": "Partial Oceanview, Pool, Tropical Garden",
         "bedding": "1 King Bed, 2 Double Beds & 1 Double Pull-Out Sofa",
         "discount": "7%+ off",
-        "priceFrom": null,
+        "priceFrom": 1217,
+        "priceChild": 45,
         "priceWas": null,
         "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/p2/"
       },
@@ -367,7 +369,8 @@
         "roomView": "Pool, Tropical Garden",
         "bedding": "1 king bed, 1 twin daybed w/trundle, 1 bunk bed w/trundle",
         "discount": "7%+ off",
-        "priceFrom": null,
+        "priceFrom": 715,
+        "priceChild": 38,
         "priceWas": null,
         "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/pw/"
       },
@@ -390,7 +393,8 @@
         "roomView": "Oceanview, Tropical Garden",
         "bedding": "1 King Bed & 1 Single Pull-out Sofa Bed",
         "discount": "7%+ off",
-        "priceFrom": null,
+        "priceFrom": 504,
+        "priceChild": 38,
         "priceWas": null,
         "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/w1bg/"
       },
@@ -413,7 +417,8 @@
         "roomView": "Oceanview, Tropical Garden",
         "bedding": "1 King Bed & 1 Single Pull-out Sofa Bed",
         "discount": "7%+ off",
-        "priceFrom": null,
+        "priceFrom": 484,
+        "priceChild": 38,
         "priceWas": null,
         "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/1bg/"
       },
@@ -436,7 +441,8 @@
         "roomView": "Oceanview, Tropical Garden",
         "bedding": "2 Double Beds And a Single Pull-Out Sofa Bed",
         "discount": "7%+ off",
-        "priceFrom": null,
+        "priceFrom": 403,
+        "priceChild": 51,
         "priceWas": null,
         "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/wbcd/"
       },
@@ -459,7 +465,8 @@
         "roomView": "Oceanview, Tropical Garden",
         "bedding": "1 King Bed & 1 Single Pull-out Sofa Bed",
         "discount": "7%+ off",
-        "priceFrom": null,
+        "priceFrom": 403,
+        "priceChild": 51,
         "priceWas": null,
         "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/wbck/"
       }
