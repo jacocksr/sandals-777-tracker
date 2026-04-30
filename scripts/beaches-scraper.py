@@ -77,7 +77,7 @@ SUITE_KEYWORDS = [
 
 
 def make_deal(i, resort_code, room_code, room_name, resort_display,
-              location, price_from=None):
+              location, price_from=None, price_child=None):
     info = RESORT_MAP.get(resort_code, {
         "name": resort_display or f"Beaches {resort_code}",
         "location": location or "Caribbean"
@@ -97,6 +97,7 @@ def make_deal(i, resort_code, room_code, room_name, resort_display,
         "bedding":     "",
         "discount":    "7%+ off",
         "priceFrom":   price_from,
+        "priceChild":  price_child,
         "priceWas":    None,
     }
 
@@ -325,18 +326,42 @@ def parse_rendered_text(text: str) -> list[dict]:
         resort_display, location, room_name = extract_resort_and_room(lookback)
         resort_code = resolve_resort_code(resort_display)
 
-        price_from = None
-        price_match = re.search(r'[Ss]tarting\s+from\s+\$\s*([\d,]+)', part)
-        if price_match:
-            price_from = int(price_match.group(1).replace(",", ""))
+        price_from  = None
+        price_child = None
+        
+        adult_match = re.search(r'Adult\s+from\s+\$\s*([\d,]+)\s*PP/?PN', part, re.IGNORECASE)
+        child_match = re.search(r'Child\s+from\s+\$\s*([\d,]+)\s*PP/?PN', part, re.IGNORECASE)
+        
+        if adult_match:
+            price_from  = int(adult_match.group(1).replace(",", ""))
+        if child_match:
+            price_child = int(child_match.group(1).replace(",", ""))
+        
+        # Fallback for any other format
+        if price_from is None:
+            for _pat in [
+                r'[Ss]tarting\s+from\s+\$\s*([\d,]+)',
+                r'[Ff]rom\s+\$\s*([\d,]+)',
+                r'\$\s*([\d,]+)\s*PP/?PN',
+                r'([\d,]+)\s*PP/?PN',
+            ]:
+                _m = re.search(_pat, part, re.IGNORECASE)
+                if _m:
+                    try:
+                        price_from = int(_m.group(1).replace(",", ""))
+                    except (ValueError, IndexError):
+                        pass
+                    else:
+                        break
 
         print(f"[parser] Deal {i}: {resort_code} | {room_code} | "
               f"{room_name[:55] if room_name else 'NO NAME'} | ${price_from}")
 
         if room_name and resort_code:
+            
             deal = make_deal(
                 len(deals) + 1, resort_code, room_code, room_name,
-                resort_display, location, price_from,
+                resort_display, location, price_from, price_child,
             )
             deal["roomView"] = room_view
             deal["bedding"]  = bedding
