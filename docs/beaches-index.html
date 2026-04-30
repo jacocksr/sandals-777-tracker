@@ -278,6 +278,9 @@
     .deal-price { font-family: 'Nunito', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--ocean-deep); line-height: 1; }
     .deal-price-night { font-size: 0.68rem; color: var(--text-muted); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 400; }
     .deal-price-na { font-size: 0.82rem; color: var(--text-muted); font-style: italic; }
+    .deal-price-stack { display: flex; flex-direction: column; gap: 0; }
+    .deal-price-adult-label { font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1px; }
+    .deal-price-child { font-size: 0.7rem; color: var(--text-muted); margin-top: 3px; }
 
     .deal-book-btn { background: var(--ocean); color: white; border: none; padding: 0.55rem 1.2rem; border-radius: 20px; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; transition: background 0.18s; white-space: nowrap; }
     .deal-book-btn:hover { background: var(--ocean-mid); }
@@ -948,9 +951,10 @@ function renderDeals(filter) {
 
   grid.innerHTML = deals.map((d, i) => {
     const priceHtml = d.priceFrom
-      ? `<div>
-           <div class="deal-price-from">From</div>
+      ? `<div class="deal-price-stack">
+           <div class="deal-price-adult-label">Adult from</div>
            <div class="deal-price">$${d.priceFrom}<span class="deal-price-night"> pp/pn</span></div>
+           ${d.priceChild ? `<div class="deal-price-child">+ Child from $${d.priceChild} pp/pn</div>` : ''}
          </div>`
       : `<div><div class="deal-price-na">Price: visit Beaches.com</div></div>`;
 
@@ -1087,7 +1091,27 @@ function openModal(id) {
     <div><div class="modal-detail-key">Room View</div><div class="modal-detail-val">${d.roomView || '–'}</div></div>
     <div><div class="modal-detail-key">Bedding</div><div class="modal-detail-val">${d.bedding || '–'}</div></div>
     <div><div class="modal-detail-key">Extra Discount</div><div class="modal-detail-val" style="color:var(--coral);font-size:1.1rem">+7% on top of current deals</div></div>
-    <div><div class="modal-detail-key">Price From</div><div class="modal-detail-val" style="font-size:1.1rem;font-weight:700;color:var(--ocean-deep)">${d.priceFrom ? '$'+d.priceFrom+' <span style="font-size:0.75rem;font-weight:400;color:var(--text-muted)">per person / per night</span>' : 'See Beaches.com'}</div></div>
+    <div style="grid-column:1/-1">
+      <div class="modal-detail-key">Price From (per person / per night)</div>
+      <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:0.3rem;align-items:flex-start">
+        ${d.priceFrom ? `
+        <div>
+          <div style="font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px">Adult</div>
+          <div style="font-size:1.2rem;font-weight:800;color:var(--ocean-deep);font-family:'Nunito',sans-serif">$${d.priceFrom}</div>
+        </div>` : ''}
+        ${d.priceChild ? `
+        <div>
+          <div style="font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px">Child</div>
+          <div style="font-size:1.2rem;font-weight:800;color:var(--ocean-mid);font-family:'Nunito',sans-serif">$${d.priceChild}</div>
+        </div>` : ''}
+        ${(d.priceFrom && d.priceChild) ? `
+        <div style="border-left:1.5px solid var(--border);padding-left:1.5rem">
+          <div style="font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px">Combined Total</div>
+          <div style="font-size:1.2rem;font-weight:800;color:var(--coral);font-family:'Nunito',sans-serif">$${d.priceFrom + d.priceChild}</div>
+        </div>` : ''}
+        ${!d.priceFrom ? '<div class="modal-detail-val" style="color:var(--text-muted)">See Beaches.com</div>' : ''}
+      </div>
+    </div>
   `;
   document.getElementById('modalBookBtn').onclick = () => window.open(d.bookUrl || 'https://www.beaches.com/specials/suite-deals/', '_blank');
   document.getElementById('dealModal').classList.add('active');
@@ -1127,7 +1151,15 @@ function renderTrends() {
 
 function buildPriceOverTimeChart(container, weeklyAvgs, isExpanded) {
   if (weeklyAvgs.length < 2) {
-    container.innerHTML = `<div class="no-data-msg">Not enough price data yet —<br>check back after a few more weeks.</div>`;
+    const _allNull = typeof historyData !== 'undefined' && historyData.length > 0 &&
+      historyData.every(w => w.deals.every(d => !d.priceFrom));
+    container.innerHTML = _allNull
+      ? `<div class="no-data-msg" style="flex-direction:column;gap:0.5rem;text-align:center;">
+           <span>Beaches.com doesn\'t list prices on their deal page.</span>
+           <a href="https://www.beaches.com/specials/suite-deals" target="_blank" rel="noopener"
+              style="color:var(--ocean-mid);font-size:0.75rem;font-weight:600;text-decoration:underline;">View pricing at Beaches.com ↗</a>
+         </div>`
+      : `<div class="no-data-msg">Not enough price data yet —<br>check back after a few more weeks.</div>`;
     return;
   }
   const W = isExpanded ? 700 : 400;
@@ -1190,7 +1222,14 @@ function buildPriceOverTimeChart(container, weeklyAvgs, isExpanded) {
 
 function getWeeklyAvgs(data) {
   return data.map(week => {
-    const prices = (week.deals||[]).map(d => parseFloat(d.priceFrom)).filter(p => !isNaN(p) && p > 0);
+    const prices = (week.deals||[]).map(d => {
+      const adult = parseFloat(d.priceFrom);
+      const child = parseFloat(d.priceChild);
+      const total = (!isNaN(adult) && adult > 0)
+        ? adult + (!isNaN(child) && child > 0 ? child : 0)
+        : NaN;
+      return total;
+    }).filter(p => !isNaN(p) && p > 0);
     return { label: (week.weekLabel||'').split('–')[0].trim(), avg: prices.length ? Math.round(prices.reduce((a,b)=>a+b,0)/prices.length) : null };
   }).filter(w => w.avg !== null);
 }
@@ -1201,13 +1240,27 @@ function renderPriceOverTime() {
 
 function renderPriceRange() {
   const el = document.getElementById('priceRangeChart');
-  const priced = currentDeals.filter(d => d.priceFrom && !isNaN(parseFloat(d.priceFrom)));
-  if (priced.length < 2) { el.innerHTML = `<div class="no-data-msg">Not enough price data for this week.</div>`; return; }
-  const sorted = [...priced].sort((a,b) => parseFloat(a.priceFrom) - parseFloat(b.priceFrom));
+  const _totalPrice = d => {
+    const a = parseFloat(d.priceFrom), c = parseFloat(d.priceChild);
+    return (!isNaN(a) && a > 0) ? a + (!isNaN(c) && c > 0 ? c : 0) : NaN;
+  };
+  const priced = currentDeals.filter(d => !isNaN(_totalPrice(d)));
+  if (priced.length < 2) {
+    const _allNull = currentDeals && currentDeals.length > 0 && currentDeals.every(d => !d.priceFrom);
+    el.innerHTML = _allNull
+      ? `<div class="no-data-msg" style="flex-direction:column;gap:0.5rem;text-align:center;">
+           <span>Prices aren\'t listed on the Beaches.com deal page.</span>
+           <a href="https://www.beaches.com/specials/suite-deals" target="_blank" rel="noopener"
+              style="color:var(--ocean-mid);font-size:0.75rem;font-weight:600;text-decoration:underline;">View pricing at Beaches.com ↗</a>
+         </div>`
+      : `<div class="no-data-msg">Not enough price data for this week.</div>`;
+    return;
+  }
+  const sorted = [...priced].sort((a,b) => _totalPrice(a) - _totalPrice(b));
   const cheapest = sorted[0], priciest = sorted[sorted.length-1];
-  const prices = sorted.map(d => parseFloat(d.priceFrom));
+  const prices = sorted.map(d => _totalPrice(d));
   const minP = Math.min(...prices), maxP = Math.max(...prices), range = maxP - minP || 1;
-  const dotData = sorted.map(d => ({ ...d, price: parseFloat(d.priceFrom), pct: ((parseFloat(d.priceFrom) - minP) / range) * 100 }));
+  const dotData = sorted.map(d => ({ ...d, price: _totalPrice(d), pct: ((_totalPrice(d) - minP) / range) * 100 }));
   const minGap = 2.2;
   for (let i = 1; i < dotData.length; i++) {
     if (dotData[i].pct - dotData[i-1].pct < minGap) {
@@ -1219,7 +1272,7 @@ function renderPriceRange() {
   dotData.forEach(d => d.pct = Math.max(0, Math.min(100, d.pct)));
   const dots = dotData.map(d => `
     <div class="price-range-dot" style="left:${d.pct}%;cursor:pointer" onclick="openModal(${d.id})">
-      <div class="price-range-tooltip">${d.resort.replace('Beaches ','')} — $${d.price}</div>
+      <div class="price-range-tooltip">${d.resort.replace('Beaches ','')} — $${d.price}${d.priceChild ? ' (Adult:$'+d.priceFrom+' + Child:$'+d.priceChild+')' : ''}</div>
     </div>`).join('');
   el.innerHTML = `<div class="price-range-wrap">
     <div class="price-range-track-wrap">
@@ -1235,11 +1288,19 @@ function renderPriceRange() {
         <div class="price-range-endpoint-label">Cheapest deal</div>
         <div class="price-range-endpoint-resort">${cheapest.resort.replace('Beaches ','')}</div>
         <div class="price-range-endpoint-room">${cheapest.roomName}</div>
+        <div style="margin-top:0.4rem;font-size:0.8rem;font-weight:700;color:var(--ocean-deep)">
+          $${cheapest.price} pp/pn total
+          ${cheapest.priceChild ? `<span style="font-weight:400;color:var(--text-muted);font-size:0.68rem;display:block">Adult $${cheapest.priceFrom} + Child $${cheapest.priceChild}</span>` : ''}
+        </div>
       </div>
       <div class="price-range-endpoint" style="text-align:right">
         <div class="price-range-endpoint-label">Priciest deal</div>
         <div class="price-range-endpoint-resort">${priciest.resort.replace('Beaches ','')}</div>
         <div class="price-range-endpoint-room">${priciest.roomName}</div>
+        <div style="margin-top:0.4rem;font-size:0.8rem;font-weight:700;color:var(--ocean-deep)">
+          $${priciest.price} pp/pn total
+          ${priciest.priceChild ? `<span style="font-weight:400;color:var(--text-muted);font-size:0.68rem;display:block">Adult $${priciest.priceFrom} + Child $${priciest.priceChild}</span>` : ''}
+        </div>
       </div>
     </div>
   </div>`;
@@ -1491,7 +1552,7 @@ function renderHistory() {
           <td><span class="resort-tag">${r.resortCode}</span> <span style="font-size:0.82rem">${r.resort.replace('Beaches ','')}</span></td>
           <td style="font-size:0.84rem;max-width:260px">${r.roomName}</td>
           <td style="font-size:0.8rem;color:var(--text-muted)">${r.roomCode||'–'}</td>
-          <td style="font-size:0.8rem;color:var(--text-muted)">${r.priceFrom ? '$'+r.priceFrom+' pp/pn' : '–'}</td>
+          <td style="font-size:0.8rem;color:var(--text-muted)">${r.priceFrom ? '$'+r.priceFrom+(r.priceChild ? ' / $'+r.priceChild+' (child)' : '')+' pp/pn' : '–'}</td>
         </tr>`;
       }).join('')
     : `<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-muted)">No history available for this range.</td></tr>`;
@@ -1523,13 +1584,13 @@ function subscribeAlert() {
 
 function useFallbackData() {
   currentDeals = [
-    { id:1, resortCode:"BTC", resort:"Beaches Turks & Caicos", location:"Providenciales, Turks & Caicos", imgColor:"#0077b6", roomCode:"CFB1", roomName:"Caribbean Family Butler Suite", priceFrom:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
-    { id:2, resortCode:"BTC", resort:"Beaches Turks & Caicos", location:"Providenciales, Turks & Caicos", imgColor:"#0096c7", roomCode:"ITV",  roomName:"Italian Village Club Level Two Bedroom Family Suite", priceFrom:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
-    { id:3, resortCode:"BTC", resort:"Beaches Turks & Caicos", location:"Providenciales, Turks & Caicos", imgColor:"#023e6e", roomCode:"KWL",  roomName:"Key West Village Luxury Room with Garden View", priceFrom:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
-    { id:4, resortCode:"BNG", resort:"Beaches Negril", location:"Negril, Jamaica", imgColor:"#00b4d8", roomCode:"FCL1", roomName:"Family Club Level One Bedroom Suite", priceFrom:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
-    { id:5, resortCode:"BNG", resort:"Beaches Negril", location:"Negril, Jamaica", imgColor:"#48cae4", roomCode:"BFS",  roomName:"Beachfront Luxury Suite with Soaking Tub", priceFrom:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
-    { id:6, resortCode:"BNG", resort:"Beaches Negril", location:"Negril, Jamaica", imgColor:"#0077b6", roomCode:"GLX",  roomName:"Grand Luxe Oceanview Room", priceFrom:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
-    { id:7, resortCode:"BTC", resort:"Beaches Turks & Caicos", location:"Providenciales, Turks & Caicos", imgColor:"#52b788", roomCode:"FPB",  roomName:"French Village Poolside Butler Suite", priceFrom:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
+    { id:1, resortCode:"BTC", resort:"Beaches Turks & Caicos", location:"Providenciales, Turks & Caicos", imgColor:"#0077b6", roomCode:"CFB1", roomName:"Caribbean Family Butler Suite", priceFrom:null, priceChild:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
+    { id:2, resortCode:"BTC", resort:"Beaches Turks & Caicos", location:"Providenciales, Turks & Caicos", imgColor:"#0096c7", roomCode:"ITV",  roomName:"Italian Village Club Level Two Bedroom Family Suite", priceFrom:null, priceChild:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
+    { id:3, resortCode:"BTC", resort:"Beaches Turks & Caicos", location:"Providenciales, Turks & Caicos", imgColor:"#023e6e", roomCode:"KWL",  roomName:"Key West Village Luxury Room with Garden View", priceFrom:null, priceChild:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
+    { id:4, resortCode:"BNG", resort:"Beaches Negril", location:"Negril, Jamaica", imgColor:"#00b4d8", roomCode:"FCL1", roomName:"Family Club Level One Bedroom Suite", priceFrom:null, priceChild:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
+    { id:5, resortCode:"BNG", resort:"Beaches Negril", location:"Negril, Jamaica", imgColor:"#48cae4", roomCode:"BFS",  roomName:"Beachfront Luxury Suite with Soaking Tub", priceFrom:null, priceChild:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
+    { id:6, resortCode:"BNG", resort:"Beaches Negril", location:"Negril, Jamaica", imgColor:"#0077b6", roomCode:"GLX",  roomName:"Grand Luxe Oceanview Room", priceFrom:null, priceChild:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
+    { id:7, resortCode:"BTC", resort:"Beaches Turks & Caicos", location:"Providenciales, Turks & Caicos", imgColor:"#52b788", roomCode:"FPB",  roomName:"French Village Poolside Butler Suite", priceFrom:null, priceChild:null, priceWas:null, bookUrl:"https://www.beaches.com/specials/suite-deals/" },
   ];
   document.getElementById('weekLabel').textContent = "Example data — scraper not yet run";
   buildFilters();
