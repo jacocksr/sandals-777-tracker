@@ -613,6 +613,177 @@
   font-style: italic;
   /* remove position: relative and top: 0.1em entirely */
 }
+
+    /* ══════════════════════════════════════════════════════════════════════
+       AI INSIGHT CARD
+    ══════════════════════════════════════════════════════════════════════ */
+    .trend-card--ai {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg,
+        color-mix(in oklch, #1a4a5c 7%, #ffffff) 0%,
+        #ffffff 100%);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--ocean);
+      border-radius: 8px;
+      padding: 1.6rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .trend-card--ai::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(26,74,92,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    #trendsAlwaysVisible { margin-top: 0; }
+
+    .ai-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .ai-card-header-left { display: flex; flex-direction: column; gap: 0.25rem; }
+
+    .ai-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(26,74,92,0.08);
+      border: 1px solid rgba(26,74,92,0.18);
+      color: var(--ocean);
+      font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 0.25rem 0.65rem; border-radius: 100px; font-weight: 600;
+      width: fit-content;
+    }
+    .ai-badge-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--ocean); flex-shrink: 0;
+    }
+    .ai-card-week {
+      font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.04em;
+    }
+
+    .ai-refresh-btn {
+      background: none; border: 1px solid var(--border); color: var(--text-muted);
+      padding: 0.32rem 0.7rem; border-radius: 100px; font-size: 0.7rem;
+      letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; font-weight: 500;
+      transition: all 0.18s; display: flex; align-items: center; gap: 0.35rem;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .ai-refresh-btn:hover { background: var(--ocean-deep); color: white; border-color: var(--ocean-deep); }
+    .ai-refresh-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .ai-body { min-height: 60px; }
+
+    .ai-skeleton-line {
+      height: 14px; border-radius: 4px; margin-bottom: 10px;
+      background: linear-gradient(90deg, #f0e6d2 25%, #faf6ef 50%, #f0e6d2 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+    .ai-skeleton-line:last-child { width: 65%; margin-bottom: 0; }
+
+    .ai-prose {
+      font-size: 0.92rem; color: var(--text); line-height: 1.72;
+      opacity: 0; transition: opacity 0.5s ease;
+    }
+    .ai-prose.visible { opacity: 1; }
+
+    .ai-best-pick {
+      display: flex; align-items: center; gap: 1rem;
+      background: rgba(184,146,42,0.07);
+      border: 1px solid rgba(184,146,42,0.22);
+      border-radius: 6px; padding: 0.75rem 1rem;
+      margin-top: 1rem;
+      opacity: 0; transition: opacity 0.5s ease 0.15s;
+    }
+    .ai-best-pick.visible { opacity: 1; }
+    .ai-best-pick-trophy {
+      font-size: 1.3rem; flex-shrink: 0; line-height: 1;
+    }
+    .ai-best-pick-body { flex: 1; min-width: 0; }
+    .ai-best-pick-label {
+      font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold); font-weight: 600; margin-bottom: 0.2rem;
+    }
+    .ai-best-pick-resort {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; color: var(--ocean-deep); font-weight: 600;
+      line-height: 1.2;
+    }
+    .ai-best-pick-meta { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.15rem; }
+    .ai-best-pick-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 600; color: var(--ocean-deep);
+      line-height: 1; flex-shrink: 0; text-align: right;
+    }
+    .ai-best-pick-price-sub {
+      font-size: 0.62rem; color: var(--text-muted); font-family: 'DM Sans', sans-serif;
+      text-align: right; margin-top: 0.1rem;
+    }
+    .ai-best-pick-delta {
+      font-size: 0.72rem; font-family: 'DM Sans', sans-serif;
+      font-weight: 600; margin-top: 0.15rem; text-align: right;
+    }
+    .ai-best-pick-delta.down { color: #4caf7d; }
+    .ai-best-pick-delta.up   { color: var(--coral); }
+
+    .ai-error {
+      display: flex; align-items: center; gap: 0.7rem;
+      font-size: 0.85rem; color: var(--text-muted);
+      font-style: italic; padding: 0.5rem 0;
+    }
+
+    .ai-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 1rem; padding-top: 0.85rem;
+      border-top: 1px solid rgba(221,213,196,0.6);
+    }
+    .ai-generated-at {
+      font-size: 0.65rem; color: #b7aea1;
+      letter-spacing: 0.04em;
+    }
+    .ai-model-tag {
+      font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-muted); opacity: 0.6;
+    }
+
+    .ai-key-prompt {
+      display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;
+    }
+    .ai-key-prompt p {
+      font-size: 0.82rem; color: var(--text-muted); line-height: 1.55;
+      max-width: 52ch;
+    }
+    .ai-key-input {
+      background: var(--sand-light); border: 1px solid var(--border);
+      color: var(--text); padding: 0.5rem 0.85rem; border-radius: 4px;
+      font-size: 0.82rem; font-family: 'DM Sans', sans-serif;
+      outline: none; width: 260px; transition: border-color 0.18s;
+    }
+    .ai-key-input:focus { border-color: var(--ocean); }
+    .ai-key-input::placeholder { color: var(--text-muted); opacity: 0.55; }
+
+    .ai-key-save-btn {
+      background: var(--ocean-deep); color: white; border: none;
+      padding: 0.5rem 1.1rem; border-radius: 4px; font-size: 0.78rem;
+      letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; font-weight: 500; transition: background 0.18s;
+      white-space: nowrap;
+    }
+    .ai-key-save-btn:hover { background: var(--ocean); }
+
+    @media (max-width: 640px) {
+      .ai-best-pick { flex-wrap: wrap; }
+      .ai-key-prompt { flex-direction: column; align-items: flex-start; }
+      .ai-key-input { width: 100%; }
+    }
+
   </style>
 </head>
 <body>
@@ -753,8 +924,68 @@
     <span class="section-meta" id="trendMeta">Based on tracked history</span>
   </div>
 
-  <!-- ROW 1 — pricing, always visible -->
-  <div class="trend-grid-2">
+    <!-- AI INSIGHT CARD — full-width, always visible, position 1 -->
+  <div class="trend-grid-2" id="trendsAlwaysVisible">
+    <div class="trend-card trend-card--ai" id="trendCardAI">
+      <div class="ai-card-header">
+        <div class="ai-card-header-left">
+          <span class="ai-badge">
+            <span class="ai-badge-dot"></span>
+            AI Deal Analysis
+          </span>
+          <span class="ai-card-week" id="aiCardWeek">Week of —</span>
+        </div>
+        <button class="ai-refresh-btn" id="aiRefreshBtn" onclick="fetchAIInsight(true)" aria-label="Refresh AI analysis">
+          ↻ Refresh
+        </button>
+      </div>
+
+      <div class="ai-body" id="aiBody">
+        <div id="aiSkeleton">
+          <div class="ai-skeleton-line" style="width:92%"></div>
+          <div class="ai-skeleton-line" style="width:85%"></div>
+          <div class="ai-skeleton-line" style="width:78%"></div>
+          <div class="ai-skeleton-line"></div>
+        </div>
+
+        <p class="ai-prose" id="aiProse"></p>
+
+        <div class="ai-best-pick" id="aiBestPick">
+          <div class="ai-best-pick-trophy">🏆</div>
+          <div class="ai-best-pick-body">
+            <div class="ai-best-pick-label">Best Pick This Week</div>
+            <div class="ai-best-pick-resort" id="aiBestPickResort">—</div>
+            <div class="ai-best-pick-meta" id="aiBestPickRoom">—</div>
+          </div>
+          <div>
+            <div class="ai-best-pick-price" id="aiBestPickPrice">—</div>
+            <div class="ai-best-pick-price-sub">per person / night</div>
+            <div class="ai-best-pick-delta" id="aiBestPickDelta"></div>
+          </div>
+        </div>
+
+        <div class="ai-error" id="aiError" style="display:none">
+          ⚠ Analysis temporarily unavailable — check your API key or try again later.
+          <button class="ai-refresh-btn" onclick="fetchAIInsight(true)" style="margin-left:0.5rem">Retry</button>
+        </div>
+
+        <div id="aiKeyPrompt" style="display:none">
+          <div class="ai-key-prompt">
+            <p>Enter your <strong>OpenAI API key</strong> to enable AI-powered deal analysis. Your key is stored only in your browser and never sent anywhere except OpenAI.</p>
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+              <input type="password" class="ai-key-input" id="aiKeyInput" placeholder="sk-…" />
+              <button class="ai-key-save-btn" onclick="saveAIKey()">Save &amp; Analyze</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ai-card-footer">
+        <span class="ai-generated-at" id="aiGeneratedAt"></span>
+        <span class="ai-model-tag">GPT-4o mini · 7·7·7 Watch</span>
+      </div>
+    </div>
+
     <div class="trend-card" id="trendCardPrice">
       <div class="trend-card-title">Average Price Over Time</div>
       <div class="trend-card-subtitle">Avg. $ per person / per night across all weekly deals</div>
@@ -763,6 +994,7 @@
         <button class="trend-expand-btn" onclick="openTrendModal('price')">⤢ Expand</button>
       </div>
     </div>
+
     <div class="trend-card" id="trendCardRange">
       <div class="trend-card-title">This Week's Price Range</div>
       <div class="trend-card-subtitle">Cheapest to most expensive deal currently active</div>
@@ -969,6 +1201,8 @@ async function loadData() {
     historyData        = await histRes.json();
 
     currentDeals = dealsPayload.deals || [];
+
+	window._dealsPayloadWeekLabel = dealsPayload.weekLabel || '';
 
     const fetchedAt = new Date(dealsPayload.fetchedAt);
     const ageHours  = (Date.now() - fetchedAt) / (1000 * 60 * 60);
@@ -1250,6 +1484,7 @@ function renderTrends() {
   renderDueSoon();
   renderTierBreakdown();
   renderTimeline();
+  initAIInsightCard();
 
   document.getElementById('trendMeta').textContent =
     `Based on ${historyData.length} weeks of tracked data`;
@@ -2141,6 +2376,281 @@ function scrollToAndHighlightDeal(id) {
       card.style.boxShadow = '';
     }, 1800);
   }, 50);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  AI DEAL INSIGHT CARD
+// ═══════════════════════════════════════════════════════════════════════════
+
+const AI_CACHE_KEY = 'sandals_ai_insight_v1';
+const AI_CACHE_TTL = 6 * 60 * 60 * 1000;
+const AI_KEY_STORE = 'sandals_openai_key';
+
+// ── Key management ─────────────────────────────────────────────────────────
+
+function getStoredAIKey() {
+  try { return localStorage.getItem(AI_KEY_STORE) || ''; } catch (e) { return ''; }
+}
+
+function saveAIKey() {
+  const input = document.getElementById('aiKeyInput');
+  const key = (input.value || '').trim();
+
+  if (!key.startsWith('sk-')) {
+    input.style.borderColor = 'var(--coral)';
+    input.placeholder = 'Key must start with sk-';
+    return;
+  }
+
+  try { localStorage.setItem(AI_KEY_STORE, key); } catch (e) {}
+  input.style.borderColor = '';
+  fetchAIInsight(true);
+}
+
+// ── Cache helpers ──────────────────────────────────────────────────────────
+
+function getCachedInsight() {
+  try {
+    const raw = localStorage.getItem(AI_CACHE_KEY);
+    if (!raw) return null;
+
+    const { text, timestamp, weekLabel } = JSON.parse(raw);
+    const fresh = (Date.now() - timestamp) < AI_CACHE_TTL;
+    const sameWeek = (window._dealsPayloadWeekLabel || '') === weekLabel;
+
+    return (fresh && sameWeek) ? { text, timestamp } : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function setCachedInsight(text) {
+  try {
+    localStorage.setItem(AI_CACHE_KEY, JSON.stringify({
+      text,
+      timestamp: Date.now(),
+      weekLabel: window._dealsPayloadWeekLabel || ''
+    }));
+  } catch (e) {}
+}
+
+// ── Best Pick computation ──────────────────────────────────────────────────
+
+function computeBestPick() {
+  if (!currentDeals.length || !historyData.length) return null;
+
+  const priced = currentDeals.filter(d => d.priceFrom && !isNaN(parseFloat(d.priceFrom)));
+  if (!priced.length) return null;
+
+  const prevWeeks = historyData.slice(0, -1);
+
+  const scored = priced.map(deal => {
+    const price = parseFloat(deal.priceFrom);
+    const pastPrices = [];
+
+    prevWeeks.forEach(week => {
+      (week.deals || []).forEach(d => {
+        if (d.resortCode === deal.resortCode && d.roomCode === deal.roomCode && d.priceFrom) {
+          const p = parseFloat(d.priceFrom);
+          if (!isNaN(p) && p > 0) pastPrices.push(p);
+        }
+      });
+    });
+
+    if (!pastPrices.length) {
+      return { deal, price, pastAvg: null, delta: null, deltaPct: 0, score: 0.5 };
+    }
+
+    const pastAvg = pastPrices.reduce((a, b) => a + b, 0) / pastPrices.length;
+    const delta = pastAvg - price;
+    const deltaPct = delta / pastAvg;
+
+    return {
+      deal,
+      price,
+      pastAvg: Math.round(pastAvg),
+      delta: Math.round(delta),
+      deltaPct,
+      score: deltaPct
+    };
+  });
+
+  scored.sort((a, b) => b.score - a.score);
+  return scored[0] || null;
+}
+
+// ── Prompt builder ──────────────────────────────────────────────────────────
+
+function buildPrompt() {
+  const weekLabel = window._dealsPayloadWeekLabel || 'this week';
+
+  const currentLines = currentDeals
+    .filter(d => d.priceFrom)
+    .map(d => `• ${d.resort} — ${d.roomName}: $${d.priceFrom}/night (${d.location})`)
+    .join('\\n');
+
+  const recentHistory = historyData.slice(-8).map(week => {
+    const prices = (week.deals || [])
+      .map(d => parseFloat(d.priceFrom))
+      .filter(p => !isNaN(p) && p > 0);
+
+    if (!prices.length) return null;
+
+    const lo = Math.min(...prices);
+    const hi = Math.max(...prices);
+    const avg = Math.round(prices.reduce((a, b) => a + b, 0) / prices.length);
+    const resorts = [...new Set(week.deals.map(d => d.resort.replace('Sandals ', '')))].join(', ');
+
+    return `${week.weekLabel}: avg $${avg} (range $${lo}–$${hi}) — resorts: ${resorts}`;
+  }).filter(Boolean).join('\\n');
+
+  return `You are an expert Sandals resort travel analyst writing for savvy deal-hunters on the 7·7·7 Watch site — an independent tracker of Sandals' weekly suite deals program (7 rooms, +7% extra discount, for 7 days).
+
+Current week deals (${weekLabel}):
+${currentLines}
+
+Recent weekly history (for context):
+${recentHistory}
+
+Write a 3–4 sentence analysis for smart travelers. You must cover:
+1. Whether this is a strong or weak week overall compared to recent history
+2. The single best-value deal this week and why, considering its price relative to historical appearances
+3. One notable rarity or watch insight — a resort that rarely appears, a room tier at an unusually low price, or a destination worth acting on now
+
+Rules: Use an authoritative, warm, expert tone. No bullet points — flowing prose only. Be specific: name resorts and prices. Keep it under 100 words.`;
+}
+
+// ── UI states ───────────────────────────────────────────────────────────────
+
+function aiShowSkeleton() {
+  document.getElementById('aiSkeleton').style.display = 'block';
+  document.getElementById('aiProse').classList.remove('visible');
+  document.getElementById('aiBestPick').classList.remove('visible');
+  document.getElementById('aiError').style.display = 'none';
+  document.getElementById('aiKeyPrompt').style.display = 'none';
+  document.getElementById('aiGeneratedAt').textContent = '';
+}
+
+function aiShowError() {
+  document.getElementById('aiSkeleton').style.display = 'none';
+  document.getElementById('aiProse').classList.remove('visible');
+  document.getElementById('aiBestPick').classList.remove('visible');
+  document.getElementById('aiError').style.display = 'flex';
+  document.getElementById('aiRefreshBtn').disabled = false;
+}
+
+function aiShowKeyPrompt() {
+  document.getElementById('aiSkeleton').style.display = 'none';
+  document.getElementById('aiProse').classList.remove('visible');
+  document.getElementById('aiBestPick').classList.remove('visible');
+  document.getElementById('aiError').style.display = 'none';
+  document.getElementById('aiKeyPrompt').style.display = 'block';
+  document.getElementById('aiRefreshBtn').disabled = false;
+}
+
+function aiShowContent(text, bestPick, timestamp) {
+  document.getElementById('aiSkeleton').style.display = 'none';
+  document.getElementById('aiError').style.display = 'none';
+  document.getElementById('aiKeyPrompt').style.display = 'none';
+
+  const proseEl = document.getElementById('aiProse');
+  proseEl.textContent = text;
+  requestAnimationFrame(() => proseEl.classList.add('visible'));
+
+  if (bestPick && bestPick.deal) {
+    const d = bestPick.deal;
+    document.getElementById('aiBestPickResort').textContent = d.resort;
+    document.getElementById('aiBestPickRoom').textContent = d.roomName;
+    document.getElementById('aiBestPickPrice').textContent = `$${bestPick.price}`;
+
+    const deltaEl = document.getElementById('aiBestPickDelta');
+    if (bestPick.pastAvg && bestPick.delta !== null) {
+      const sign = bestPick.delta >= 0 ? '↓' : '↑';
+      const absD = Math.abs(bestPick.delta);
+      deltaEl.textContent = `${sign} $${absD} vs. hist. avg ($${bestPick.pastAvg})`;
+      deltaEl.className = 'ai-best-pick-delta ' + (bestPick.delta >= 0 ? 'down' : 'up');
+    } else {
+      deltaEl.textContent = 'First time at this price';
+      deltaEl.className = 'ai-best-pick-delta down';
+    }
+
+    requestAnimationFrame(() => document.getElementById('aiBestPick').classList.add('visible'));
+  }
+
+  if (timestamp) {
+    const d = new Date(timestamp);
+    document.getElementById('aiGeneratedAt').textContent =
+      `Generated ${d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+  }
+
+  document.getElementById('aiRefreshBtn').disabled = false;
+}
+
+// ── Main fetch ───────────────────────────────────────────────────────────────
+
+async function fetchAIInsight(forceRefresh = false) {
+  const key = getStoredAIKey();
+  if (!key) {
+    aiShowKeyPrompt();
+    return;
+  }
+
+  if (!forceRefresh) {
+    const cached = getCachedInsight();
+    if (cached) {
+      aiShowContent(cached.text, computeBestPick(), cached.timestamp);
+      return;
+    }
+  }
+
+  aiShowSkeleton();
+  document.getElementById('aiRefreshBtn').disabled = true;
+
+  try {
+    const resp = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${key}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        max_tokens: 180,
+        temperature: 0.4,
+        messages: [{ role: 'user', content: buildPrompt() }]
+      })
+    });
+
+    if (!resp.ok) {
+      console.error('[777Watch AI] OpenAI error:', resp.status);
+      aiShowError();
+      return;
+    }
+
+    const data = await resp.json();
+    const text = data?.choices?.[0]?.message?.content?.trim();
+
+    if (!text) {
+      aiShowError();
+      return;
+    }
+
+    setCachedInsight(text);
+    aiShowContent(text, computeBestPick(), Date.now());
+  } catch (err) {
+    console.error('[777Watch AI] Fetch error:', err);
+    aiShowError();
+  }
+}
+
+// ── Init ────────────────────────────────────────────────────────────────────
+
+function initAIInsightCard() {
+  const weekLabel = window._dealsPayloadWeekLabel || '';
+  if (weekLabel) {
+    document.getElementById('aiCardWeek').textContent = `Week of ${weekLabel}`;
+  }
+  fetchAIInsight(false);
 }
 
 // ─── BOOT ───────────────────────────────────────────────────────────────────
