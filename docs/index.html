@@ -971,7 +971,7 @@
 
         <div id="aiKeyPrompt" style="display:none">
           <div class="ai-key-prompt">
-            <p>Enter your <strong>OpenAI API key</strong> to enable AI-powered deal analysis. Your key is stored only in your browser and never sent anywhere except OpenAI.</p>
+            <p>Enter your <strong>Google Gemini API key</strong> (free at <a href="https://aistudio.google.com" target="_blank" rel="noopener" style="color:var(--ocean)">aistudio.google.com</a>) to enable AI-powered deal analysis. Your key is stored only in your browser.</p>
             <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
               <input type="password" class="ai-key-input" id="aiKeyInput" placeholder="sk-…" />
               <button class="ai-key-save-btn" onclick="saveAIKey()">Save &amp; Analyze</button>
@@ -982,7 +982,7 @@
 
       <div class="ai-card-footer">
         <span class="ai-generated-at" id="aiGeneratedAt"></span>
-        <span class="ai-model-tag">GPT-4o mini · 7·7·7 Watch</span>
+        <span class="ai-model-tag">Gemini 2.5 Flash · 7·7·7 Watch</span>
       </div>
     </div>
 
@@ -2384,7 +2384,7 @@ function scrollToAndHighlightDeal(id) {
 
 const AI_CACHE_KEY = 'sandals_ai_insight_v1';
 const AI_CACHE_TTL = 6 * 60 * 60 * 1000;
-const AI_KEY_STORE = 'sandals_openai_key';
+const AI_KEY_STORE = 'sandals_gemini_key';
 
 // ── Key management ─────────────────────────────────────────────────────────
 
@@ -2396,11 +2396,11 @@ function saveAIKey() {
   const input = document.getElementById('aiKeyInput');
   const key = (input.value || '').trim();
 
-  if (!key.startsWith('sk-')) {
-    input.style.borderColor = 'var(--coral)';
-    input.placeholder = 'Key must start with sk-';
-    return;
-  }
+  if (!key.startsWith('AIza')) {
+  input.style.borderColor = 'var(--coral)';
+  input.placeholder = 'Key must start with AIza';
+  return;
+}
 
   try { localStorage.setItem(AI_KEY_STORE, key); } catch (e) {}
   input.style.borderColor = '';
@@ -2607,28 +2607,30 @@ async function fetchAIInsight(forceRefresh = false) {
   document.getElementById('aiRefreshBtn').disabled = true;
 
   try {
-    const resp = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${key}`
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        max_tokens: 180,
-        temperature: 0.4,
-        messages: [{ role: 'user', content: buildPrompt() }]
-      })
-    });
+    const resp = await fetch(
+  `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`,
+  {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: buildPrompt() }] }],
+      generationConfig: {
+        maxOutputTokens: 220,
+        temperature: 0.4
+      }
+    })
+  }
+);
 
-    if (!resp.ok) {
-      console.error('[777Watch AI] OpenAI error:', resp.status);
-      aiShowError();
-      return;
-    }
+if (!resp.ok) {
+  const errData = await resp.json().catch(() => ({}));
+  console.error('[777Watch AI] Gemini error:', resp.status, errData?.error?.message);
+  aiShowError();
+  return;
+}
 
-    const data = await resp.json();
-    const text = data?.choices?.[0]?.message?.content?.trim();
+const data = await resp.json();
+const text = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
 
     if (!text) {
       aiShowError();
