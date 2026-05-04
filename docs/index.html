@@ -753,31 +753,6 @@
       color: var(--text-muted); opacity: 0.6;
     }
 
-    .ai-key-prompt {
-      display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;
-    }
-    .ai-key-prompt p {
-      font-size: 0.82rem; color: var(--text-muted); line-height: 1.55;
-      max-width: 52ch;
-    }
-    .ai-key-input {
-      background: var(--sand-light); border: 1px solid var(--border);
-      color: var(--text); padding: 0.5rem 0.85rem; border-radius: 4px;
-      font-size: 0.82rem; font-family: 'DM Sans', sans-serif;
-      outline: none; width: 260px; transition: border-color 0.18s;
-    }
-    .ai-key-input:focus { border-color: var(--ocean); }
-    .ai-key-input::placeholder { color: var(--text-muted); opacity: 0.55; }
-
-    .ai-key-save-btn {
-      background: var(--ocean-deep); color: white; border: none;
-      padding: 0.5rem 1.1rem; border-radius: 4px; font-size: 0.78rem;
-      letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
-      font-family: 'DM Sans', sans-serif; font-weight: 500; transition: background 0.18s;
-      white-space: nowrap;
-    }
-    .ai-key-save-btn:hover { background: var(--ocean); }
-
     @media (max-width: 640px) {
       .ai-best-pick { flex-wrap: wrap; }
       .ai-key-prompt { flex-direction: column; align-items: flex-start; }
@@ -967,16 +942,6 @@
         <div class="ai-error" id="aiError" style="display:none">
           ⚠ Analysis temporarily unavailable — check your API key or try again later.
           <button class="ai-refresh-btn" onclick="fetchAIInsight(true)" style="margin-left:0.5rem">Retry</button>
-        </div>
-
-        <div id="aiKeyPrompt" style="display:none">
-          <div class="ai-key-prompt">
-            <p>Enter your <strong>Google Gemini API key</strong> (free at <a href="https://aistudio.google.com" target="_blank" rel="noopener" style="color:var(--ocean)">aistudio.google.com</a>) to enable AI-powered deal analysis. Your key is stored only in your browser.</p>
-            <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
-              <input type="password" class="ai-key-input" id="aiKeyInput" placeholder="sk-…" />
-              <button class="ai-key-save-btn" onclick="saveAIKey()">Save &amp; Analyze</button>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -2384,28 +2349,6 @@ function scrollToAndHighlightDeal(id) {
 
 const AI_CACHE_KEY = 'sandals_ai_insight_v1';
 const AI_CACHE_TTL = 6 * 60 * 60 * 1000;
-const AI_KEY_STORE = 'sandals_gemini_key';
-
-// ── Key management ─────────────────────────────────────────────────────────
-
-function getStoredAIKey() {
-  try { return localStorage.getItem(AI_KEY_STORE) || ''; } catch (e) { return ''; }
-}
-
-function saveAIKey() {
-  const input = document.getElementById('aiKeyInput');
-  const key = (input.value || '').trim();
-
-  if (!key.startsWith('AIza')) {
-  input.style.borderColor = 'var(--coral)';
-  input.placeholder = 'Key must start with AIza';
-  return;
-}
-
-  try { localStorage.setItem(AI_KEY_STORE, key); } catch (e) {}
-  input.style.borderColor = '';
-  fetchAIInsight(true);
-}
 
 // ── Cache helpers ──────────────────────────────────────────────────────────
 
@@ -2527,7 +2470,6 @@ function aiShowSkeleton() {
   document.getElementById('aiProse').classList.remove('visible');
   document.getElementById('aiBestPick').classList.remove('visible');
   document.getElementById('aiError').style.display = 'none';
-  document.getElementById('aiKeyPrompt').style.display = 'none';
   document.getElementById('aiGeneratedAt').textContent = '';
 }
 
@@ -2539,19 +2481,9 @@ function aiShowError() {
   document.getElementById('aiRefreshBtn').disabled = false;
 }
 
-function aiShowKeyPrompt() {
-  document.getElementById('aiSkeleton').style.display = 'none';
-  document.getElementById('aiProse').classList.remove('visible');
-  document.getElementById('aiBestPick').classList.remove('visible');
-  document.getElementById('aiError').style.display = 'none';
-  document.getElementById('aiKeyPrompt').style.display = 'block';
-  document.getElementById('aiRefreshBtn').disabled = false;
-}
-
 function aiShowContent(text, bestPick, timestamp) {
   document.getElementById('aiSkeleton').style.display = 'none';
   document.getElementById('aiError').style.display = 'none';
-  document.getElementById('aiKeyPrompt').style.display = 'none';
 
   const proseEl = document.getElementById('aiProse');
   proseEl.textContent = text;
@@ -2587,13 +2519,8 @@ function aiShowContent(text, bestPick, timestamp) {
 }
 
 // ── Main fetch ───────────────────────────────────────────────────────────────
-
+	
 async function fetchAIInsight(forceRefresh = false) {
-  const key = getStoredAIKey();
-  if (!key) {
-    aiShowKeyPrompt();
-    return;
-  }
 
   if (!forceRefresh) {
     const cached = getCachedInsight();
@@ -2607,38 +2534,29 @@ async function fetchAIInsight(forceRefresh = false) {
   document.getElementById('aiRefreshBtn').disabled = true;
 
   try {
-    const resp = await fetch(
-  `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`,
-  {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: buildPrompt() }] }],
-      generationConfig: {
-        maxOutputTokens: 220,
-        temperature: 0.4
-      }
-    })
-  }
-);
+    const resp = await fetch('https://sandals-ai-proxy.777vacationtracker.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: buildPrompt() }] }],
+        generationConfig: { maxOutputTokens: 220, temperature: 0.4 }
+      })
+    });
 
-if (!resp.ok) {
-  const errData = await resp.json().catch(() => ({}));
-  console.error('[777Watch AI] Gemini error:', resp.status, errData?.error?.message);
-  aiShowError();
-  return;
-}
-
-const data = await resp.json();
-const text = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
-
-    if (!text) {
+    if (!resp.ok) {
+      console.error('[777Watch AI] Worker error:', resp.status);
       aiShowError();
       return;
     }
 
+    const data = await resp.json();
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+
+    if (!text) { aiShowError(); return; }
+
     setCachedInsight(text);
     aiShowContent(text, computeBestPick(), Date.now());
+
   } catch (err) {
     console.error('[777Watch AI] Fetch error:', err);
     aiShowError();
