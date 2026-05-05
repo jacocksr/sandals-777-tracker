@@ -75,6 +75,11 @@ SUITE_KEYWORDS = [
     "penthouse", "veranda",
 ]
 
+SCRAPER_BLOCKLIST = {
+    'new room', 'new', 'featured', 'book now', 'view details',
+    'read more', 'sold out', 'limited availability', 'per person',
+    'per night', 'starting from', 'adults only', 'family friendly',
+}
 
 def make_deal(i, resort_code, room_code, room_name, resort_display,
               location, price_from=None, price_child=None):
@@ -411,7 +416,8 @@ def extract_resort_and_room(lookback: str) -> tuple:
                 is_title = (len(candidate) <= 70 and
                             not re.match(r'^[a-z]', candidate) and
                             '.' not in candidate)
-                if has_keyword or is_title:
+                
+                if (has_keyword or is_title) and candidate.lower().strip() not in SCRAPER_BLOCKLIST:
                     room_name = candidate
                     break
 
