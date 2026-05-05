@@ -41,13 +41,13 @@
         "images/SHB_JB_4.jpg"
       ],
       "roomCode": "JB",
-      "roomName": "NEW ROOM",
+      "roomName": "Halcyon Shore House Butler Suite w/Balcony Tranquility Soaking Tub",
       "roomView": "Beachfront, Oceanfront, Oceanview",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
       "priceFrom": 563,
       "priceWas": null,
-      "bookUrl": "https://www.sandals.com/sandals-halcyon-beach/rooms-suites/jb/"
+      "bookUrl": "https://www.sandals.com/halcyon-beach/rooms-suites/jb/"
     },
     {
       "id": 3,
@@ -110,7 +110,7 @@
         "images/SGO_NG1_4.jpg"
       ],
       "roomCode": "NG1",
-      "roomName": "NEW ROOM",
+      "roomName": "One Bedroom Poolside Butler Villa Estate Suite",
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
