@@ -2363,29 +2363,21 @@ const AI_CACHE_TTL = 6 * 60 * 60 * 1000;
 
 // ── Cache helpers ──────────────────────────────────────────────────────────
 
+let _aiCache = null;
+
 function getCachedInsight() {
-  try {
-    const raw = localStorage.getItem(AI_CACHE_KEY);
-    if (!raw) return null;
-
-    const { text, timestamp, weekLabel } = JSON.parse(raw);
-    const fresh = (Date.now() - timestamp) < AI_CACHE_TTL;
-    const sameWeek = (window._dealsPayloadWeekLabel || '') === weekLabel;
-
-    return (fresh && sameWeek) ? { text, timestamp } : null;
-  } catch (e) {
-    return null;
-  }
+  if (!_aiCache) return null;
+  const fresh = (Date.now() - _aiCache.timestamp) < AICACHETTL;
+  const sameWeek = window.dealsPayloadWeekLabel === _aiCache.weekLabel;
+  return (fresh && sameWeek) ? _aiCache : null;
 }
 
 function setCachedInsight(text) {
-  try {
-    localStorage.setItem(AI_CACHE_KEY, JSON.stringify({
-      text,
-      timestamp: Date.now(),
-      weekLabel: window._dealsPayloadWeekLabel || ''
-    }));
-  } catch (e) {}
+  _aiCache = {
+    text,
+    timestamp: Date.now(),
+    weekLabel: window.dealsPayloadWeekLabel
+  };
 }
 
 // ── Best Pick computation ──────────────────────────────────────────────────
@@ -2529,7 +2521,6 @@ function aiShowContent(text, bestPick, timestamp) {
     pickEl.onclick = null;
     pickEl.title = '';
   	}
-  }
 
   if (timestamp) {
     const d = new Date(timestamp);
