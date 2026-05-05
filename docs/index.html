@@ -701,7 +701,18 @@
       border-radius: 6px; padding: 0.75rem 1rem;
       margin-top: 1rem;
       opacity: 0; transition: opacity 0.5s ease 0.15s;
-    }
+      cursor: pointer;
+	  transition: opacity 0.5s ease 0.15s, background 0.18s, box-shadow 0.18s;
+	}
+	
+	.ai-best-pick:hover {
+	  background: rgba(184,146,42,0.14);
+	  box-shadow: 0 2px 10px rgba(184,146,42,0.15);
+	}
+	
+	.ai-best-pick:active {
+	  background: rgba(184,146,42,0.20);
+	}
     .ai-best-pick.visible { opacity: 1; }
     .ai-best-pick-trophy {
       font-size: 1.3rem; flex-shrink: 0; line-height: 1;
@@ -2493,6 +2504,11 @@ function aiShowContent(text, bestPick, timestamp) {
     const d = bestPick.deal;
     document.getElementById('aiBestPickResort').textContent = d.resort;
     document.getElementById('aiBestPickRoom').textContent = d.roomName;
+	// Wire the Best Pick row to open the deal modal
+	const pickEl = document.getElementById('aiBestPick');
+	pickEl.style.cursor = 'pointer';
+	pickEl.onclick = () => openModal(d.id);
+	pickEl.title = 'Click to view full deal details';
     document.getElementById('aiBestPickPrice').textContent = `$${bestPick.price}`;
 
     const deltaEl = document.getElementById('aiBestPickDelta');
@@ -2507,6 +2523,12 @@ function aiShowContent(text, bestPick, timestamp) {
     }
 
     requestAnimationFrame(() => document.getElementById('aiBestPick').classList.add('visible'));
+	} else {
+    const pickEl = document.getElementById('aiBestPick');
+    pickEl.style.cursor = '';
+    pickEl.onclick = null;
+    pickEl.title = '';
+  	}
   }
 
   if (timestamp) {
