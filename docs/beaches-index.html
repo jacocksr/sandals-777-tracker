@@ -941,6 +941,11 @@ function getRoomTier(roomName) {
   return                               { label: 'Luxury Level', cls: 'tier-luxury' };
 }
 
+function cleanRoomName(name) {
+  if (!name || name.trim().toUpperCase() === 'NEW ROOM') return 'Room Details TBA';
+  return name;
+}
+	
 function renderDeals(filter) {
   const grid = document.getElementById('dealGrid');
   const deals = filter === 'all' ? currentDeals : currentDeals.filter(d => d.resortCode === filter);
@@ -980,7 +985,7 @@ function renderDeals(filter) {
         <div class="deal-card-body">
           <div class="deal-resort">${d.resort} · ${d.location}</div>
           ${(t => t ? `<span class="tier-badge ${t.cls}">${t.label}</span>` : '')(getRoomTier(d.roomName))}
-          <div class="deal-room-name">${d.roomName}</div>
+          <div class="deal-room-name">${cleanRoomName(d.roomName)}</div>
           <div class="deal-meta-row">
             <div class="deal-meta-item">
               <span class="deal-meta-key">Room Code</span>
@@ -1074,7 +1079,7 @@ function openModal(id) {
   if (!d) return;
   buildCarousel(d);
   document.getElementById('modalResort').textContent = `${d.resort} · ${d.location}`;
-  document.getElementById('modalTitle').textContent  = d.roomName;
+  document.getElementById('modalTitle').textContent = cleanRoomName(d.roomName);
   const tier = getRoomTier(d.roomName);
   const existing = document.getElementById('modalTierBadge');
   if (existing) existing.remove();
@@ -1257,11 +1262,13 @@ function renderPriceRange() {
       : `<div class="no-data-msg">Not enough price data for this week.</div>`;
     return;
   }
-  const sorted = [...priced].sort((a,b) => _totalPrice(a) - _totalPrice(b));
-  const cheapest = sorted[0], priciest = sorted[sorted.length-1];
-  const prices = sorted.map(d => _totalPrice(d));
+	
+  const prices = priced.map(d => _totalPrice(d));
   const minP = Math.min(...prices), maxP = Math.max(...prices), range = maxP - minP || 1;
-  const dotData = sorted.map(d => ({ ...d, price: _totalPrice(d), pct: ((_totalPrice(d) - minP) / range) * 100 }));
+  const dotData = [...priced]
+  .map(d => ({ ...d, price: _totalPrice(d), pct: ((_totalPrice(d) - minP) / range) * 100 }))
+  .sort((a, b) => a.price - b.price);
+  const cheapest = dotData[0], priciest = dotData[dotData.length - 1];
   const minGap = 2.2;
   for (let i = 1; i < dotData.length; i++) {
     if (dotData[i].pct - dotData[i-1].pct < minGap) {
