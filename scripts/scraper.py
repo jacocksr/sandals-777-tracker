@@ -482,7 +482,7 @@ def extract_resort_and_room(lookback: str) -> tuple:
                 is_title = (len(candidate) <= 60 and
                             not re.match(r'^[a-z]', candidate) and
                             '.' not in candidate)
-               if has_keyword or is_title:
+                if has_keyword or is_title:
                     room_name = candidate.replace("NEW ROOM", "").replace("New Room", "").strip()
                     # Strip any residual leading/trailing punctuation or whitespace
                     room_name = room_name.strip(" -–—")
