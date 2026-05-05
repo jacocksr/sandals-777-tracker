@@ -93,6 +93,7 @@ RESORT_CDN_SLUG = {
 #   - "Negril" keeps short slug: negril
 #   - All others need "sandals-" prefix to avoid clashing with destination pages
 #   - SGO is special: slug is just "ochi" (not "ochi-beach-resort")
+#   - SHB is special: slug is just "halcyon-beach" (not "sandals-halcyon-beach" )
 RESORT_BOOKING_SLUG = {
     "SAB": "sandals-grande-antigua",
     "SRP": "royal-plantation",
@@ -109,7 +110,7 @@ RESORT_BOOKING_SLUG = {
     "SKJ": "sandals-south-coast",
     "SML": "sandals-montego-bay",
     "SMB": "sandals-emerald-bay",
-    "SHB": "sandals-halcyon-beach",
+    "SHB": "halcyon-beach",
 }
 
 # Resort name fragments → resort code (order matters: more specific first)
@@ -481,9 +482,12 @@ def extract_resort_and_room(lookback: str) -> tuple:
                 is_title = (len(candidate) <= 60 and
                             not re.match(r'^[a-z]', candidate) and
                             '.' not in candidate)
-                if has_keyword or is_title:
-                    room_name = candidate
-                    break
+               if has_keyword or is_title:
+                    room_name = candidate.replace("NEW ROOM", "").replace("New Room", "").strip()
+                    # Strip any residual leading/trailing punctuation or whitespace
+                    room_name = room_name.strip(" -–—")
+                    if room_name:
+                        break
 
     return resort_display, location, room_name
 
