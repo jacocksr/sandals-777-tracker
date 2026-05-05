@@ -10,7 +10,7 @@
     :root {
       --sky: #e8f6ff;
       --sky-light: #f4fbff;
-	--sky-dark: #b7def7;
+	  --sky-dark: #b7def7;
       --ocean: #0077b6;
       --ocean-deep: #023e6e;
       --ocean-mid: #0096c7;
@@ -541,6 +541,146 @@
     font-size: 0.72rem !important;
   }
 }
+
+    /* ══════════════════════════════════════════════════════════════════════
+       AI INSIGHT CARD
+    ══════════════════════════════════════════════════════════════════════ */
+    .trend-card--ai {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg,
+        color-mix(in oklch, #0077b6 6%, #ffffff) 0%,
+        #ffffff 100%);
+      border: 1.5px solid var(--border);
+      border-left: 3px solid var(--ocean-mid);
+      border-radius: 14px;
+      padding: 1.6rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .trend-card--ai::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,150,199,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #trendsAlwaysVisible { margin-top: 0; }
+    .ai-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .ai-card-header-left { display: flex; flex-direction: column; gap: 0.25rem; }
+    .ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(0,119,182,0.08);
+      border: 1px solid rgba(0,119,182,0.18);
+      color: var(--ocean);
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: 100px;
+      font-weight: 700;
+      width: fit-content;
+    }
+    .ai-badge-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--ocean);
+      flex-shrink: 0;
+    }
+    .ai-card-week { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.04em; }
+    .ai-refresh-btn {
+      background: none;
+      border: 1.5px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.32rem 0.7rem;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      transition: all 0.18s;
+      display: flex; align-items: center; gap: 0.35rem;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .ai-refresh-btn:hover { background: var(--ocean-deep); color: white; border-color: var(--ocean-deep); }
+    .ai-refresh-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .ai-body { min-height: 60px; }
+    .ai-skeleton-line {
+      height: 14px; border-radius: 6px; margin-bottom: 10px;
+      background: linear-gradient(90deg, #e8f6ff 25%, #f4fbff 50%, #e8f6ff 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+    .ai-skeleton-line:last-child { width: 65%; margin-bottom: 0; }
+    .ai-prose {
+      font-size: 0.92rem; color: var(--text); line-height: 1.72;
+      opacity: 0; transition: opacity 0.5s ease;
+    }
+    .ai-prose.visible { opacity: 1; }
+    .ai-best-pick {
+      display: flex; align-items: center; gap: 1rem;
+      background: rgba(0,119,182,0.06);
+      border: 1.5px solid rgba(0,119,182,0.18);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      margin-top: 1rem;
+      opacity: 0;
+      transition: opacity 0.5s ease 0.15s, background 0.18s, box-shadow 0.18s;
+      cursor: pointer;
+    }
+    .ai-best-pick:hover { background: rgba(0,119,182,0.12); box-shadow: 0 2px 10px rgba(0,119,182,0.15); }
+    .ai-best-pick:active { background: rgba(0,119,182,0.18); }
+    .ai-best-pick.visible { opacity: 1; }
+    .ai-best-pick-trophy { font-size: 1.3rem; flex-shrink: 0; line-height: 1; }
+    .ai-best-pick-body { flex: 1; min-width: 0; }
+    .ai-best-pick-label {
+      font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--ocean-mid); font-weight: 700; margin-bottom: 0.2rem;
+    }
+    .ai-best-pick-resort {
+      font-family: 'Nunito', sans-serif; font-size: 1.05rem;
+      color: var(--ocean-deep); font-weight: 800; line-height: 1.2;
+    }
+    .ai-best-pick-meta { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.15rem; }
+    .ai-best-pick-price {
+      font-family: 'Nunito', sans-serif; font-size: 1.5rem; font-weight: 800;
+      color: var(--ocean-deep); line-height: 1; flex-shrink: 0; text-align: right;
+    }
+    .ai-best-pick-price-sub {
+      font-size: 0.62rem; color: var(--text-muted);
+      font-family: 'Plus Jakarta Sans', sans-serif; text-align: right; margin-top: 0.1rem;
+    }
+    .ai-best-pick-delta {
+      font-size: 0.72rem; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700; margin-top: 0.15rem; text-align: right;
+    }
+    .ai-best-pick-delta.down { color: var(--lime); }
+    .ai-best-pick-delta.up   { color: var(--coral); }
+    .ai-error {
+      display: flex; align-items: center; gap: 0.7rem;
+      font-size: 0.85rem; color: var(--text-muted); font-style: italic; padding: 0.5rem 0;
+    }
+    .ai-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 1rem; padding-top: 0.85rem; border-top: 1.5px solid var(--border);
+    }
+    .ai-generated-at { font-size: 0.65rem; color: #7a9ab0; letter-spacing: 0.04em; }
+    .ai-model-tag { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); opacity: 0.6; }
+    @media (max-width: 640px) {
+      .ai-best-pick { flex-wrap: wrap; }
+    }
+
   </style>
 </head>
 <body>
@@ -594,6 +734,7 @@
     <a href="index.html" class="nav-sandals-link">Sandals ↗</a>
 	<a href="#deals">This Week</a>
     <a href="#trends">Trends</a>
+        <a href="#ai">AI</a>
     <a href="#history">History</a>
     <a href="#alerts" class="nav-cta">Get Alerts</a>
   </nav>
@@ -684,6 +825,54 @@
       <h2 class="section-title">Trending Insights</h2>
       <span class="section-meta" id="trendMeta">Based on tracked history</span>
     </div>
+    <!-- ══ AI INSIGHT CARD — full-width, always visible ══ -->
+    <div id="ai" style="scroll-margin-top:90px"></div>
+    <div class="trend-grid-2" id="trendsAlwaysVisible">
+      <div class="trend-card trend-card--ai" id="trendCardAI">
+        <div class="ai-card-header">
+          <div class="ai-card-header-left">
+            <span class="ai-badge">
+              <span class="ai-badge-dot"></span> AI Deal Analysis
+            </span>
+            <span class="ai-card-week" id="aiCardWeek">Week of —</span>
+          </div>
+          <button class="ai-refresh-btn" id="aiRefreshBtn" onclick="fetchAIInsight(true)" aria-label="Refresh AI analysis">
+            &#x21BA; Refresh
+          </button>
+        </div>
+        <div class="ai-body" id="aiBody">
+          <div id="aiSkeleton">
+            <div class="ai-skeleton-line" style="width:92%"></div>
+            <div class="ai-skeleton-line" style="width:85%"></div>
+            <div class="ai-skeleton-line" style="width:78%"></div>
+            <div class="ai-skeleton-line"></div>
+          </div>
+          <p class="ai-prose" id="aiProse"></p>
+          <div class="ai-best-pick" id="aiBestPick">
+            <div class="ai-best-pick-trophy">&#x1F3C6;</div>
+            <div class="ai-best-pick-body">
+              <div class="ai-best-pick-label">Best Pick This Week</div>
+              <div class="ai-best-pick-resort" id="aiBestPickResort"></div>
+              <div class="ai-best-pick-meta" id="aiBestPickRoom"></div>
+            </div>
+            <div>
+              <div class="ai-best-pick-price" id="aiBestPickPrice"></div>
+              <div class="ai-best-pick-price-sub">per person / night</div>
+              <div class="ai-best-pick-delta" id="aiBestPickDelta"></div>
+            </div>
+          </div>
+          <div class="ai-error" id="aiError" style="display:none">
+            &#x26A0; Analysis temporarily unavailable &mdash; check your API key or try again later.
+            <button class="ai-refresh-btn" onclick="fetchAIInsight(true)" style="margin-left:0.5rem">Retry</button>
+          </div>
+        </div>
+        <div class="ai-card-footer">
+          <span class="ai-generated-at" id="aiGeneratedAt"></span>
+          <span class="ai-model-tag">Llama 3.1 &middot; 777 Watch</span>
+        </div>
+      </div>
+    </div>
+
     <div class="trend-grid-2">
       <div class="trend-card" id="trendCardPrice">
         <div class="trend-card-title">Average Price Over Time</div>
@@ -821,6 +1010,154 @@
 </footer>
 
 <script>
+
+  /* ══════════════════════════════════════════════════════════════════════
+     AI INSIGHT CARD — Beaches 777 Watch
+  ══════════════════════════════════════════════════════════════════════ */
+  const AI_WORKER    = 'https://beaches-ai-proxy.777vacationtracker.workers.dev';
+  const AI_CACHE_TTL = 6 * 60 * 60 * 1000; // 6 hours
+  let aiCache = null;
+
+  function getCachedInsight() {
+    if (!aiCache) return null;
+    const fresh    = (Date.now() - aiCache.timestamp) < AI_CACHE_TTL;
+    const sameWeek = window._beachesWeekLabel === aiCache.weekLabel;
+    return (fresh && sameWeek) ? aiCache : null;
+  }
+  function setCachedInsight(text) {
+    aiCache = { text, timestamp: Date.now(), weekLabel: window._beachesWeekLabel };
+  }
+
+  function computeBestPick() {
+    if (!currentDeals || !currentDeals.length) return null;
+    const priced = currentDeals.filter(d => d.priceFrom && !isNaN(parseFloat(d.priceFrom)));
+    if (!priced.length) return null;
+    const prevWeeks = (historyData || []).slice(0, -1);
+    const scored = priced.map(deal => {
+      const price = parseFloat(deal.priceFrom);
+      const pastPrices = [];
+      prevWeeks.forEach(week => (week.deals || []).forEach(d => {
+        if (d.resortCode === deal.resortCode && d.roomCode === deal.roomCode && d.priceFrom) {
+          const p = parseFloat(d.priceFrom);
+          if (!isNaN(p) && p > 0) pastPrices.push(p);
+        }
+      }));
+      if (!pastPrices.length) return { deal, price, pastAvg: null, delta: null, deltaPct: 0, score: 0.5 };
+      const pastAvg  = pastPrices.reduce((a, b) => a + b, 0) / pastPrices.length;
+      const delta    = pastAvg - price;
+      const deltaPct = delta / pastAvg;
+      return { deal, price, pastAvg: Math.round(pastAvg), delta: Math.round(delta), deltaPct, score: deltaPct };
+    });
+    scored.sort((a, b) => b.score - a.score);
+    return scored[0] || null;
+  }
+
+  function buildBeachesPrompt() {
+    const weekLabel = window._beachesWeekLabel || 'this week';
+    const currentLines = (currentDeals || [])
+      .filter(d => d.priceFrom)
+      .map(d => `${d.resort} — ${d.roomName}: $${d.priceFrom}/night`)
+      .join('\n') || 'No priced deals available this week.';
+    const recentHistory = (historyData || []).slice(-8).map(week => {
+      const prices = (week.deals || []).map(d => parseFloat(d.priceFrom)).filter(p => !isNaN(p) && p > 0);
+      if (!prices.length) return null;
+      const avg     = Math.round(prices.reduce((a, b) => a + b, 0) / prices.length);
+      const lo      = Math.min(...prices), hi = Math.max(...prices);
+      const resorts = [...new Set((week.deals || []).map(d => (d.resort || '').replace('Beaches ', '')))].join(', ');
+      return `${week.weekLabel} — avg $${avg}/night, range $${lo}–$${hi}, resorts: ${resorts}`;
+    }).filter(Boolean).join('\n') || 'Not enough history yet.';
+
+    return `You are an expert Beaches Resorts family travel analyst writing for deal-savvy parents on the 777 Watch site — an independent tracker of Beaches Resorts' weekly 777 program (7 rooms, 7% extra discount, 7 days only). Beaches resorts are all-inclusive family resorts in Turks & Caicos and Jamaica. Kids stay, eat, and play free.
+
+Current week deals (${weekLabel}):
+${currentLines}
+
+Recent weekly history for context:
+${recentHistory}
+
+Write a 3–4 sentence analysis for family travel deal-hunters. Cover: (1) whether this is a strong or weak week overall vs. recent history; (2) the single best-value family deal this week and why; (3) one notable insight — a resort that rarely appears, a connecting room or suite at an unusually good price, or a destination worth booking now. Tone: warm, authoritative, specific. No bullet points — flowing prose only. Name resorts and prices. Under 100 words.`;
+  }
+
+  function aiShowSkeleton() {
+    document.getElementById('aiSkeleton').style.display = 'block';
+    document.getElementById('aiProse').classList.remove('visible');
+    document.getElementById('aiBestPick').classList.remove('visible');
+    document.getElementById('aiError').style.display = 'none';
+    document.getElementById('aiGeneratedAt').textContent = '';
+  }
+  function aiShowError() {
+    document.getElementById('aiSkeleton').style.display = 'none';
+    document.getElementById('aiProse').classList.remove('visible');
+    document.getElementById('aiBestPick').classList.remove('visible');
+    document.getElementById('aiError').style.display = 'flex';
+    document.getElementById('aiRefreshBtn').disabled = false;
+  }
+  function aiShowContent(text, bestPick, timestamp) {
+    document.getElementById('aiSkeleton').style.display = 'none';
+    document.getElementById('aiError').style.display = 'none';
+    const proseEl = document.getElementById('aiProse');
+    proseEl.textContent = text;
+    requestAnimationFrame(() => proseEl.classList.add('visible'));
+    if (bestPick && bestPick.deal) {
+      const d = bestPick.deal;
+      document.getElementById('aiBestPickResort').textContent = d.resort;
+      document.getElementById('aiBestPickRoom').textContent   = d.roomName;
+      const pickEl = document.getElementById('aiBestPick');
+      pickEl.onclick = () => openModal(d.id);
+      pickEl.title   = 'Click to view full deal details';
+      document.getElementById('aiBestPickPrice').textContent = '$' + bestPick.price;
+      const deltaEl = document.getElementById('aiBestPickDelta');
+      if (bestPick.pastAvg && bestPick.delta !== null) {
+        const sign = bestPick.delta > 0 ? '↓' : '↑';
+        deltaEl.textContent = `${sign} $${Math.abs(bestPick.delta)} vs. hist. avg $${bestPick.pastAvg}`;
+        deltaEl.className = 'ai-best-pick-delta ' + (bestPick.delta > 0 ? 'down' : 'up');
+      } else {
+        deltaEl.textContent = 'First time at this price';
+        deltaEl.className = 'ai-best-pick-delta down';
+      }
+      requestAnimationFrame(() => document.getElementById('aiBestPick').classList.add('visible'));
+    }
+    if (timestamp) {
+      const d = new Date(timestamp);
+      document.getElementById('aiGeneratedAt').textContent =
+        'Generated ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+    document.getElementById('aiRefreshBtn').disabled = false;
+  }
+
+  async function fetchAIInsight(forceRefresh = false) {
+    if (!forceRefresh) {
+      const cached = getCachedInsight();
+      if (cached) { aiShowContent(cached.text, computeBestPick(), cached.timestamp); return; }
+    }
+    aiShowSkeleton();
+    document.getElementById('aiRefreshBtn').disabled = true;
+    try {
+      const resp = await fetch(AI_WORKER, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: buildBeachesPrompt() })
+      });
+      if (!resp.ok) { console.error('[777Watch-Beaches] AI error:', resp.status); aiShowError(); return; }
+      const data = await resp.json();
+      const text = data?.choices?.[0]?.message?.content?.trim();
+      if (!text) { aiShowError(); return; }
+      setCachedInsight(text);
+      aiShowContent(text, computeBestPick(), Date.now());
+    } catch (err) {
+      console.error('[777Watch-Beaches] AI fetch error:', err);
+      aiShowError();
+    }
+  }
+
+  function initAIInsightCard() {
+    const weekLabel = window._beachesWeekLabel;
+    if (weekLabel) document.getElementById('aiCardWeek').textContent = 'Week of ' + weekLabel;
+    fetchAIInsight(false);
+  }
+  /* ══ END AI CARD ══════════════════════════════════════════════════════ */
+
+
 // ═══════════════════════════════════════════════════════════════════════
 //  BEACHES RESORT DATA
 // ═══════════════════════════════════════════════════════════════════════
@@ -864,10 +1201,12 @@ async function loadData() {
 
     document.getElementById('weekLabel').textContent =
       `Week of ${dealsPayload.weekLabel} · ${currentDeals.length} deals active`;
+    window._beachesWeekLabel = dealsPayload.weekLabel;
 
     buildFilters();
     renderDeals('all');
     renderTrends();
+    initAIInsightCard();
     renderHistory();
     updateHeroStats();
 
@@ -941,11 +1280,6 @@ function getRoomTier(roomName) {
   return                               { label: 'Luxury Level', cls: 'tier-luxury' };
 }
 
-function cleanRoomName(name) {
-  if (!name || name.trim().toUpperCase() === 'NEW ROOM') return 'Room Details TBA';
-  return name;
-}
-	
 function renderDeals(filter) {
   const grid = document.getElementById('dealGrid');
   const deals = filter === 'all' ? currentDeals : currentDeals.filter(d => d.resortCode === filter);
@@ -985,7 +1319,7 @@ function renderDeals(filter) {
         <div class="deal-card-body">
           <div class="deal-resort">${d.resort} · ${d.location}</div>
           ${(t => t ? `<span class="tier-badge ${t.cls}">${t.label}</span>` : '')(getRoomTier(d.roomName))}
-          <div class="deal-room-name">${cleanRoomName(d.roomName)}</div>
+          <div class="deal-room-name">${d.roomName}</div>
           <div class="deal-meta-row">
             <div class="deal-meta-item">
               <span class="deal-meta-key">Room Code</span>
@@ -1079,7 +1413,7 @@ function openModal(id) {
   if (!d) return;
   buildCarousel(d);
   document.getElementById('modalResort').textContent = `${d.resort} · ${d.location}`;
-  document.getElementById('modalTitle').textContent = cleanRoomName(d.roomName);
+  document.getElementById('modalTitle').textContent  = d.roomName;
   const tier = getRoomTier(d.roomName);
   const existing = document.getElementById('modalTierBadge');
   if (existing) existing.remove();
@@ -1262,13 +1596,11 @@ function renderPriceRange() {
       : `<div class="no-data-msg">Not enough price data for this week.</div>`;
     return;
   }
-	
-  const prices = priced.map(d => _totalPrice(d));
+  const sorted = [...priced].sort((a,b) => _totalPrice(a) - _totalPrice(b));
+  const cheapest = sorted[0], priciest = sorted[sorted.length-1];
+  const prices = sorted.map(d => _totalPrice(d));
   const minP = Math.min(...prices), maxP = Math.max(...prices), range = maxP - minP || 1;
-  const dotData = [...priced]
-  .map(d => ({ ...d, price: _totalPrice(d), pct: ((_totalPrice(d) - minP) / range) * 100 }))
-  .sort((a, b) => a.price - b.price);
-  const cheapest = dotData[0], priciest = dotData[dotData.length - 1];
+  const dotData = sorted.map(d => ({ ...d, price: _totalPrice(d), pct: ((_totalPrice(d) - minP) / range) * 100 }));
   const minGap = 2.2;
   for (let i = 1; i < dotData.length; i++) {
     if (dotData[i].pct - dotData[i-1].pct < minGap) {
