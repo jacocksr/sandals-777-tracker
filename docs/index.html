@@ -947,7 +947,7 @@
 
       <div class="ai-card-footer">
         <span class="ai-generated-at" id="aiGeneratedAt"></span>
-        <span class="ai-model-tag">Gemini 2.5 Flash · 7·7·7 Watch</span>
+        <span class="ai-model-tag">Llama 3.1 · 7·7·7 Watch</span>
       </div>
     </div>
 
@@ -2537,10 +2537,7 @@ async function fetchAIInsight(forceRefresh = false) {
     const resp = await fetch('https://sandals-ai-proxy.777vacationtracker.workers.dev', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: buildPrompt() }] }],
-        generationConfig: { maxOutputTokens: 220, temperature: 0.4 }
-      })
+      body: JSON.stringify({ prompt: buildPrompt() })
     });
 
     if (!resp.ok) {
@@ -2550,7 +2547,7 @@ async function fetchAIInsight(forceRefresh = false) {
     }
 
     const data = await resp.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+    const text = data?.choices?.[0]?.message?.content?.trim();
 
     if (!text) { aiShowError(); return; }
 
