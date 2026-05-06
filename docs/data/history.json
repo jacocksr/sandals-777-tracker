@@ -1478,7 +1478,7 @@
   },
   {
     "weekLabel": "May 6 – May 12, 2026",
-    "fetchedAt": "2026-05-06T11:13:18.534507+00:00",
+    "fetchedAt": "2026-05-06T11:48:33.214964+00:00",
     "deals": [
       {
         "id": 1,
@@ -1573,28 +1573,6 @@
       },
       {
         "id": 5,
-        "resortCode": "SRB",
-        "resort": "Sandals Royal Bahamian",
-        "location": "Nassau, Bahamas",
-        "imgColor": "#2a6858",
-        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/srb/accommodations/large/srb-299.jpg",
-        "imgPath": "images/SRB_GL.jpg",
-        "imgPaths": [
-          "images/SRB_GL.jpg",
-          "images/SRB_GL_2.jpg",
-          "images/SRB_GL_3.jpg"
-        ],
-        "roomCode": "GL",
-        "roomName": "East Bay Oceanview Luxury",
-        "roomView": "Oceanview, Pool",
-        "bedding": "1 King Bed",
-        "discount": "7%+ off",
-        "priceFrom": 407,
-        "priceWas": null,
-        "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/gl/"
-      },
-      {
-        "id": 6,
         "resortCode": "SBR",
         "resort": "Sandals Barbados",
         "location": "Christ Church, Barbados",
@@ -1614,6 +1592,28 @@
         "priceFrom": 402,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/sandals-barbados/rooms-suites/obt/"
+      },
+      {
+        "id": 6,
+        "resortCode": "SRB",
+        "resort": "Sandals Royal Bahamian",
+        "location": "Nassau, Bahamas",
+        "imgColor": "#2a6858",
+        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/srb/accommodations/large/srb-299.jpg",
+        "imgPath": "images/SRB_GL.jpg",
+        "imgPaths": [
+          "images/SRB_GL.jpg",
+          "images/SRB_GL_2.jpg",
+          "images/SRB_GL_3.jpg"
+        ],
+        "roomCode": "GL",
+        "roomName": "East Bay Oceanview Luxury",
+        "roomView": "Oceanview, Pool",
+        "bedding": "1 King Bed",
+        "discount": "7%+ off",
+        "priceFrom": 351,
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/gl/"
       },
       {
         "id": 7,
