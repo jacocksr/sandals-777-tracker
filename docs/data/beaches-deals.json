@@ -1,6 +1,6 @@
 {
   "weekLabel": "May 6 – May 12, 2026",
-  "fetchedAt": "2026-05-06T10:27:04.627961+00:00",
+  "fetchedAt": "2026-05-06T11:16:55.450246+00:00",
   "dealCount": 7,
   "deals": [
     {
@@ -130,30 +130,6 @@
       "location": "Negril, Jamaica",
       "imgColor": "#00b4d8",
       "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-524.jpg",
-      "imgPath": "images/BBNG_GCK.jpg",
-      "imgPaths": [
-        "images/BBNG_GCK.jpg",
-        "images/BBNG_GCK_2.jpg",
-        "images/BBNG_GCK_3.jpg",
-        "images/BBNG_GCK_4.jpg"
-      ],
-      "roomCode": "GCK",
-      "roomName": "Tropical Concierge King",
-      "roomView": "Tropical Garden",
-      "bedding": "1 King Bed & a Twin-Size Daybed with Trundle",
-      "discount": "7%+ off",
-      "priceFrom": 368,
-      "priceChild": 51,
-      "priceWas": null,
-      "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gck/"
-    },
-    {
-      "id": 7,
-      "resortCode": "BNG",
-      "resort": "Beaches Negril",
-      "location": "Negril, Jamaica",
-      "imgColor": "#00b4d8",
-      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-524.jpg",
       "imgPath": "images/BBNG_GCD.jpg",
       "imgPaths": [
         "images/BBNG_GCD.jpg",
@@ -170,6 +146,30 @@
       "priceChild": 51,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gcd/"
+    },
+    {
+      "id": 7,
+      "resortCode": "BNG",
+      "resort": "Beaches Negril",
+      "location": "Negril, Jamaica",
+      "imgColor": "#00b4d8",
+      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-524.jpg",
+      "imgPath": "images/BBNG_GCK.jpg",
+      "imgPaths": [
+        "images/BBNG_GCK.jpg",
+        "images/BBNG_GCK_2.jpg",
+        "images/BBNG_GCK_3.jpg",
+        "images/BBNG_GCK_4.jpg"
+      ],
+      "roomCode": "GCK",
+      "roomName": "Tropical Concierge King",
+      "roomView": "Tropical Garden",
+      "bedding": "1 King Bed & a Twin-Size Daybed with Trundle",
+      "discount": "7%+ off",
+      "priceFrom": 368,
+      "priceChild": 51,
+      "priceWas": null,
+      "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gck/"
     }
   ]
 }
