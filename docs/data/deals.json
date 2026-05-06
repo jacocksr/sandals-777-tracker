@@ -1,6 +1,6 @@
 {
   "weekLabel": "May 6 – May 12, 2026",
-  "fetchedAt": "2026-05-06T10:26:05.164568+00:00",
+  "fetchedAt": "2026-05-06T11:13:18.533529+00:00",
   "dealCount": 7,
   "deals": [
     {
@@ -44,7 +44,7 @@
       "roomView": "Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 802,
+      "priceFrom": 675,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/royal-curacao/rooms-suites/wb1/"
     },
@@ -96,28 +96,6 @@
     },
     {
       "id": 5,
-      "resortCode": "SBR",
-      "resort": "Sandals Barbados",
-      "location": "Christ Church, Barbados",
-      "imgColor": "#3a7868",
-      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sbd/accommodations/large/sbd-169.jpg",
-      "imgPath": "images/SBR_OBT.jpg",
-      "imgPaths": [
-        "images/SBR_OBT.jpg",
-        "images/SBR_OBT_2.jpg",
-        "images/SBR_OBT_3.jpg"
-      ],
-      "roomCode": "OBT",
-      "roomName": "Beachfront Club Level Suite with Balcony Tranquility Soaking Tub",
-      "roomView": "Beachfront, Oceanfront, Oceanview",
-      "bedding": "1 King Bed",
-      "discount": "7%+ off",
-      "priceFrom": 485,
-      "priceWas": null,
-      "bookUrl": "https://www.sandals.com/sandals-barbados/rooms-suites/obt/"
-    },
-    {
-      "id": 6,
       "resortCode": "SRB",
       "resort": "Sandals Royal Bahamian",
       "location": "Nassau, Bahamas",
@@ -137,6 +115,28 @@
       "priceFrom": 407,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/gl/"
+    },
+    {
+      "id": 6,
+      "resortCode": "SBR",
+      "resort": "Sandals Barbados",
+      "location": "Christ Church, Barbados",
+      "imgColor": "#3a7868",
+      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sbd/accommodations/large/sbd-169.jpg",
+      "imgPath": "images/SBR_OBT.jpg",
+      "imgPaths": [
+        "images/SBR_OBT.jpg",
+        "images/SBR_OBT_2.jpg",
+        "images/SBR_OBT_3.jpg"
+      ],
+      "roomCode": "OBT",
+      "roomName": "Beachfront Club Level Suite with Balcony Tranquility Soaking Tub",
+      "roomView": "Beachfront, Oceanfront, Oceanview",
+      "bedding": "1 King Bed",
+      "discount": "7%+ off",
+      "priceFrom": 402,
+      "priceWas": null,
+      "bookUrl": "https://www.sandals.com/sandals-barbados/rooms-suites/obt/"
     },
     {
       "id": 7,
