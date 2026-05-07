@@ -2417,15 +2417,15 @@ const TIER_WEIGHTS = {
  */
 function scoreAndRankDeals(deals, historyData) {
   // Build a per-room historical average: { "SRB_GL": avgPrice, ... }
-  const roomHistory = {};
-  (historyData || []).forEach(week => {
-    (week.deals || []).forEach(d => {
-      if (!d.priceFrom || isNaN(d.priceFrom)) return;
-      const key = `${d.resortCode}_${d.roomCode}`;
-      if (!roomHistory[key]) roomHistory[key] = [];
-      roomHistory[key].push(parseFloat(d.priceFrom));
-    });
-  });
+	const roomHistory = {};
+	historyData.forEach(week => {
+	  week.deals.forEach(d => {
+	    if (!d.priceFrom || isNaN(d.priceFrom)) return;
+	    const key = d.resortCode + d.roomCode;
+	    if (!roomHistory[key]) roomHistory[key] = [];
+	    roomHistory[key].push(parseFloat(d.priceFrom));
+	  });
+	});
 
   const histAvgMap = {};
   Object.entries(roomHistory).forEach(([key, prices]) => {
