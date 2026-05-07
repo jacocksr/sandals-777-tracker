@@ -1040,6 +1040,16 @@ function computeBestPick() {
 
   const prevWeeks = (historyData || []).slice(0, -1);
 
+  // Define tier weights for scoring
+  const TIER_WEIGHTS = {
+    // Beaches Butler tiers
+    'B1B': 3, 'B2B': 3, 'UB': 3, '1B': 3, '2B': 3, '3B': 3, '4B': 3, 'M1P': 3, 'P1B': 3, 'OPB': 3,
+    // Beaches Club tiers (Concierge)
+    'KVS': 2, 'CVS': 2, 'HC': 2, 'PC': 2, 'JS': 2, '1H': 2, '2H': 2, 'D1': 2, 'D2': 2,
+    // Beaches Luxury tiers
+    'PR': 1, 'LX': 1, 'GL': 1, 'HL': 1, 'OL': 1, 'DL': 1, 'PE': 1
+  };
+
   const scored = priced.map(deal => {
     const price = parseFloat(deal.priceFrom);
 
@@ -1062,58 +1072,96 @@ function computeBestPick() {
     const delta    = pastAvg !== null ? pastAvg - price : 0;
     const deltaPct = pastAvg !== null ? delta / pastAvg : 0;
 
-    // 2. Value score: cheaper rooms score higher (0 = most expensive, 1 = cheapest)
+    // 2. Value score: cheaper relative to this week's spread (0 to 1)
     const valueScore = (maxPrice - price) / priceRange;
 
-    // 3. Rarity bonus: rooms that appear less often are more noteworthy
-    const totalWeeks = prevWeeks.length || 1;
-    const rarityScore = 1 - (appearances / totalWeeks);
+    // 3. Tier weight bonus
+    const tierW = TIER_WEIGHTS[deal.roomCode] || 1;
+    const tierBonus = tierW / 3; // Normalize to 0-1
 
-    // Composite: 40% historical discount, 40% value (price), 20% rarity
-    // Cap deltaPct at ±0.5 to prevent one signal dominating
+    // Composite: 40% discount, 30% absolute price, 30% room tier
     const discountScore = Math.max(-0.5, Math.min(0.5, deltaPct));
-    const composite = (discountScore * 0.4) + (valueScore * 0.4) + (rarityScore * 0.2);
+    const composite = (discountScore * 0.4) + (valueScore * 0.3) + (tierBonus * 0.3);
 
     return {
-      deal, price,
+      deal,
+      price,
       pastAvg: pastAvg ? Math.round(pastAvg) : null,
       delta: Math.round(delta),
       deltaPct,
-      score: composite
+      score: composite,
+      notableReason: pastAvg 
+        ? (delta > 0 ? `Deep ${Math.round(deltaPct*100)}% discount vs history` : `Slightly above historical average`)
+        : `First time tracked in this dataset`
     };
-  });
+  }).sort((a, b) => b.score - a.score);
 
-  scored.sort((a, b) => b.score - a.score);
-  return scored[0] || null;
+  window._rankedDeals = scored;
+  window._bestPickDeal = scored[0] || null;
+  return window._bestPickDeal;
 }
 
-  function buildBeachesPrompt() {
-    const weekLabel = window._beachesWeekLabel || 'this week';
-    const currentLines = (currentDeals || [])
-      .filter(d => d.priceFrom)
-      .map(d => `${d.resort} — ${d.roomName}: $${d.priceFrom}/night`)
-      .join('\n') || 'No priced deals available this week.';
-    const recentHistory = (historyData || []).slice(-8).map(week => {
-      const prices = (week.deals || []).map(d => parseFloat(d.priceFrom)).filter(p => !isNaN(p) && p > 0);
-      if (!prices.length) return null;
-      const avg     = Math.round(prices.reduce((a, b) => a + b, 0) / prices.length);
-      const lo      = Math.min(...prices), hi = Math.max(...prices);
-      const resorts = [...new Set((week.deals || []).map(d => (d.resort || '').replace('Beaches ', '')))].join(', ');
-      return `${week.weekLabel} — avg $${avg}/night, range $${lo}–$${hi}, resorts: ${resorts}`;
-    }).filter(Boolean).join('\n') || 'Not enough history yet.';
+function buildBeachesPrompt() {
+  const weekLabel = window._dealsPayloadWeekLabel || 'this week';
 
-    return `You are an expert Beaches Resorts family travel analyst writing for deal-savvy parents on the 777 Watch site — an independent tracker of Beaches Resorts' weekly 777 program (7 rooms, 7% extra discount, 7 days only). Beaches resorts are all-inclusive family resorts in Turks & Caicos and Jamaica. Kids stay, eat, and play free.
+  // Make sure we have ranked deals
+  if (!window._rankedDeals) computeBestPick();
+
+  const ranked = window._rankedDeals || [];
+  if (!ranked.length) return "Analyze this week's deals.";
+
+  const bestPick = ranked[0];
+  const runnerUps = ranked.slice(1, 3);
+
+  const currentLines = currentDeals
+    .filter(d => d.priceFrom)
+    .map(d => `• ${d.resort} — ${d.roomName}: $${d.priceFrom}/night (${d.location})`)
+    .join('\\n');
+
+  const recentHistory = historyData.slice(-8).map(week => {
+    const prices = (week.deals || [])
+      .map(d => parseFloat(d.priceFrom))
+      .filter(p => !isNaN(p) && p > 0);
+
+    if (!prices.length) return null;
+
+    const lo = Math.min(...prices);
+    const hi = Math.max(...prices);
+    const avg = Math.round(prices.reduce((a, b) => a + b, 0) / prices.length);
+    const resorts = [...new Set(week.deals.map(d => d.resort.replace('Beaches ', '')))].join(', ');
+
+    return `${week.weekLabel}: avg $${avg} (range $${lo}–$${hi}) — resorts: ${resorts}`;
+  }).filter(Boolean).join('\\n');
+
+  const bestPickContext = `BEST PICK THIS WEEK (MANDATORY):\n- Resort: ${bestPick.deal.resort}\n- Room: ${bestPick.deal.roomName}\n- Price: $${bestPick.price}\n- Context: ${bestPick.notableReason}`;
+
+  const runnerUpContext = runnerUps.map(r => 
+    `- ${r.deal.resort} ($${r.price}): ${r.notableReason}`
+  ).join('\\n');
+
+  return `You are an expert Beaches resort travel analyst writing for savvy deal-hunters on the 7·7·7 Watch site — an independent tracker of Beaches' weekly suite deals program (7 rooms, +7% extra discount, for 7 days).
 
 Current week deals (${weekLabel}):
 ${currentLines}
 
-Recent weekly history for context:
+Recent weekly history (for context):
 ${recentHistory}
 
-Write a 3–4 sentence analysis for family travel deal-hunters. Cover: (1) whether this is a strong or weak week overall vs. recent history; (2) the single best-value family deal this week and why; (3) one notable insight — a resort that rarely appears, a connecting room or suite at an unusually good price, or a destination worth booking now. Tone: warm, authoritative, specific. No bullet points — flowing prose only. Name resorts and prices. Under 100 words.`;
-  }
+${bestPickContext}
 
-  function aiShowSkeleton() {
+NOTABLE RUNNER-UPS:
+${runnerUpContext}
+
+Write a 3–4 sentence analysis for smart travelers. You must cover:
+1. Whether this is a strong or weak week overall compared to recent history.
+2. Explicitly name the Best Pick listed above as the standout value/top recommendation of the week and explain why based on its context.
+3. Briefly mention 1–2 runner-up deals as 'notable mentions' based on the provided context (e.g. deep discount or rare appearance). 
+4. You may mention if a prominent resort (like Turks & Caicos) is missing this week if that is interesting.
+
+Rules: Use an authoritative, warm, expert tone. No bullet points — flowing prose only. Be specific: name resorts and prices. Keep it under 100 words.`;
+}
+
+function aiShowSkeleton() {
     document.getElementById('aiSkeleton').style.display = 'block';
     document.getElementById('aiProse').classList.remove('visible');
     document.getElementById('aiBestPick').classList.remove('visible');
