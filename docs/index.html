@@ -2495,8 +2495,7 @@ function buildPrompt() {
 
   const runnerUpContext = runnerUps.map(r => 
     `- ${r.deal.resort} ($${r.price}): ${r.notableReason}`
-  ).join('
-');
+  ).join('\n');
 
   return `You are an expert Sandals resort travel analyst writing for savvy deal-hunters on the 7·7·7 Watch site — an independent tracker of Sandals' weekly suite deals program (7 rooms, +7% extra discount, for 7 days).
 
