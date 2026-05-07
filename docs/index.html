@@ -2380,204 +2380,145 @@ function setCachedInsight(text) {
   };
 }
 
-	// ─────────────────────────────────────────────────────────────────────────────
-// SCORING — run once, shared by both the prompt AND the Best Pick widget
-// ─────────────────────────────────────────────────────────────────────────────
+// ── Best Pick computation ──────────────────────────────────────────────────
 
-/**
- * Room tier weights — higher = more premium.
- * Covers common Sandals room codes; defaults to 1 for anything unlisted.
- */
-const TIER_WEIGHTS = {
-  // Butler Villas / Private Pool (top tier)
-  VHP: 5, VGP: 5, LV: 5, WB1: 5,
-  // Oceanfront / Beachfront Suites
-  GA: 4.5, PO: 4.5, PRR: 4.5, JBP: 4.5,
-  // Balcony / Soaking Tub Butler Suites
-  VS1: 4, VH: 4, VF: 4, CBM: 4, '1B': 4, LS: 4,
-  // Club Level Oceanview / Beachfront
-  MO: 3.5, BLX: 3.5, WPL: 3.5, WGLT: 3.5,
-  // Club Level Standard
-  WSCL: 3, HSUP: 3, VS: 3, CLX: 3, NG1: 3,
-  // Walkout / Swim-up
-  WGL: 2.5, WPL: 2.5, ELX: 2.5,
-  // Luxury Rooms
-  LX: 2, GL: 2, PL: 2, NPV: 2, NV1: 2, OV1: 2, SPR: 2, '1R': 2,
-};
+function computeBestPick() {
+  if (!currentDeals || !currentDeals.length) return null;
+  const priced = currentDeals.filter(d => d.priceFrom && !isNaN(parseFloat(d.priceFrom)));
+  if (!priced.length) return null;
 
-/**
- * scoreAndRankDeals(deals, historyData)
- *
- * Returns the deals array sorted best-to-worst by composite score.
- * Each deal is augmented with:
- *   deal.score        — composite score (0–100, higher = better deal)
- *   deal.histAvg      — this room's historical average price (null if no history)
- *   deal.vsHistAvg    — dollar delta vs. historical avg (negative = cheaper, null if unknown)
- *   deal.discountPct  — estimated discount % vs. historical avg (null if unknown)
- */
-function scoreAndRankDeals(deals, historyData) {
-  // Build a per-room historical average: { "SRB_GL": avgPrice, ... }
-	const roomHistory = {};
-	historyData.forEach(week => {
-	  week.deals.forEach(d => {
-	    if (!d.priceFrom || isNaN(d.priceFrom)) return;
-	    const key = d.resortCode + d.roomCode;
-	    if (!roomHistory[key]) roomHistory[key] = [];
-	    roomHistory[key].push(parseFloat(d.priceFrom));
-	  });
-	});
-
-  const histAvgMap = {};
-  Object.entries(roomHistory).forEach(([key, prices]) => {
-    histAvgMap[key] = Math.round(prices.reduce((a, b) => a + b, 0) / prices.length);
-  });
-
-  // Also compute the weekly price range for normalising the absolute-price component
-  const allPrices = deals.map(d => parseFloat(d.priceFrom)).filter(p => !isNaN(p) && p > 0);
-  const minPrice  = Math.min(...allPrices);
-  const maxPrice  = Math.max(...allPrices);
+  const prices = priced.map(d => parseFloat(d.priceFrom));
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
   const priceRange = maxPrice - minPrice || 1;
 
-  // Score each deal
-  const scored = deals
-    .filter(d => d.priceFrom && !isNaN(d.priceFrom))
-    .map(d => {
-      const price   = parseFloat(d.priceFrom);
-      const key     = `${d.resortCode}_${d.roomCode}`;
-      const histAvg = histAvgMap[key] ?? null;
+  const prevWeeks = (historyData || []).slice(0, -1);
 
-      // Component 1 — Discount vs. historical average (0–40 pts)
-      // If we have history, reward deeper discounts from the room's own avg.
-      let discountScore = 0;
-      let vsHistAvg     = null;
-      let discountPct   = null;
-      if (histAvg !== null) {
-        vsHistAvg    = price - histAvg;              // negative = cheaper than avg
-        discountPct  = Math.round(((histAvg - price) / histAvg) * 100);
-        // Cap at ±30 % for scoring; a 30 %+ saving gets the full 40 pts
-        const pctCapped = Math.min(Math.max(discountPct, -30), 30);
-        discountScore   = ((pctCapped + 30) / 60) * 40;
-      } else {
-        // No history — neutral (20/40)
-        discountScore = 20;
+  // Define tier weights for scoring
+  const TIER_WEIGHTS = {
+    // Butler tiers
+    'RS': 3, 'RJ': 3, 'B1B': 3, 'BS': 3, 'UB': 3, '1B': 3, 'BV': 3, 'M1P': 3, 'PSV': 3, 'SKYV': 3,
+    // Club tiers
+    'WOL': 2, 'HG': 2, 'KVS': 2, 'VS': 2, 'CVS': 2, 'WCV': 2, 'HC': 2, 'PC': 2, 'JS': 2,
+    // Luxury tiers
+    'PR': 1, 'LX': 1, 'GL': 1, 'HL': 1, 'OL': 1, 'DL': 1, 'PE': 1
+  };
+
+  const scored = priced.map(deal => {
+    const price = parseFloat(deal.priceFrom);
+
+    // 1. Historical discount signal
+    const pastPrices = [];
+    let appearances = 0;
+    prevWeeks.forEach(week => (week.deals || []).forEach(d => {
+      if (d.resortCode === deal.resortCode && d.roomCode === deal.roomCode) {
+        appearances++;
+        if (d.priceFrom) {
+          const p = parseFloat(d.priceFrom);
+          if (!isNaN(p) && p > 0) pastPrices.push(p);
+        }
       }
+    }));
 
-      // Component 2 — Absolute price relative to this week's range (0–30 pts)
-      // Cheaper = higher score (deals hunters care about value)
-      const priceScore = ((maxPrice - price) / priceRange) * 30;
+    const pastAvg  = pastPrices.length
+      ? pastPrices.reduce((a, b) => a + b, 0) / pastPrices.length
+      : null;
+    const delta    = pastAvg !== null ? pastAvg - price : 0;
+    const deltaPct = pastAvg !== null ? delta / pastAvg : 0;
 
-      // Component 3 — Room tier weight (0–30 pts)
-      const tier      = TIER_WEIGHTS[d.roomCode] ?? 1;
-      const tierScore = (tier / 5) * 30;
+    // 2. Value score: cheaper relative to this week's spread (0 to 1)
+    const valueScore = (maxPrice - price) / priceRange;
 
-      const score = Math.round(discountScore + priceScore + tierScore);
+    // 3. Tier weight bonus
+    const tierW = TIER_WEIGHTS[deal.roomCode] || 1;
+    const tierBonus = tierW / 3; // Normalize to 0-1
 
-      return { ...d, score, histAvg, vsHistAvg, discountPct };
-    });
+    // Composite: 40% discount, 30% absolute price, 30% room tier
+    const discountScore = Math.max(-0.5, Math.min(0.5, deltaPct));
+    const composite = (discountScore * 0.4) + (valueScore * 0.3) + (tierBonus * 0.3);
 
-  // Sort best-to-worst
-  scored.sort((a, b) => b.score - a.score);
-  return scored;
+    return {
+      deal,
+      price,
+      pastAvg: pastAvg ? Math.round(pastAvg) : null,
+      delta: Math.round(delta),
+      deltaPct,
+      score: composite,
+      notableReason: pastAvg 
+        ? (delta > 0 ? `Deep ${Math.round(deltaPct*100)}% discount vs history` : `Slightly above historical average`)
+        : `First time tracked in this dataset`
+    };
+  }).sort((a, b) => b.score - a.score);
+
+  window._rankedDeals = scored;
+  window._bestPickDeal = scored[0] || null;
+  return window._bestPickDeal;
 }
-
-
-// ─────────────────────────────────────────────────────────────────────────────
-// PROMPT BUILDER — inject pre-ranked results so the LLM never picks its own winner
-// ─────────────────────────────────────────────────────────────────────────────
 
 function buildPrompt() {
   const weekLabel = window._dealsPayloadWeekLabel || 'this week';
 
-  // ── 1. Rank all deals FIRST ──────────────────────────────────────────────
-  const ranked     = scoreAndRankDeals(currentDeals, historyData);
-  const bestPick   = ranked[0];
-  const mentions   = ranked.slice(1, 3);   // up to 2 honorable mentions
+  // Make sure we have ranked deals
+  if (!window._rankedDeals) computeBestPick();
 
-  // ── 2. Expose the Best Pick to the widget (same source of truth) ─────────
-  //    The widget should read window._bestPickDeal rather than re-computing.
-  window._bestPickDeal = bestPick;
+  const ranked = window._rankedDeals || [];
+  if (!ranked.length) return "Analyze this week's deals.";
 
-  // ── 3. Build weekly-average context ─────────────────────────────────────
-  const currentAvg = Math.round(
-    currentDeals.filter(d => d.priceFrom).reduce((s, d) => s + parseFloat(d.priceFrom), 0) /
-    currentDeals.filter(d => d.priceFrom).length
-  );
+  const bestPick = ranked[0];
+  const runnerUps = ranked.slice(1, 3);
 
-  const recentAvgs = historyData.slice(-8).map(week => {
-    const prices = (week.deals || [])
-      .map(d => parseFloat(d.priceFrom))
-      .filter(p => !isNaN(p) && p > 0);
-    return prices.length
-      ? Math.round(prices.reduce((a, b) => a + b, 0) / prices.length)
-      : null;
-  }).filter(Boolean);
-
-  const historicalAvg = recentAvgs.length
-    ? Math.round(recentAvgs.reduce((a, b) => a + b, 0) / recentAvgs.length)
-    : null;
-
-  const weekStrength = historicalAvg
-    ? currentAvg <= historicalAvg * 0.95
-      ? 'strong (below recent average)'
-      : currentAvg >= historicalAvg * 1.05
-        ? 'weak (above recent average)'
-        : 'moderate (near recent average)'
-    : 'moderate';
-
-  // ── 4. Format the injected deal data ─────────────────────────────────────
-  const fmtDelta = d =>
-    d.vsHistAvg !== null
-      ? ` (${d.vsHistAvg <= 0 ? '↓' : '↑'}$${Math.abs(d.vsHistAvg)} vs. hist. avg of $${d.histAvg})`
-      : '';
-
-  const bestPickLine =
-    `${bestPick.resort} — ${bestPick.roomName}: $${bestPick.priceFrom}/night${fmtDelta(bestPick)}` +
-    (bestPick.discountPct !== null ? `, ~${bestPick.discountPct}% off historical avg` : '');
-
-  const mentionLines = mentions.map((d, i) => {
-    const why = d.vsHistAvg !== null && d.vsHistAvg < 0
-      ? `$${Math.abs(d.vsHistAvg)} below its historical average`
-      : d.priceFrom === Math.min(...currentDeals.map(x => x.priceFrom))
-        ? 'lowest absolute price this week'
-        : 'strong discount on a premium room tier';
-    return `${i + 2}. ${d.resort} — ${d.roomName}: $${d.priceFrom}/night — notable because: ${why}`;
-  }).join('\n');
+  const currentLines = currentDeals
+    .filter(d => d.priceFrom)
+    .map(d => `• ${d.resort} — ${d.roomName}: $${d.priceFrom}/night (${d.location})`)
+    .join('\n');
 
   const recentHistory = historyData.slice(-8).map(week => {
     const prices = (week.deals || [])
       .map(d => parseFloat(d.priceFrom))
       .filter(p => !isNaN(p) && p > 0);
+
     if (!prices.length) return null;
-    const lo  = Math.min(...prices);
-    const hi  = Math.max(...prices);
+
+    const lo = Math.min(...prices);
+    const hi = Math.max(...prices);
     const avg = Math.round(prices.reduce((a, b) => a + b, 0) / prices.length);
-    return `${week.weekLabel}: avg $${avg} (range $${lo}–$${hi})`;
+    const resorts = [...new Set(week.deals.map(d => d.resort.replace('Sandals ', '')))].join(', ');
+
+    return `${week.weekLabel}: avg $${avg} (range $${lo}–$${hi}) — resorts: ${resorts}`;
   }).filter(Boolean).join('\n');
 
-  // ── 5. Return the prompt ─────────────────────────────────────────────────
-  return `You are an expert Sandals resort travel analyst writing for savvy deal-hunters on the 7·7·7 Watch site.
+  const bestPickContext = `BEST PICK THIS WEEK (MANDATORY):
+- Resort: ${bestPick.deal.resort}
+- Room: ${bestPick.deal.roomName}
+- Price: $${bestPick.price}
+- Context: ${bestPick.notableReason}`;
 
-Week: ${weekLabel}
-Overall week strength: ${weekStrength} (current avg $${currentAvg}${historicalAvg ? `, recent 8-week avg $${historicalAvg}` : ''})
+  const runnerUpContext = runnerUps.map(r => 
+    `- ${r.deal.resort} ($${r.price}): ${r.notableReason}`
+  ).join('
+');
 
-── BEST PICK THIS WEEK (highest composite score — always lead with this) ──
-1. ${bestPickLine}
+  return `You are an expert Sandals resort travel analyst writing for savvy deal-hunters on the 7·7·7 Watch site — an independent tracker of Sandals' weekly suite deals program (7 rooms, +7% extra discount, for 7 days).
 
-── NOTABLE MENTIONS (reference these as runner-ups, in order) ──
-${mentionLines}
+Current week deals (${weekLabel}):
+${currentLines}
 
-── RECENT HISTORY (for context only) ──
+Recent weekly history (for context):
 ${recentHistory}
 
-Write a 3–4 sentence analysis for smart travelers. You must:
-1. Open by naming the Best Pick above as the week's top recommendation — use its resort name and price.
-2. Comment on whether this is a strong or weak week overall vs. recent history.
-3. Briefly name the notable mentions with one specific reason each (e.g., "$X below its avg", "lowest price this week").
+${bestPickContext}
 
-Rules: authoritative, warm, expert tone. Flowing prose only — no bullet points or lists. Name resorts and prices. Stay under 100 words.`;
+NOTABLE RUNNER-UPS:
+${runnerUpContext}
+
+Write a 3–4 sentence analysis for smart travelers. You must cover:
+1. Whether this is a strong or weak week overall compared to recent history.
+2. Explicitly name the Best Pick listed above as the standout value/top recommendation of the week and explain why based on its context.
+3. Briefly mention 1–2 runner-up deals as 'notable mentions' based on the provided context (e.g. deep discount or rare appearance). 
+4. You may mention if a prominent resort (like Grenada) is missing this week if that is interesting.
+
+Rules: Use an authoritative, warm, expert tone. No bullet points — flowing prose only. Be specific: name resorts and prices. Keep it under 100 words.`;
 }
-
-// ── UI states ───────────────────────────────────────────────────────────────
 
 function aiShowSkeleton() {
   document.getElementById('aiSkeleton').style.display = 'block';
@@ -2603,8 +2544,8 @@ function aiShowContent(text, bestPick, timestamp) {
   proseEl.textContent = text;
   requestAnimationFrame(() => proseEl.classList.add('visible'));
 
-  if (bestPick) {
-    const d = bestPick;
+  if (bestPick && bestPick.deal) {
+    const d = bestPick.deal;
     document.getElementById('aiBestPickResort').textContent = d.resort;
     document.getElementById('aiBestPickRoom').textContent = d.roomName;
 	// Wire the Best Pick row to open the deal modal
@@ -2612,14 +2553,14 @@ function aiShowContent(text, bestPick, timestamp) {
 	pickEl.style.cursor = 'pointer';
 	pickEl.onclick = () => openModal(d.id);
 	pickEl.title = 'Click to view full deal details';
-    document.getElementById('aiBestPickPrice').textContent = `$${d.priceFrom}`;
+    document.getElementById('aiBestPickPrice').textContent = `$${bestPick.price}`;
 
     const deltaEl = document.getElementById('aiBestPickDelta');
-    if (d.histAvg && d.vsHistAvg !== null) {
-      const sign = d.vsHistAvg >= 0 ? '↓' : '↑';
-      const absD = Math.abs(d.vsHistAvg);
-      deltaEl.textContent = `${sign} $${absD} vs. hist. avg ($${d.histAvg})`;
-      deltaEl.className = 'ai-best-pick-delta ' + (d.vsHistAvg >= 0 ? 'down' : 'up');
+    if (bestPick.pastAvg && bestPick.delta !== null) {
+      const sign = bestPick.delta >= 0 ? '↓' : '↑';
+      const absD = Math.abs(bestPick.delta);
+      deltaEl.textContent = `${sign} $${absD} vs. hist. avg ($${bestPick.pastAvg})`;
+      deltaEl.className = 'ai-best-pick-delta ' + (bestPick.delta >= 0 ? 'down' : 'up');
     } else {
       deltaEl.textContent = 'First time at this price';
       deltaEl.className = 'ai-best-pick-delta down';
@@ -2634,9 +2575,9 @@ function aiShowContent(text, bestPick, timestamp) {
   	}
 
   if (timestamp) {
-    const tsDate = new Date(timestamp);
+    const d = new Date(timestamp);
     document.getElementById('aiGeneratedAt').textContent =
-      `Generated ${tsDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+      `Generated ${d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
   }
 
   document.getElementById('aiRefreshBtn').disabled = false;
@@ -2649,45 +2590,39 @@ async function fetchAIInsight(forceRefresh = false) {
   if (!forceRefresh) {
     const cached = getCachedInsight();
     if (cached) {
-	  buildPrompt();  // ← runs scoring to set window._bestPickDeal
-	  aiShowContent(cached.text, window._bestPickDeal, cached.timestamp);
-	  return;
-	}
+      aiShowContent(cached.text, computeBestPick(), cached.timestamp);
+      return;
+    }
   }
 
   aiShowSkeleton();
   document.getElementById('aiRefreshBtn').disabled = true;
 
-	try {
-	  const prompt = buildPrompt(); // sets window._bestPickDeal
-	
-	  const resp = await fetch('https://sandals-ai-proxy...', {
-	    method: 'POST',
-	    headers: { 'Content-Type': 'application/json' },
-	    body: JSON.stringify({ prompt })
-	  });
-	
-	  if (!resp.ok) {
-	    console.error('[777Watch AI] Worker error:', resp.status);
-	    aiShowError();
-	    return;
-	  }
-	
-	  const data = await resp.json();
-	  const text = data?.choices?.[0]?.message?.content?.trim();
-	
-	  if (!text) {
-	    aiShowError();
-	    return;
-	  }
-	
-	  setCachedInsight(text);
-	  aiShowContent(text, window._bestPickDeal, Date.now());
-	
-	} catch (err) {
-	  console.error('[777Watch AI] Fetch error:', err);
-	  aiShowError();
-	}
+  try {
+    const resp = await fetch('https://sandals-ai-proxy.777vacationtracker.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: buildPrompt() })
+    });
+
+    if (!resp.ok) {
+      console.error('[777Watch AI] Worker error:', resp.status);
+      aiShowError();
+      return;
+    }
+
+    const data = await resp.json();
+    const text = data?.choices?.[0]?.message?.content?.trim();
+
+    if (!text) { aiShowError(); return; }
+
+    setCachedInsight(text);
+    aiShowContent(text, computeBestPick(), Date.now());
+
+  } catch (err) {
+    console.error('[777Watch AI] Fetch error:', err);
+    aiShowError();
+  }
 }
 
 // ── Init ────────────────────────────────────────────────────────────────────
