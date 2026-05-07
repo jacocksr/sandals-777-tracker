@@ -2603,8 +2603,8 @@ function aiShowContent(text, bestPick, timestamp) {
   proseEl.textContent = text;
   requestAnimationFrame(() => proseEl.classList.add('visible'));
 
-  if (bestPick && bestPick.deal) {
-    const d = bestPick.deal;
+  if (bestPick) {
+    const d = bestPick;
     document.getElementById('aiBestPickResort').textContent = d.resort;
     document.getElementById('aiBestPickRoom').textContent = d.roomName;
 	// Wire the Best Pick row to open the deal modal
@@ -2612,14 +2612,14 @@ function aiShowContent(text, bestPick, timestamp) {
 	pickEl.style.cursor = 'pointer';
 	pickEl.onclick = () => openModal(d.id);
 	pickEl.title = 'Click to view full deal details';
-    document.getElementById('aiBestPickPrice').textContent = `$${bestPick.price}`;
+    document.getElementById('aiBestPickPrice').textContent = `$${d.priceFrom}`;
 
     const deltaEl = document.getElementById('aiBestPickDelta');
-    if (bestPick.pastAvg && bestPick.delta !== null) {
-      const sign = bestPick.delta >= 0 ? '↓' : '↑';
-      const absD = Math.abs(bestPick.delta);
-      deltaEl.textContent = `${sign} $${absD} vs. hist. avg ($${bestPick.pastAvg})`;
-      deltaEl.className = 'ai-best-pick-delta ' + (bestPick.delta >= 0 ? 'down' : 'up');
+    if (d.histAvg && d.vsHistAvg !== null) {
+      const sign = d.vsHistAvg >= 0 ? '↓' : '↑';
+      const absD = Math.abs(d.vsHistAvg);
+      deltaEl.textContent = `${sign} $${absD} vs. hist. avg ($${d.histAvg})`;
+      deltaEl.className = 'ai-best-pick-delta ' + (d.vsHistAvg >= 0 ? 'down' : 'up');
     } else {
       deltaEl.textContent = 'First time at this price';
       deltaEl.className = 'ai-best-pick-delta down';
@@ -2634,9 +2634,9 @@ function aiShowContent(text, bestPick, timestamp) {
   	}
 
   if (timestamp) {
-    const d = new Date(timestamp);
+    const tsDate = new Date(timestamp);
     document.getElementById('aiGeneratedAt').textContent =
-      `Generated ${d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+      `Generated ${tsDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
   }
 
   document.getElementById('aiRefreshBtn').disabled = false;
@@ -2658,33 +2658,36 @@ async function fetchAIInsight(forceRefresh = false) {
   aiShowSkeleton();
   document.getElementById('aiRefreshBtn').disabled = true;
 
-  try {
-    const prompt = buildPrompt();   // ← scoreAndRankDeals runs here, sets window._bestPickDeal
-		const resp = await fetch('https://sandals-ai-proxy...', {
-		  method: 'POST',
-		  headers: { 'Content-Type': 'application/json' },
-		  body: JSON.stringify({ prompt })
-		});
-    });
-
-    if (!resp.ok) {
-      console.error('[777Watch AI] Worker error:', resp.status);
-      aiShowError();
-      return;
-    }
-
-    const data = await resp.json();
-    const text = data?.choices?.[0]?.message?.content?.trim();
-
-    if (!text) { aiShowError(); return; }
-
-    setCachedInsight(text);
-	aiShowContent(text, window._bestPickDeal, Date.now());
-
-  } catch (err) {
-    console.error('[777Watch AI] Fetch error:', err);
-    aiShowError();
-  }
+	try {
+	  const prompt = buildPrompt(); // sets window._bestPickDeal
+	
+	  const resp = await fetch('https://sandals-ai-proxy...', {
+	    method: 'POST',
+	    headers: { 'Content-Type': 'application/json' },
+	    body: JSON.stringify({ prompt })
+	  });
+	
+	  if (!resp.ok) {
+	    console.error('[777Watch AI] Worker error:', resp.status);
+	    aiShowError();
+	    return;
+	  }
+	
+	  const data = await resp.json();
+	  const text = data?.choices?.[0]?.message?.content?.trim();
+	
+	  if (!text) {
+	    aiShowError();
+	    return;
+	  }
+	
+	  setCachedInsight(text);
+	  aiShowContent(text, window._bestPickDeal, Date.now());
+	
+	} catch (err) {
+	  console.error('[777Watch AI] Fetch error:', err);
+	  aiShowError();
+	}
 }
 
 // ── Init ────────────────────────────────────────────────────────────────────
