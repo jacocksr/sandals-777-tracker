@@ -1712,7 +1712,7 @@ function renderPriceRange() {
         <div class="price-range-endpoint-resort">${cheapest.resort.replace('Beaches ','')}</div>
         <div class="price-range-endpoint-room">${cheapest.roomName}</div>
         <div style="margin-top:0.4rem;font-size:0.8rem;font-weight:700;color:var(--ocean-deep)">
-          $${cheapest.price} pp/pn total
+          $${_totalPrice(cheapest)} pp/pn total
           ${cheapest.priceChild ? `<span style="font-weight:400;color:var(--text-muted);font-size:0.68rem;display:block">Adult $${cheapest.priceFrom} + Child $${cheapest.priceChild}</span>` : ''}
         </div>
       </div>
@@ -1721,7 +1721,7 @@ function renderPriceRange() {
         <div class="price-range-endpoint-resort">${priciest.resort.replace('Beaches ','')}</div>
         <div class="price-range-endpoint-room">${priciest.roomName}</div>
         <div style="margin-top:0.4rem;font-size:0.8rem;font-weight:700;color:var(--ocean-deep)">
-          $${priciest.price} pp/pn total
+          $${_totalPrice(priciest)} pp/pn total
           ${priciest.priceChild ? `<span style="font-weight:400;color:var(--text-muted);font-size:0.68rem;display:block">Adult $${priciest.priceFrom} + Child $${priciest.priceChild}</span>` : ''}
         </div>
       </div>
