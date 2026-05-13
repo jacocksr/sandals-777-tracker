@@ -206,56 +206,10 @@ def scrape_deals() -> list[dict]:
             except Exception:
                 pass
 
-        # Scroll through full page to trigger lazy-loaded images
-        print("[scraper] Scrolling to trigger lazy image loading...")
-        for scroll_pos in [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000]:
-            page.mouse.wheel(0, scroll_pos)
-            time.sleep(0.8)
-
-        page.evaluate("window.scrollTo(0, 0)")
-        time.sleep(1)
-
-        # Wait up to 10s for at least 7 CDN images in the DOM
-        print("[scraper] Waiting for CDN images to load...")
-        for wait_attempt in range(10):
-            cdn_img_count = page.evaluate("""() =>
-                [...document.querySelectorAll('img')]
-                .filter(i => i.src && i.src.includes('cdn.sandals.com')).length
-            """)
-            print(f"[scraper] CDN images in DOM: {cdn_img_count} (attempt {wait_attempt+1})")
-            if cdn_img_count >= 7:
-                print("[scraper] Sufficient CDN images loaded ✓")
-                break
-            time.sleep(1)
-        else:
-            print("[scraper] ⚠️  Fewer than 7 CDN images found — proceeding anyway")
-
-        img_urls_raw = []
-        try:
-            img_urls_raw = page.evaluate("""() => {
-                const seen = new Set();
-                const imgs = [];
-                document.querySelectorAll('img').forEach(img => {
-                    const src = img.src || img.dataset.src || img.dataset.lazy || '';
-                    if (src.includes('cdn.sandals.com') &&
-                        !src.includes('logo') &&
-                        !src.includes('icon') &&
-                        !src.includes('card_image') &&
-                        !src.includes('footer') &&
-                        !src.includes('brands') &&
-                        !seen.has(src)) {
-                        seen.add(src);
-                        imgs.push(src);
-                    }
-                });
-                return imgs;
-            }""")
-            print(f"[scraper] Found {len(img_urls_raw)} CDN image URLs total")
-            for u in img_urls_raw:
-                print(f"[scraper] CDN: {u[:100]}")
-        except Exception as e:
-            print(f"[scraper] Image extraction error: {e}")
-
+        # Capture the raw HTML source containing the Next.js state data before closing
+        print("[scraper] Capturing Next.js state data...")
+        html_source = page.content()
+        
         browser.close()
 
     if not body_text:
@@ -264,21 +218,48 @@ def scrape_deals() -> list[dict]:
 
     rc_count = body_text.count("Room Code:")
     print(f"[scraper] Rendered text: {len(body_text)} chars, {rc_count} 'Room Code:' occurrences")
+    
+    # Parse deals from the rendered text
     deals = parse_rendered_text(body_text)
 
+    # Extract accurate images from the Next.js HTML source
+    print("[scraper] Extracting accurate images from Next.js state data...")
     for deal in deals:
-        slug = RESORT_CDN_SLUG.get(deal["resortCode"], "").lower()
-        matched = [u for u in img_urls_raw if f"/media/{slug}/" in u.lower()] if slug else []
-        deal["imgUrl"]    = matched[0] if matched else ""
-        deal["_cdn_urls"] = matched[:4]
-        if deal["imgUrl"]:
-            print(f"[scraper] Matched {len(matched)} images for {deal['resortCode']} (slug='{slug}')")
+        room_name = deal.get('roomName', '')
+        if not room_name:
+            continue
+            
+        # The HTML encodes ampersands as \u0026
+        room_search_term = room_name.replace('&', '\\u0026')
+        
+        # Find where this room is mentioned in the Next.js JSON state
+        idx = html_source.find(room_search_term)
+        if idx != -1:
+            # Look at a window of text before the room name to find the associated images
+            window_start = max(0, idx - 1500)
+            window_end = min(len(html_source), idx + 1000)
+            window = html_source[window_start:window_end]
+            
+            # Find all CDN jpg URLs in this window
+            found_urls = re.findall(r'https://cdn\.sandals\.com/[^"\\]+\.jpg', window)
+            
+            if found_urls:
+                # Deduplicate while preserving order
+                unique_urls = list(dict.fromkeys(found_urls))
+                
+                # Assign up to 4 images to the deal (Uses _cdn_urls to match your download_images logic)
+                deal['_cdn_urls'] = unique_urls[:4]
+                
+                # Set the primary image URL
+                deal['imgUrl'] = unique_urls[0]
+                print(f"[scraper] Found {len(unique_urls)} images for {room_name[:30]}...")
+            else:
+                print(f"[scraper] No Next.js images found for {room_name[:30]}")
         else:
-            print(f"[scraper] No image matched for {deal['resortCode']} (slug='{slug}')")
+            print(f"[scraper] Room name not found in Next.js state: {room_name[:30]}")
 
     download_images(deals)
     return deals
-
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  PARSER
