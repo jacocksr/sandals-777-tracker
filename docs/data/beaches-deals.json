@@ -1,6 +1,6 @@
 {
   "weekLabel": "May 13 – May 19, 2026",
-  "fetchedAt": "2026-05-13T12:17:40.149165+00:00",
+  "fetchedAt": "2026-05-13T14:44:18.886722+00:00",
   "dealCount": 7,
   "deals": [
     {
@@ -12,10 +12,7 @@
       "imgUrl": "https://cdn.sandals.com/beaches/v11/media/btc/accommodations/large/btc-145.jpg",
       "imgPath": "images/BBTC_NP.jpg",
       "imgPaths": [
-        "images/BBTC_NP.jpg",
-        "images/BBTC_NP_2.jpg",
-        "images/BBTC_NP_3.jpg",
-        "images/BBTC_NP_4.jpg"
+        "images/BBTC_NP.jpg"
       ],
       "roomCode": "NP",
       "roomName": "Italian Two Bedroom Butler Family Suite",
@@ -33,13 +30,10 @@
       "resort": "Beaches Turks & Caicos",
       "location": "Providenciales, Turks & Caicos",
       "imgColor": "#0077b6",
-      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/btc/accommodations/large/btc-145.jpg",
+      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/btc/accommodations/large/btc-172.jpg",
       "imgPath": "images/BBTC_2BO.jpg",
       "imgPaths": [
-        "images/BBTC_2BO.jpg",
-        "images/BBTC_2BO_2.jpg",
-        "images/BBTC_2BO_3.jpg",
-        "images/BBTC_2BO_4.jpg"
+        "images/BBTC_2BO.jpg"
       ],
       "roomCode": "2BO",
       "roomName": "Key West Oceanview Two Story, Two Bedroom Butler Suite",
@@ -60,10 +54,7 @@
       "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-518.jpg",
       "imgPath": "images/BBNG_3BW.jpg",
       "imgPaths": [
-        "images/BBNG_3BW.jpg",
-        "images/BBNG_3BW_2.jpg",
-        "images/BBNG_3BW_3.jpg",
-        "images/BBNG_3BW_4.jpg"
+        "images/BBNG_3BW.jpg"
       ],
       "roomCode": "3BW",
       "roomName": "Eventide Penthouse Three Bedroom Butler Walkout",
@@ -81,13 +72,10 @@
       "resort": "Beaches Turks & Caicos",
       "location": "Providenciales, Turks & Caicos",
       "imgColor": "#0077b6",
-      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/btc/accommodations/large/btc-145.jpg",
+      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/btc/accommodations/large/btc-845.jpg",
       "imgPath": "images/BBTC_XPC.jpg",
       "imgPaths": [
-        "images/BBTC_XPC.jpg",
-        "images/BBTC_XPC_2.jpg",
-        "images/BBTC_XPC_3.jpg",
-        "images/BBTC_XPC_4.jpg"
+        "images/BBTC_XPC.jpg"
       ],
       "roomCode": "XPC",
       "roomName": "Treasure Beach Oceanview Penthouse Concierge Suite",
@@ -105,13 +93,10 @@
       "resort": "Beaches Turks & Caicos",
       "location": "Providenciales, Turks & Caicos",
       "imgColor": "#0077b6",
-      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/btc/accommodations/large/btc-145.jpg",
+      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/btc/accommodations/large/btc-156.jpg",
       "imgPath": "images/BBTC_D2.jpg",
       "imgPaths": [
-        "images/BBTC_D2.jpg",
-        "images/BBTC_D2_2.jpg",
-        "images/BBTC_D2_3.jpg",
-        "images/BBTC_D2_4.jpg"
+        "images/BBTC_D2.jpg"
       ],
       "roomCode": "D2",
       "roomName": "Italian Oceanfront Concierge Family Suite with Kids Room",
@@ -129,13 +114,10 @@
       "resort": "Beaches Negril",
       "location": "Negril, Jamaica",
       "imgColor": "#00b4d8",
-      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-518.jpg",
+      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-598.jpg",
       "imgPath": "images/BBNG_GLD.jpg",
       "imgPaths": [
-        "images/BBNG_GLD.jpg",
-        "images/BBNG_GLD_2.jpg",
-        "images/BBNG_GLD_3.jpg",
-        "images/BBNG_GLD_4.jpg"
+        "images/BBNG_GLD.jpg"
       ],
       "roomCode": "GLD",
       "roomName": "Grande Luxe Double",
@@ -153,13 +135,10 @@
       "resort": "Beaches Negril",
       "location": "Negril, Jamaica",
       "imgColor": "#00b4d8",
-      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-518.jpg",
+      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-601.jpg",
       "imgPath": "images/BBNG_GLK.jpg",
       "imgPaths": [
-        "images/BBNG_GLK.jpg",
-        "images/BBNG_GLK_2.jpg",
-        "images/BBNG_GLK_3.jpg",
-        "images/BBNG_GLK_4.jpg"
+        "images/BBNG_GLK.jpg"
       ],
       "roomCode": "GLK",
       "roomName": "Grande Luxe King",
