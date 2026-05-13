@@ -1,6 +1,6 @@
 {
   "weekLabel": "May 13 – May 19, 2026",
-  "fetchedAt": "2026-05-13T08:07:25.098247+00:00",
+  "fetchedAt": "2026-05-13T09:19:05.869287+00:00",
   "dealCount": 7,
   "deals": [
     {
@@ -23,7 +23,7 @@
       "bedding": "1 King bed, 1 sleeper chair, 1 bunk bed w/trundle, 1 daybed w/trundle, 1 sofa bed",
       "discount": "7%+ off",
       "priceFrom": 1414,
-      "priceChild": 47,
+      "priceChild": 38,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/np/"
     },
@@ -47,7 +47,7 @@
       "bedding": "2 King beds, 1 pullout sofa and trundle",
       "discount": "7%+ off",
       "priceFrom": 1319,
-      "priceChild": 47,
+      "priceChild": 38,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/2bo/"
     },
@@ -71,7 +71,7 @@
       "bedding": "1 King Bed, 2 Queen Beds, 1 Twin Bunk Bed Trundle, 2 Queen Sleeper Sofa Beds",
       "discount": "7%+ off",
       "priceFrom": 1184,
-      "priceChild": 47,
+      "priceChild": 38,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/3bw/"
     },
@@ -95,7 +95,7 @@
       "bedding": "1 King Bed, 1 Bunk Bed w/trundle, 1 Sleeper Sofa",
       "discount": "7%+ off",
       "priceFrom": 1164,
-      "priceChild": 47,
+      "priceChild": 38,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/xpc/"
     },
@@ -119,7 +119,7 @@
       "bedding": "1 king bed, 1 sleeper chair, 1 bunk bed w/trundle",
       "discount": "7%+ off",
       "priceFrom": 1020,
-      "priceChild": 47,
+      "priceChild": 38,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/d2/"
     },
@@ -143,7 +143,7 @@
       "bedding": "2 Double Beds (rollaway beds available upon request)",
       "discount": "7%+ off",
       "priceFrom": 332,
-      "priceChild": 68,
+      "priceChild": 58,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gld/"
     },
@@ -167,7 +167,7 @@
       "bedding": "1 King Bed & a Twin-Size Daybed with Trundle",
       "discount": "7%+ off",
       "priceFrom": 332,
-      "priceChild": 68,
+      "priceChild": 58,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/glk/"
     }
