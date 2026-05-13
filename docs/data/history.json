@@ -1641,7 +1641,7 @@
   },
   {
     "weekLabel": "May 13 – May 19, 2026",
-    "fetchedAt": "2026-05-13T07:54:21.511539+00:00",
+    "fetchedAt": "2026-05-13T08:55:28.260639+00:00",
     "deals": [
       {
         "id": 1,
@@ -1714,29 +1714,6 @@
       },
       {
         "id": 4,
-        "resortCode": "SGO",
-        "resort": "Sandals Ochi",
-        "location": "Ocho Rios, Jamaica",
-        "imgColor": "#1a5c6a",
-        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sgo/accommodations/large/sgo-100.jpg",
-        "imgPath": "images/SGO_OV1.jpg",
-        "imgPaths": [
-          "images/SGO_OV1.jpg",
-          "images/SGO_OV1_2.jpg",
-          "images/SGO_OV1_3.jpg",
-          "images/SGO_OV1_4.jpg"
-        ],
-        "roomCode": "OV1",
-        "roomName": "Oceanview One Bedroom Poolside Butler Villa Suite",
-        "roomView": "Oceanview, Pool, Tropical Garden",
-        "bedding": "1 King Bed",
-        "discount": "7%+ off",
-        "priceFrom": 383,
-        "priceWas": null,
-        "bookUrl": "https://www.sandals.com/ochi/rooms-suites/ov1/"
-      },
-      {
-        "id": 5,
         "resortCode": "SCR",
         "resort": "Sandals Royal Curacao",
         "location": "Santa Barbara, Curaçao",
@@ -1756,6 +1733,29 @@
         "priceFrom": 379,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/royal-curacao/rooms-suites/wscl/"
+      },
+      {
+        "id": 5,
+        "resortCode": "SGO",
+        "resort": "Sandals Ochi",
+        "location": "Ocho Rios, Jamaica",
+        "imgColor": "#1a5c6a",
+        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sgo/accommodations/large/sgo-100.jpg",
+        "imgPath": "images/SGO_OV1.jpg",
+        "imgPaths": [
+          "images/SGO_OV1.jpg",
+          "images/SGO_OV1_2.jpg",
+          "images/SGO_OV1_3.jpg",
+          "images/SGO_OV1_4.jpg"
+        ],
+        "roomCode": "OV1",
+        "roomName": "Oceanview One Bedroom Poolside Butler Villa Suite",
+        "roomView": "Oceanview, Pool, Tropical Garden",
+        "bedding": "1 King Bed",
+        "discount": "7%+ off",
+        "priceFrom": 377,
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/ochi/rooms-suites/ov1/"
       },
       {
         "id": 6,
@@ -1797,7 +1797,7 @@
         "roomView": "Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 314,
+        "priceFrom": 277,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/halcyon-beach/rooms-suites/wglt/"
       }
