@@ -1805,7 +1805,7 @@
   },
   {
     "weekLabel": "May 20 – May 26, 2026",
-    "fetchedAt": "2026-05-20T08:30:16.152408+00:00",
+    "fetchedAt": "2026-05-20T09:52:06.800053+00:00",
     "deals": [
       {
         "id": 1,
@@ -1938,7 +1938,7 @@
         "roomView": "Pool, Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 297,
+        "priceFrom": 285,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/sandals-grande-antigua/rooms-suites/vs/"
       },
