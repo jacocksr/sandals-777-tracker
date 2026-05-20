@@ -1,6 +1,6 @@
 {
   "weekLabel": "May 20 – May 26, 2026",
-  "fetchedAt": "2026-05-20T07:54:16.271567+00:00",
+  "fetchedAt": "2026-05-20T08:30:16.151379+00:00",
   "dealCount": 7,
   "deals": [
     {
@@ -156,7 +156,7 @@
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 285,
+      "priceFrom": 257,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/halcyon-beach/rooms-suites/pl/"
     }
