@@ -801,7 +801,7 @@
   },
   {
     "weekLabel": "May 20 – May 26, 2026",
-    "fetchedAt": "2026-05-20T12:01:17.962289+00:00",
+    "fetchedAt": "2026-05-20T12:33:45.179545+00:00",
     "deals": [
       {
         "id": 1,
@@ -914,27 +914,6 @@
         "resort": "Beaches Negril",
         "location": "Negril, Jamaica",
         "imgColor": "#00b4d8",
-        "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-591.jpg",
-        "imgPath": "images/BBNG_GCK.jpg",
-        "imgPaths": [
-          "images/BBNG_GCK.jpg"
-        ],
-        "roomCode": "GCK",
-        "roomName": "Tropical Concierge King",
-        "roomView": "Tropical Garden",
-        "bedding": "1 King Bed & a Twin-Size Daybed with Trundle",
-        "discount": "7%+ off",
-        "priceFrom": 368,
-        "priceChild": 51,
-        "priceWas": null,
-        "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gck/"
-      },
-      {
-        "id": 7,
-        "resortCode": "BNG",
-        "resort": "Beaches Negril",
-        "location": "Negril, Jamaica",
-        "imgColor": "#00b4d8",
         "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-589.jpg",
         "imgPath": "images/BBNG_GCD.jpg",
         "imgPaths": [
@@ -949,6 +928,27 @@
         "priceChild": 51,
         "priceWas": null,
         "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gcd/"
+      },
+      {
+        "id": 7,
+        "resortCode": "BNG",
+        "resort": "Beaches Negril",
+        "location": "Negril, Jamaica",
+        "imgColor": "#00b4d8",
+        "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-591.jpg",
+        "imgPath": "images/BBNG_GCK.jpg",
+        "imgPaths": [
+          "images/BBNG_GCK.jpg"
+        ],
+        "roomCode": "GCK",
+        "roomName": "Tropical Concierge King",
+        "roomView": "Tropical Garden",
+        "bedding": "1 King Bed & a Twin-Size Daybed with Trundle",
+        "discount": "7%+ off",
+        "priceFrom": 368,
+        "priceChild": 51,
+        "priceWas": null,
+        "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gck/"
       }
     ]
   }
