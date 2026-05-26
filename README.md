@@ -1,141 +1,116 @@
-# 7·7·7 Watch — Sandals Deal Tracker
+# 🏖️ Sandals & Beaches 777 Tracker
 
-An independent, automated tracker for Sandals Resorts' weekly 7-7-7 promotion.
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Deployed-success?logo=github)](https://jacocksr.github.io/sandals-777-tracker/)
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![Data Format](https://img.shields.io/badge/Data-JSON-lightgray.svg)]()
+[![Automation](https://img.shields.io/badge/Action-Automated%20Scraping-green.svg)]()
 
----
+An automated tracking system that scrapes, records, and publishes the latest discounted room deals (777 promotions) for Sandals and Beaches Resorts. 
 
-## How It Works (plain English)
-
-1. **Every Wednesday**, GitHub (a free code storage website) automatically runs a Python script on its servers.
-2. That script opens an invisible Chrome browser, loads the Sandals 7-7-7 page, reads the deals, and saves them to `data/deals.json`.
-3. Your website (a single HTML file) reads `deals.json` and displays the deals beautifully.
-4. Visitors see live, current data — updated automatically, every week, for free.
-
-**Cost to run: $0/month** using GitHub Pages + GitHub Actions free tier.
+The project uses Python to scrape weekly deals, stores the current and historical data in JSON format, and presents it through a static website hosted on GitHub Pages.
 
 ---
 
-## Project Structure
+## ✨ Features
 
+- **Automated Scraping**: Dedicated Python scripts extract the latest 7%+ off deals for both Sandals and Beaches resorts.
+- **Data Logging**: Maintains both a current snapshot (`deals.json`) and a running historical log (`history.json`) to track price changes over time.
+- **Static Web Dashboard**: A frontend hosted on GitHub Pages (`docs/` folder) allows users to easily view current deals and historical trends without looking at raw code.
+- **CI/CD Integration**: Designed to be automated via GitHub Actions (`.github/workflows`) to run the scrapers on a weekly schedule.
+
+---
+
+## 📂 Repository Structure
+
+```text
+├── .github/                 # GitHub Actions workflows for automated scraping
+├── README.md                # Project documentation
+├── scripts/                 # Python scraping modules
+│   ├── scraper.py           # Main scraper for Sandals 777 deals
+│   └── beaches-scraper.py   # Main scraper for Beaches deals
+├── docs/                    # GitHub Pages static site files
+│   ├── index.html           # Frontend dashboard for Sandals deals
+│   ├── beaches-index.html   # Frontend dashboard for Beaches deals
+│   ├── data/                # Frontend data assets
+│   └── images/              # Frontend image assets
+└── *.json                   # Data output files (deals & history logs)
 ```
-sandals-tracker/
-├── .github/
-│   └── workflows/
-│       └── scrape-weekly.yml   ← Automated weekly scheduler
-├── data/
-│   ├── deals.json              ← This week's deals (auto-updated)
-│   └── history.json            ← Every week ever scraped (grows over time)
-├── scripts/
-│   └── scraper.py              ← The Python scraper
-├── site/
-│   └── index.html              ← Your website
-└── README.md                   ← This file
+
+---
+
+## 🚀 Setup & Installation
+
+To run the scrapers locally and contribute to the project, follow these steps:
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/jacocksr/sandals-777-tracker.git
+cd sandals-777-tracker
+```
+
+### 2. Set Up a Virtual Environment
+It's recommended to use a virtual environment to manage dependencies.
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows use: venv\Scripts\activate
+```
+
+### 3. Install Dependencies
+*(Note: Ensure you have a `requirements.txt` file listing your web scraping libraries such as `requests`, `beautifulsoup4`, or `selenium`)*
+```bash
+pip install -r requirements.txt
 ```
 
 ---
 
-## Step-by-Step: Get This Live in 30 Minutes
+## 🛠️ Usage
 
-### Step 1 — Create a GitHub Account
+### Running the Scrapers
+To fetch the latest deals and update the JSON files, execute the scripts from the root directory:
 
-1. Go to [github.com](https://github.com) and click **Sign up** (top right)
-2. Choose a username, enter your email, create a password
-3. Verify your email when they send you a confirmation
+**For Sandals Resorts:**
+```bash
+python scripts/scraper.py
+```
+*Updates `deals.json` and appends to `history.json`.*
 
-### Step 2 — Create a New Repository
+**For Beaches Resorts:**
+```bash
+python scripts/beaches-scraper.py
+```
+*Updates `beaches-deals.json` and appends to `beaches-history.json`.*
 
-A "repository" (or "repo") is just a folder on GitHub that stores your code.
-
-1. Once logged in, click the **+** icon (top right) → **New repository**
-2. Repository name: `sandals-777-tracker` (or anything you like)
-3. Set it to **Public** (required for free hosting)
-4. Check **Add a README file**
-5. Click **Create repository**
-
-### Step 3 — Upload Your Files
-
-1. On your new repository page, click **Add file** → **Upload files**
-2. Upload everything from this project folder, keeping the folder structure:
-   - Drag the `.github` folder
-   - Drag the `data` folder
-   - Drag the `scripts` folder
-   - Drag the `docs` folder; this is where the html page lives
-3. At the bottom, click **Commit changes**
-
-> **Tip on the .github folder:** On Mac, folders starting with `.` are hidden by default. Press `Cmd+Shift+.` in Finder to show hidden files before uploading.
-
-### Step 4 — Enable GitHub Pages (Free Hosting)
-
-GitHub Pages turns your repository into a live website automatically.
-
-1. In your repository, click **Settings** (tab near the top)
-2. In the left sidebar, click **Pages**
-3. Under "Source", select **Deploy from a branch**
-4. Under "Branch", select **main** and set the folder to **/docs**
-5. Click **Save**
-6. Wait 1-2 minutes, then your site will be live at:
-   `https://YOUR-USERNAME.github.io/sandals-777-tracker`
-
-### Step 5 — Verify the Scraper Works
-
-1. In your repository, click the **Actions** tab
-2. On the left, click **"Scrape Sandals 7·7·7 Deals"**
-3. Click **Run workflow** → **Run workflow** (green button)
-4. Watch it run! It takes about 2-3 minutes.
-5. If it shows a green checkmark ✅ — everything works!
-6. If it shows a red ✗ — click on it to see the error log
-
-> The scraper will now run automatically every Wednesday at 6am UTC (1am US Eastern).
+### Viewing the Frontend Locally
+Since the frontend uses basic HTML/JS, you can preview the site locally by spinning up a simple Python server:
+```bash
+cd docs
+python -m http.server 8000
+```
+Then navigate to `http://localhost:8000` in your web browser.
 
 ---
 
-## Troubleshooting
+## 🤖 Automation (GitHub Actions)
 
-### "The site shows old/fallback data"
-- The site reads `data/deals.json`. If the scraper hasn't run yet, you'll see the seed data.
-- Manually trigger the scraper via the Actions tab.
-
-### "The scraper failed with a Timeout error"
-- Sandals' website was slow or down. Try running manually again.
-- If it keeps failing, Sandals may have updated their page structure. Open an issue.
-
-### "I see a CORS error in the browser console"
-- This happens when you open `index.html` directly from your computer (the `file://` protocol).
-- The site works correctly when hosted on GitHub Pages.
-- To test locally, run a simple server: `python3 -m http.server 8000` inside the `site/` folder, then visit `http://localhost:8000`.
-
-### "The scraper extracted 0 deals"
-- Sandals may have updated their page's HTML structure.
-- Open `scripts/scraper.py` and update the `CARD_SELECTORS` list with the new CSS selectors.
-- You can find these by right-clicking a deal card on their site → Inspect Element.
+This project leverages GitHub Actions to run automatically. The workflows located in `.github/` are configured to:
+1. Spin up a runner on a weekly cron schedule (typically Wednesdays when new 777 deals drop).
+2. Execute both `scraper.py` and `beaches-scraper.py`.
+3. Commit any changes to the `*.json` files back to the repository.
+4. Trigger a GitHub Pages deployment to update the live dashboards.
 
 ---
 
-## Customizing the Site
+## 📊 Data Structure
 
-- **Colors/fonts:** Edit the `:root` CSS variables at the top of `site/index.html`
-- **Adding a custom domain:** In GitHub Pages Settings, add a custom domain (e.g. `777deals.com`) — you'll need to buy the domain (~$12/year) and point its DNS to GitHub
-- **Email alerts:** Sign up for [EmailOctopus](https://emailoctopus.com) (free up to 2,500 subscribers) and replace the `subscribeAlert()` function with their embed code
-
----
-
-## Legal Notes
-
-- This site is an **independent tracker** and is not affiliated with Sandals Resorts International.
-- Deal data is sourced from Sandals' public website.
-- Always verify pricing and availability at [sandals.com](https://www.sandals.com/specials/suite-deals/) before booking.
-- Prices shown are for informational purposes only.
+The output data is structured in JSON for easy integration with the frontend. A typical deal entry includes:
+- **Resort Name & Location** (e.g., Sandals Saint Vincent)
+- **Room Category**
+- **Original Price vs. Discounted Price**
+- **Travel Window Dates**
+- **Booking URL**
 
 ---
 
-## Future Ideas
+## 📜 License
 
-- [ ] Price history charts per room code
-- [ ] "Notify me when resort X appears" alerts
-- [ ] Affiliate link integration for commission on bookings
-- [ ] Twitter/X bot that tweets the deals every Wednesday
-- [ ] Compare total discount % across weeks
-
----
-
-*Built for travelers, by travelers.*
+Distributed under the MIT License. See `LICENSE` for more information.
