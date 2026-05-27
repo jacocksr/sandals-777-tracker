@@ -1,6 +1,6 @@
 {
   "weekLabel": "May 27 – Jun 2, 2026",
-  "fetchedAt": "2026-05-27T08:10:58.921576+00:00",
+  "fetchedAt": "2026-05-27T08:46:35.984037+00:00",
   "dealCount": 7,
   "deals": [
     {
@@ -20,7 +20,7 @@
       "bedding": "Two king beds, two double beds, one twin daybed with a trundle and three single pullout sofa beds.",
       "discount": "7%+ off",
       "priceFrom": 1119,
-      "priceChild": 47,
+      "priceChild": 38,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/w3bg/"
     },
@@ -41,7 +41,7 @@
       "bedding": "1 King Bed, 1 Bunk Bed w/trundle, 1 Sleeper Sofa",
       "discount": "7%+ off",
       "priceFrom": 860,
-      "priceChild": 47,
+      "priceChild": 38,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/xc/"
     },
@@ -62,33 +62,12 @@
       "bedding": "1 king bed, 1 sleeper chair, 1 bunk bed w/trundle",
       "discount": "7%+ off",
       "priceFrom": 761,
-      "priceChild": 47,
+      "priceChild": 38,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/r2/"
     },
     {
       "id": 4,
-      "resortCode": "BNG",
-      "resort": "Beaches Negril",
-      "location": "Negril, Jamaica",
-      "imgColor": "#00b4d8",
-      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-594.jpg",
-      "imgPath": "images/BBNG_GLC.jpg",
-      "imgPaths": [
-        "images/BBNG_GLC.jpg"
-      ],
-      "roomCode": "GLC",
-      "roomName": "Grand Luxe Family Rooms",
-      "roomView": "Tropical Garden",
-      "bedding": "1 King Bed, 2 Double Beds, and a Twin Daybed with Trundle.",
-      "discount": "7%+ off",
-      "priceFrom": 632,
-      "priceChild": 68,
-      "priceWas": null,
-      "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/glc/"
-    },
-    {
-      "id": 5,
       "resortCode": "BNG",
       "resort": "Beaches Negril",
       "location": "Negril, Jamaica",
@@ -104,9 +83,30 @@
       "bedding": "1 King Bed, 2 Double Beds, 1 Twin Daybed with Trundle and 1 Single Pullout Sofa Bed.",
       "discount": "7%+ off",
       "priceFrom": 629,
-      "priceChild": 47,
+      "priceChild": 38,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/bcc/"
+    },
+    {
+      "id": 5,
+      "resortCode": "BNG",
+      "resort": "Beaches Negril",
+      "location": "Negril, Jamaica",
+      "imgColor": "#00b4d8",
+      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-594.jpg",
+      "imgPath": "images/BBNG_GLC.jpg",
+      "imgPaths": [
+        "images/BBNG_GLC.jpg"
+      ],
+      "roomCode": "GLC",
+      "roomName": "Grand Luxe Family Rooms",
+      "roomView": "Tropical Garden",
+      "bedding": "1 King Bed, 2 Double Beds, and a Twin Daybed with Trundle.",
+      "discount": "7%+ off",
+      "priceFrom": 613,
+      "priceChild": 58,
+      "priceWas": null,
+      "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/glc/"
     },
     {
       "id": 6,
@@ -124,8 +124,8 @@
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed, 1 Queen Sleeper Sofa Bed, Can Accomodate Rollaway",
       "discount": "7%+ off",
-      "priceFrom": 586,
-      "priceChild": 47,
+      "priceFrom": 575,
+      "priceChild": 38,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/g1/"
     },
@@ -146,7 +146,7 @@
       "bedding": "",
       "discount": "7%+ off",
       "priceFrom": 433,
-      "priceChild": 54,
+      "priceChild": 45,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gs/"
     }
