@@ -1,6 +1,6 @@
 {
   "weekLabel": "Jun 10 – Jun 16, 2026",
-  "fetchedAt": "2026-06-10T08:15:39.042721+00:00",
+  "fetchedAt": "2026-06-10T08:54:06.422680+00:00",
   "dealCount": 7,
   "deals": [
     {
@@ -22,7 +22,7 @@
       "roomView": "Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 1079,
+      "priceFrom": 928,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/royal-curacao/rooms-suites/kb/"
     },
@@ -44,7 +44,7 @@
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 838,
+      "priceFrom": 706,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/sandals-saint-vincent/rooms-suites/vfp/"
     },
@@ -73,24 +73,6 @@
     },
     {
       "id": 4,
-      "resortCode": "SSN",
-      "resort": "Sandals Grenada",
-      "location": "Point Saline, Grenada",
-      "imgColor": "#784838",
-      "imgUrl": "",
-      "imgPath": "",
-      "imgPaths": [],
-      "roomCode": "PO",
-      "roomName": "Pink Gin Oceanview Room",
-      "roomView": "Oceanview",
-      "bedding": "1 King Bed",
-      "discount": "7%+ off",
-      "priceFrom": 402,
-      "priceWas": null,
-      "bookUrl": "https://www.sandals.com/sandals-grenada/rooms-suites/po/"
-    },
-    {
-      "id": 5,
       "resortCode": "SRB",
       "resort": "Sandals Royal Bahamian",
       "location": "Nassau, Bahamas",
@@ -110,6 +92,24 @@
       "priceFrom": 351,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/gl/"
+    },
+    {
+      "id": 5,
+      "resortCode": "SSN",
+      "resort": "Sandals Grenada",
+      "location": "Point Saline, Grenada",
+      "imgColor": "#784838",
+      "imgUrl": "",
+      "imgPath": "",
+      "imgPaths": [],
+      "roomCode": "PO",
+      "roomName": "Pink Gin Oceanview Room",
+      "roomView": "Oceanview",
+      "bedding": "1 King Bed",
+      "discount": "7%+ off",
+      "priceFrom": 344,
+      "priceWas": null,
+      "bookUrl": "https://www.sandals.com/sandals-grenada/rooms-suites/po/"
     },
     {
       "id": 6,
