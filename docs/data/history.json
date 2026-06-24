@@ -2617,7 +2617,7 @@
   },
   {
     "weekLabel": "Jun 24 – Jun 30, 2026",
-    "fetchedAt": "2026-06-24T08:26:06.023865+00:00",
+    "fetchedAt": "2026-06-24T09:48:24.214420+00:00",
     "deals": [
       {
         "id": 1,
@@ -2660,7 +2660,7 @@
         "roomView": "Beachfront, Oceanview, Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 472,
+        "priceFrom": 381,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/royal-curacao/rooms-suites/bc/"
       },
@@ -2682,7 +2682,7 @@
         "roomView": "Oceanview",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 446,
+        "priceFrom": 365,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/pjs/"
       },
@@ -2704,7 +2704,7 @@
         "roomView": "Beachfront, Oceanfront, Oceanview, Pool",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 388,
+        "priceFrom": 326,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/sandals-barbados/rooms-suites/ojs/"
       },
@@ -2722,7 +2722,7 @@
         "roomView": "Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 379,
+        "priceFrom": 318,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/sandals-grenada/rooms-suites/lwjs/"
       },
