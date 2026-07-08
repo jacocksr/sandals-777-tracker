@@ -1,6 +1,6 @@
 {
   "weekLabel": "Jul 8 – Jul 14, 2026",
-  "fetchedAt": "2026-07-08T08:42:06.140750+00:00",
+  "fetchedAt": "2026-07-08T09:31:10.273017+00:00",
   "dealCount": 7,
   "deals": [
     {
@@ -27,24 +27,6 @@
     },
     {
       "id": 2,
-      "resortCode": "SPR",
-      "resort": "Sandals Royal Barbados",
-      "location": "Christ Church, Barbados",
-      "imgColor": "#685838",
-      "imgUrl": "",
-      "imgPath": "",
-      "imgPaths": [],
-      "roomCode": "RPP",
-      "roomName": "South Seas Royal Rondoval Butler Suite w/ Private Pool Sanctuary",
-      "roomView": "Pool, Tropical Garden",
-      "bedding": "1 King Bed",
-      "discount": "7%+ off",
-      "priceFrom": 705,
-      "priceWas": null,
-      "bookUrl": "https://www.sandals.com/royal-barbados/rooms-suites/rpp/"
-    },
-    {
-      "id": 3,
       "resortCode": "SCR",
       "resort": "Sandals Royal Curacao",
       "location": "Santa Barbara, Curaçao",
@@ -65,6 +47,24 @@
       "priceFrom": 625,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/royal-curacao/rooms-suites/wb1/"
+    },
+    {
+      "id": 3,
+      "resortCode": "SPR",
+      "resort": "Sandals Royal Barbados",
+      "location": "Christ Church, Barbados",
+      "imgColor": "#685838",
+      "imgUrl": "",
+      "imgPath": "",
+      "imgPaths": [],
+      "roomCode": "RPP",
+      "roomName": "South Seas Royal Rondoval Butler Suite w/ Private Pool Sanctuary",
+      "roomView": "Pool, Tropical Garden",
+      "bedding": "1 King Bed",
+      "discount": "7%+ off",
+      "priceFrom": 562,
+      "priceWas": null,
+      "bookUrl": "https://www.sandals.com/royal-barbados/rooms-suites/rpp/"
     },
     {
       "id": 4,
