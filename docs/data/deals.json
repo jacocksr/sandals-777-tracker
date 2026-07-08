@@ -1,33 +1,10 @@
 {
   "weekLabel": "Jul 8 – Jul 14, 2026",
-  "fetchedAt": "2026-07-08T07:33:19.779952+00:00",
+  "fetchedAt": "2026-07-08T08:42:06.140750+00:00",
   "dealCount": 7,
   "deals": [
     {
       "id": 1,
-      "resortCode": "SCR",
-      "resort": "Sandals Royal Curacao",
-      "location": "Santa Barbara, Curaçao",
-      "imgColor": "#1a6878",
-      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/scr/accommodations/large/scr-285.jpg",
-      "imgPath": "images/SCR_WB1.jpg",
-      "imgPaths": [
-        "images/SCR_WB1.jpg",
-        "images/SCR_WB1_2.jpg",
-        "images/SCR_WB1_3.jpg",
-        "images/SCR_WB1_4.jpg"
-      ],
-      "roomCode": "WB1",
-      "roomName": "Sunchi Beachside One-Bedroom Butler Walkout Suite w/ Patio Tranquility Soaking Tub",
-      "roomView": "Tropical Garden",
-      "bedding": "1 King Bed",
-      "discount": "7%+ off",
-      "priceFrom": 742,
-      "priceWas": null,
-      "bookUrl": "https://www.sandals.com/royal-curacao/rooms-suites/wb1/"
-    },
-    {
-      "id": 2,
       "resortCode": "SSV",
       "resort": "Sandals Saint Vincent",
       "location": "Buccament Bay, Saint Vincent",
@@ -49,7 +26,7 @@
       "bookUrl": "https://www.sandals.com/sandals-saint-vincent/rooms-suites/vfp/"
     },
     {
-      "id": 3,
+      "id": 2,
       "resortCode": "SPR",
       "resort": "Sandals Royal Barbados",
       "location": "Christ Church, Barbados",
@@ -65,6 +42,29 @@
       "priceFrom": 705,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/royal-barbados/rooms-suites/rpp/"
+    },
+    {
+      "id": 3,
+      "resortCode": "SCR",
+      "resort": "Sandals Royal Curacao",
+      "location": "Santa Barbara, Curaçao",
+      "imgColor": "#1a6878",
+      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/scr/accommodations/large/scr-285.jpg",
+      "imgPath": "images/SCR_WB1.jpg",
+      "imgPaths": [
+        "images/SCR_WB1.jpg",
+        "images/SCR_WB1_2.jpg",
+        "images/SCR_WB1_3.jpg",
+        "images/SCR_WB1_4.jpg"
+      ],
+      "roomCode": "WB1",
+      "roomName": "Sunchi Beachside One-Bedroom Butler Walkout Suite w/ Patio Tranquility Soaking Tub",
+      "roomView": "Tropical Garden",
+      "bedding": "1 King Bed",
+      "discount": "7%+ off",
+      "priceFrom": 625,
+      "priceWas": null,
+      "bookUrl": "https://www.sandals.com/royal-curacao/rooms-suites/wb1/"
     },
     {
       "id": 4,
@@ -85,7 +85,7 @@
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 515,
+      "priceFrom": 397,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/hsup/"
     },
@@ -107,7 +107,7 @@
       "roomView": "Beachfront, Oceanfront, Oceanview",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 402,
+      "priceFrom": 349,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/sandals-barbados/rooms-suites/obt/"
     },
@@ -130,7 +130,7 @@
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 359,
+      "priceFrom": 316,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/ochi/rooms-suites/ng1/"
     },
@@ -152,7 +152,7 @@
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 285,
+      "priceFrom": 282,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/sandals-grande-antigua/rooms-suites/vs/"
     }
