@@ -2028,7 +2028,7 @@
   },
   {
     "weekLabel": "Jul 15 – Jul 21, 2026",
-    "fetchedAt": "2026-07-15T10:11:59.005949+00:00",
+    "fetchedAt": "2026-07-15T11:43:20.854565+00:00",
     "deals": [
       {
         "id": 1,
@@ -2049,8 +2049,8 @@
         "roomView": "Beachfront, Oceanview",
         "bedding": "1 King Bed, 2 Queen Beds, 1 Twin Bunk Bed, 2 Queen Sleeper Sofa Beds",
         "discount": "7%+ off",
-        "priceFrom": 1228,
-        "priceChild": 47,
+        "priceFrom": 1186,
+        "priceChild": 38,
         "priceWas": null,
         "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/3rt/"
       },
@@ -2154,8 +2154,8 @@
         "roomView": "Tropical Garden",
         "bedding": "1 King Bed & a Twin-Size Daybed with Trundle",
         "discount": "7%+ off",
-        "priceFrom": 359,
-        "priceChild": 61,
+        "priceFrom": 342,
+        "priceChild": 51,
         "priceWas": null,
         "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gck/"
       },
@@ -2175,8 +2175,8 @@
         "roomView": "Tropical Garden",
         "bedding": "2 Double Beds And a Single Pull-Out Sofa Bed",
         "discount": "7%+ off",
-        "priceFrom": 359,
-        "priceChild": 61,
+        "priceFrom": 342,
+        "priceChild": 51,
         "priceWas": null,
         "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gcd/"
       }
