@@ -3093,7 +3093,7 @@
   },
   {
     "weekLabel": "Jul 15 – Jul 21, 2026",
-    "fetchedAt": "2026-07-15T09:18:14.227713+00:00",
+    "fetchedAt": "2026-07-15T10:10:50.041359+00:00",
     "deals": [
       {
         "id": 1,
@@ -3114,7 +3114,7 @@
         "roomView": "Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 894,
+        "priceFrom": 812,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/royal-curacao/rooms-suites/kb/"
       },
@@ -3245,7 +3245,7 @@
         "roomView": "Pool, Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 316,
+        "priceFrom": 311,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/ochi/rooms-suites/nv1/"
       }
