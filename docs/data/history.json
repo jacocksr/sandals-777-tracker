@@ -3093,7 +3093,7 @@
   },
   {
     "weekLabel": "Jul 15 – Jul 21, 2026",
-    "fetchedAt": "2026-07-15T11:00:09.689089+00:00",
+    "fetchedAt": "2026-07-15T11:36:04.289171+00:00",
     "deals": [
       {
         "id": 1,
@@ -3166,50 +3166,6 @@
       },
       {
         "id": 4,
-        "resortCode": "SRB",
-        "resort": "Sandals Royal Bahamian",
-        "location": "Nassau, Bahamas",
-        "imgColor": "#2a6858",
-        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/srb/accommodations/large/srb-281.jpg",
-        "imgPath": "images/SRB_JS.jpg",
-        "imgPaths": [
-          "images/SRB_JS.jpg",
-          "images/SRB_JS_2.jpg",
-          "images/SRB_JS_3.jpg"
-        ],
-        "roomCode": "JS",
-        "roomName": "West Bay Honeymoon Oceanview Club Level Suite",
-        "roomView": "Oceanview, Pool, Tropical Garden",
-        "bedding": "1 King Bed",
-        "discount": "7%+ off",
-        "priceFrom": 383,
-        "priceWas": null,
-        "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/js/"
-      },
-      {
-        "id": 5,
-        "resortCode": "SAB",
-        "resort": "Sandals Grande Antigua",
-        "location": "St. John's, Antigua",
-        "imgColor": "#5a6848",
-        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sat/accommodations/large/sat-201.jpg",
-        "imgPath": "images/SAB_WJS.jpg",
-        "imgPaths": [
-          "images/SAB_WJS.jpg",
-          "images/SAB_WJS_2.jpg",
-          "images/SAB_WJS_3.jpg"
-        ],
-        "roomCode": "WJS",
-        "roomName": "Caribbean Walkout Club Level Veranda Suite",
-        "roomView": "Pool, Tropical Garden",
-        "bedding": "1 King Bed",
-        "discount": "7%+ off",
-        "priceFrom": 353,
-        "priceWas": null,
-        "bookUrl": "https://www.sandals.com/sandals-grande-antigua/rooms-suites/wjs/"
-      },
-      {
-        "id": 6,
         "resortCode": "SPR",
         "resort": "Sandals Royal Barbados",
         "location": "Christ Church, Barbados",
@@ -3227,7 +3183,29 @@
         "bookUrl": "https://www.sandals.com/royal-barbados/rooms-suites/sshl/"
       },
       {
-        "id": 7,
+        "id": 5,
+        "resortCode": "SRB",
+        "resort": "Sandals Royal Bahamian",
+        "location": "Nassau, Bahamas",
+        "imgColor": "#2a6858",
+        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/srb/accommodations/large/srb-281.jpg",
+        "imgPath": "images/SRB_JS.jpg",
+        "imgPaths": [
+          "images/SRB_JS.jpg",
+          "images/SRB_JS_2.jpg",
+          "images/SRB_JS_3.jpg"
+        ],
+        "roomCode": "JS",
+        "roomName": "West Bay Honeymoon Oceanview Club Level Suite",
+        "roomView": "Oceanview, Pool, Tropical Garden",
+        "bedding": "1 King Bed",
+        "discount": "7%+ off",
+        "priceFrom": 313,
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/js/"
+      },
+      {
+        "id": 6,
         "resortCode": "SGO",
         "resort": "Sandals Ochi",
         "location": "Ocho Rios, Jamaica",
@@ -3245,9 +3223,31 @@
         "roomView": "Pool, Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 316,
+        "priceFrom": 311,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/ochi/rooms-suites/nv1/"
+      },
+      {
+        "id": 7,
+        "resortCode": "SAB",
+        "resort": "Sandals Grande Antigua",
+        "location": "St. John's, Antigua",
+        "imgColor": "#5a6848",
+        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sat/accommodations/large/sat-201.jpg",
+        "imgPath": "images/SAB_WJS.jpg",
+        "imgPaths": [
+          "images/SAB_WJS.jpg",
+          "images/SAB_WJS_2.jpg",
+          "images/SAB_WJS_3.jpg"
+        ],
+        "roomCode": "WJS",
+        "roomName": "Caribbean Walkout Club Level Veranda Suite",
+        "roomView": "Pool, Tropical Garden",
+        "bedding": "1 King Bed",
+        "discount": "7%+ off",
+        "priceFrom": 289,
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/sandals-grande-antigua/rooms-suites/wjs/"
       }
     ]
   }
