@@ -3093,7 +3093,7 @@
   },
   {
     "weekLabel": "Jul 15 – Jul 21, 2026",
-    "fetchedAt": "2026-07-15T07:19:10.386702+00:00",
+    "fetchedAt": "2026-07-15T08:31:03.917848+00:00",
     "deals": [
       {
         "id": 1,
@@ -3184,28 +3184,6 @@
       },
       {
         "id": 5,
-        "resortCode": "SRB",
-        "resort": "Sandals Royal Bahamian",
-        "location": "Nassau, Bahamas",
-        "imgColor": "#2a6858",
-        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/srb/accommodations/large/srb-281.jpg",
-        "imgPath": "images/SRB_JS.jpg",
-        "imgPaths": [
-          "images/SRB_JS.jpg",
-          "images/SRB_JS_2.jpg",
-          "images/SRB_JS_3.jpg"
-        ],
-        "roomCode": "JS",
-        "roomName": "West Bay Honeymoon Oceanview Club Level Suite",
-        "roomView": "Oceanview, Pool, Tropical Garden",
-        "bedding": "1 King Bed",
-        "discount": "7%+ off",
-        "priceFrom": 383,
-        "priceWas": null,
-        "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/js/"
-      },
-      {
-        "id": 6,
         "resortCode": "SAB",
         "resort": "Sandals Grande Antigua",
         "location": "St. John's, Antigua",
@@ -3227,6 +3205,28 @@
         "bookUrl": "https://www.sandals.com/sandals-grande-antigua/rooms-suites/wjs/"
       },
       {
+        "id": 6,
+        "resortCode": "SRB",
+        "resort": "Sandals Royal Bahamian",
+        "location": "Nassau, Bahamas",
+        "imgColor": "#2a6858",
+        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/srb/accommodations/large/srb-281.jpg",
+        "imgPath": "images/SRB_JS.jpg",
+        "imgPaths": [
+          "images/SRB_JS.jpg",
+          "images/SRB_JS_2.jpg",
+          "images/SRB_JS_3.jpg"
+        ],
+        "roomCode": "JS",
+        "roomName": "West Bay Honeymoon Oceanview Club Level Suite",
+        "roomView": "Oceanview, Pool, Tropical Garden",
+        "bedding": "1 King Bed",
+        "discount": "7%+ off",
+        "priceFrom": 313,
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/js/"
+      },
+      {
         "id": 7,
         "resortCode": "SGO",
         "resort": "Sandals Ochi",
@@ -3245,7 +3245,7 @@
         "roomView": "Pool, Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 316,
+        "priceFrom": 311,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/ochi/rooms-suites/nv1/"
       }
