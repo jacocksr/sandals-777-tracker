@@ -1,6 +1,6 @@
 {
-  "weekLabel": "Jul 22 – Jul 28, 2026",
-  "fetchedAt": "2026-07-22T11:58:05.618447+00:00",
+  "weekLabel": "Jul 29 – Aug 4, 2026",
+  "fetchedAt": "2026-07-29T06:41:12.113435+00:00",
   "dealCount": 7,
   "deals": [
     {
@@ -9,20 +9,20 @@
       "resort": "Beaches Turks & Caicos",
       "location": "Providenciales, Turks & Caicos",
       "imgColor": "#0077b6",
-      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/btc/accommodations/large/btc-892.jpg",
-      "imgPath": "images/BBTC_NP.jpg",
+      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/btc/accommodations/large/btc-582.jpg",
+      "imgPath": "images/BBTC_XOC.jpg",
       "imgPaths": [
-        "images/BBTC_NP.jpg"
+        "images/BBTC_XOC.jpg"
       ],
-      "roomCode": "NP",
-      "roomName": "Italian Two Bedroom Butler Family Suite",
-      "roomView": "Pool, Tropical Garden",
-      "bedding": "1 King bed, 1 sleeper chair, 1 bunk bed w/trundle, 1 daybed w/trundle, 1 sofa bed",
+      "roomCode": "XOC",
+      "roomName": "Treasure Beach Oceanview Concierge Suite",
+      "roomView": "Oceanview, Pool, Tropical Garden",
+      "bedding": "1 King Bed, 1 Bunk Bed w/trundle, 1 Sleeper Sofa",
       "discount": "7%+ off",
-      "priceFrom": 1400,
-      "priceChild": 38,
+      "priceFrom": 947,
+      "priceChild": 47,
       "priceWas": null,
-      "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/np/"
+      "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/xoc/"
     },
     {
       "id": 2,
@@ -30,83 +30,83 @@
       "resort": "Beaches Turks & Caicos",
       "location": "Providenciales, Turks & Caicos",
       "imgColor": "#0077b6",
-      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/btc/accommodations/large/btc-172.jpg",
-      "imgPath": "images/BBTC_2BO.jpg",
+      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/btc/accommodations/large/btc-148.jpg",
+      "imgPath": "images/BBTC_RW.jpg",
       "imgPaths": [
-        "images/BBTC_2BO.jpg"
+        "images/BBTC_RW.jpg"
       ],
-      "roomCode": "2BO",
-      "roomName": "Key West Oceanview Two Story, Two Bedroom Butler Suite",
-      "roomView": "Oceanview",
-      "bedding": "2 King beds, 1 pullout sofa and trundle",
+      "roomCode": "RW",
+      "roomName": "Italian Oceanfront Walkout Concierge Family Suite with Kids Room",
+      "roomView": "Oceanfront, Oceanview",
+      "bedding": "1 king bed, 1 twin daybed w/trundle, 1 sleeper chair, 1 bunk bed w/trundle",
       "discount": "7%+ off",
-      "priceFrom": 1187,
-      "priceChild": 38,
+      "priceFrom": 883,
+      "priceChild": 47,
       "priceWas": null,
-      "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/2bo/"
+      "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/rw/"
     },
     {
       "id": 3,
+      "resortCode": "BTC",
+      "resort": "Beaches Turks & Caicos",
+      "location": "Providenciales, Turks & Caicos",
+      "imgColor": "#0077b6",
+      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/btc/accommodations/large/btc-092.jpg",
+      "imgPath": "images/BBTC_LV1.jpg",
+      "imgPaths": [
+        "images/BBTC_LV1.jpg"
+      ],
+      "roomCode": "LV1",
+      "roomName": "Seaside Honeymoon One Bedroom Concierge Villa Suite",
+      "roomView": "Tropical Garden",
+      "bedding": "1 King Bed & 1 Trundle Bed",
+      "discount": "7%+ off",
+      "priceFrom": 580,
+      "priceChild": 47,
+      "priceWas": null,
+      "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/lv1/"
+    },
+    {
+      "id": 4,
       "resortCode": "BNG",
       "resort": "Beaches Negril",
       "location": "Negril, Jamaica",
       "imgColor": "#00b4d8",
-      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-518.jpg",
-      "imgPath": "images/BBNG_3BW.jpg",
+      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-635.jpg",
+      "imgPath": "images/BBNG_WBS.jpg",
       "imgPaths": [
-        "images/BBNG_3BW.jpg"
+        "images/BBNG_WBS.jpg"
       ],
-      "roomCode": "3BW",
-      "roomName": "Eventide Penthouse Three Bedroom Butler Walkout",
-      "roomView": "Beachfront, Oceanview",
-      "bedding": "1 King Bed, 2 Queen Beds, 1 Twin Bunk Bed, 2 Queen Sleeper Sofa Beds",
+      "roomCode": "WBS",
+      "roomName": "Tropical Oceanview Walkout Oversized Concierge Family Suite",
+      "roomView": "Oceanview, Tropical Garden",
+      "bedding": "1 King Bed, 1 Single Pullout Sofa Bed and 1 Twin-size Daybed with Trundle.",
       "discount": "7%+ off",
-      "priceFrom": 1174,
-      "priceChild": 38,
+      "priceFrom": 468,
+      "priceChild": 54,
       "priceWas": null,
-      "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/3bw/"
-    },
-    {
-      "id": 4,
-      "resortCode": "BTC",
-      "resort": "Beaches Turks & Caicos",
-      "location": "Providenciales, Turks & Caicos",
-      "imgColor": "#0077b6",
-      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/btc/accommodations/large/btc-845.jpg",
-      "imgPath": "images/BBTC_XPC.jpg",
-      "imgPaths": [
-        "images/BBTC_XPC.jpg"
-      ],
-      "roomCode": "XPC",
-      "roomName": "Treasure Beach Oceanview Penthouse Concierge Suite",
-      "roomView": "Oceanview, Pool, Tropical Garden",
-      "bedding": "1 King Bed, 1 Bunk Bed w/trundle, 1 Sleeper Sofa",
-      "discount": "7%+ off",
-      "priceFrom": 852,
-      "priceChild": 38,
-      "priceWas": null,
-      "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/xpc/"
+      "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/wbs/"
     },
     {
       "id": 5,
-      "resortCode": "BTC",
-      "resort": "Beaches Turks & Caicos",
-      "location": "Providenciales, Turks & Caicos",
-      "imgColor": "#0077b6",
-      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/btc/accommodations/large/btc-931.jpg",
-      "imgPath": "images/BBTC_D2.jpg",
+      "resortCode": "BNG",
+      "resort": "Beaches Negril",
+      "location": "Negril, Jamaica",
+      "imgColor": "#00b4d8",
+      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-580.jpg",
+      "imgPath": "images/BBNG_BS.jpg",
       "imgPaths": [
-        "images/BBTC_D2.jpg"
+        "images/BBNG_BS.jpg"
       ],
-      "roomCode": "D2",
-      "roomName": "Italian Oceanfront Concierge Family Suite with Kids Room",
-      "roomView": "Oceanfront, Oceanview",
-      "bedding": "1 king bed, 1 sleeper chair, 1 bunk bed w/trundle",
+      "roomCode": "BS",
+      "roomName": "Tropical Oceanview Oversized Concierge Family Suite",
+      "roomView": "Oceanview, Tropical Garden",
+      "bedding": "1 King Bed, 1 Single Pullout Sofa Bed and 1 Twin-size Daybed with Trundle.",
       "discount": "7%+ off",
-      "priceFrom": 731,
-      "priceChild": 38,
+      "priceFrom": 456,
+      "priceChild": 54,
       "priceWas": null,
-      "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/d2/"
+      "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/bs/"
     },
     {
       "id": 6,
@@ -114,20 +114,20 @@
       "resort": "Beaches Negril",
       "location": "Negril, Jamaica",
       "imgColor": "#00b4d8",
-      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-598.jpg",
-      "imgPath": "images/BBNG_GLD.jpg",
+      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-591.jpg",
+      "imgPath": "images/BBNG_GCK.jpg",
       "imgPaths": [
-        "images/BBNG_GLD.jpg"
+        "images/BBNG_GCK.jpg"
       ],
-      "roomCode": "GLD",
-      "roomName": "Grande Luxe Double",
+      "roomCode": "GCK",
+      "roomName": "Tropical Concierge King",
       "roomView": "Tropical Garden",
-      "bedding": "2 Double Beds (rollaway beds available upon request)",
+      "bedding": "1 King Bed & a Twin-Size Daybed with Trundle",
       "discount": "7%+ off",
-      "priceFrom": 306,
-      "priceChild": 58,
+      "priceFrom": 342,
+      "priceChild": 61,
       "priceWas": null,
-      "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gld/"
+      "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gck/"
     },
     {
       "id": 7,
@@ -135,20 +135,20 @@
       "resort": "Beaches Negril",
       "location": "Negril, Jamaica",
       "imgColor": "#00b4d8",
-      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-601.jpg",
-      "imgPath": "images/BBNG_GLK.jpg",
+      "imgUrl": "https://cdn.sandals.com/beaches/v11/media/bng/accommodations/large/bng-589.jpg",
+      "imgPath": "images/BBNG_GCD.jpg",
       "imgPaths": [
-        "images/BBNG_GLK.jpg"
+        "images/BBNG_GCD.jpg"
       ],
-      "roomCode": "GLK",
-      "roomName": "Grande Luxe King",
+      "roomCode": "GCD",
+      "roomName": "Tropical Concierge Double",
       "roomView": "Tropical Garden",
-      "bedding": "1 King Bed & a Twin-Size Daybed with Trundle",
+      "bedding": "2 Double Beds And a Single Pull-Out Sofa Bed",
       "discount": "7%+ off",
-      "priceFrom": 306,
-      "priceChild": 58,
+      "priceFrom": 342,
+      "priceChild": 61,
       "priceWas": null,
-      "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/glk/"
+      "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gcd/"
     }
   ]
 }
