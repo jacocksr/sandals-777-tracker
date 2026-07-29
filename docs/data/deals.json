@@ -1,6 +1,6 @@
 {
   "weekLabel": "Jul 29 – Aug 4, 2026",
-  "fetchedAt": "2026-07-29T07:47:25.712448+00:00",
+  "fetchedAt": "2026-07-29T08:52:51.123289+00:00",
   "dealCount": 7,
   "deals": [
     {
@@ -68,7 +68,7 @@
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 581,
+      "priceFrom": 462,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/vpp/"
     },
@@ -91,12 +91,30 @@
       "roomView": "Pool",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 426,
+      "priceFrom": 367,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/sandals-barbados/rooms-suites/1b/"
     },
     {
       "id": 5,
+      "resortCode": "SPR",
+      "resort": "Sandals Royal Barbados",
+      "location": "Christ Church, Barbados",
+      "imgColor": "#685838",
+      "imgUrl": "",
+      "imgPath": "",
+      "imgPaths": [],
+      "roomCode": "SSHL",
+      "roomName": "South Seas Hideaway Crystal Lagoon Club Level Suite with Balcony Tranquility Soaking Tub",
+      "roomView": "Pool, Tropical Garden",
+      "bedding": "1 King Bed",
+      "discount": "7%+ off",
+      "priceFrom": 316,
+      "priceWas": null,
+      "bookUrl": "https://www.sandals.com/royal-barbados/rooms-suites/sshl/"
+    },
+    {
+      "id": 6,
       "resortCode": "SCR",
       "resort": "Sandals Royal Curacao",
       "location": "Santa Barbara, Curaçao",
@@ -113,27 +131,9 @@
       "roomView": "Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 321,
+      "priceFrom": 314,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/royal-curacao/rooms-suites/clx/"
-    },
-    {
-      "id": 6,
-      "resortCode": "SPR",
-      "resort": "Sandals Royal Barbados",
-      "location": "Christ Church, Barbados",
-      "imgColor": "#685838",
-      "imgUrl": "",
-      "imgPath": "",
-      "imgPaths": [],
-      "roomCode": "SSHL",
-      "roomName": "South Seas Hideaway Crystal Lagoon Club Level Suite with Balcony Tranquility Soaking Tub",
-      "roomView": "Pool, Tropical Garden",
-      "bedding": "1 King Bed",
-      "discount": "7%+ off",
-      "priceFrom": 316,
-      "priceWas": null,
-      "bookUrl": "https://www.sandals.com/royal-barbados/rooms-suites/sshl/"
     },
     {
       "id": 7,
@@ -154,7 +154,7 @@
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 311,
+      "priceFrom": 271,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/ochi/rooms-suites/nv1/"
     }
