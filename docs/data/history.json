@@ -3574,7 +3574,7 @@
   },
   {
     "weekLabel": "Aug 5 – Aug 11, 2026",
-    "fetchedAt": "2026-08-05T07:44:18.226644+00:00",
+    "fetchedAt": "2026-08-05T08:48:39.733877+00:00",
     "deals": [
       {
         "id": 1,
@@ -3590,34 +3590,12 @@
         "roomView": "Oceanfront, Pool, Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 614,
+        "priceFrom": 527,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/sandals-montego-bay/rooms-suites/osc/"
       },
       {
         "id": 2,
-        "resortCode": "SLU",
-        "resort": "Sandals Regency La Toc",
-        "location": "Castries, Saint Lucia",
-        "imgColor": "#5a4878",
-        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/slu/accommodations/large/slu-251.jpg",
-        "imgPath": "images/SLU_BO.jpg",
-        "imgPaths": [
-          "images/SLU_BO.jpg",
-          "images/SLU_BO_2.jpg",
-          "images/SLU_BO_3.jpg"
-        ],
-        "roomCode": "BO",
-        "roomName": "Piton Oceanview Two Story Butler Veranda Suite",
-        "roomView": "Oceanview",
-        "bedding": "1 King Bed",
-        "discount": "7%+ off",
-        "priceFrom": 502,
-        "priceWas": null,
-        "bookUrl": "https://www.sandals.com/sandals-regency-la-toc/rooms-suites/bo/"
-      },
-      {
-        "id": 3,
         "resortCode": "SRB",
         "resort": "Sandals Royal Bahamian",
         "location": "Nassau, Bahamas",
@@ -3638,6 +3616,28 @@
         "priceFrom": 481,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/v1pp/"
+      },
+      {
+        "id": 3,
+        "resortCode": "SLU",
+        "resort": "Sandals Regency La Toc",
+        "location": "Castries, Saint Lucia",
+        "imgColor": "#5a4878",
+        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/slu/accommodations/large/slu-251.jpg",
+        "imgPath": "images/SLU_BO.jpg",
+        "imgPaths": [
+          "images/SLU_BO.jpg",
+          "images/SLU_BO_2.jpg",
+          "images/SLU_BO_3.jpg"
+        ],
+        "roomCode": "BO",
+        "roomName": "Piton Oceanview Two Story Butler Veranda Suite",
+        "roomView": "Oceanview",
+        "bedding": "1 King Bed",
+        "discount": "7%+ off",
+        "priceFrom": 422,
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/sandals-regency-la-toc/rooms-suites/bo/"
       },
       {
         "id": 4,
@@ -3702,7 +3702,7 @@
         "roomView": "Pool, Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 275,
+        "priceFrom": 239,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/ochi/rooms-suites/npv/"
       }
