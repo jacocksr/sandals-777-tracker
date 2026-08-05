@@ -2490,7 +2490,7 @@
   },
   {
     "weekLabel": "Aug 5 – Aug 11, 2026",
-    "fetchedAt": "2026-08-05T07:46:48.302505+00:00",
+    "fetchedAt": "2026-08-05T08:50:17.442118+00:00",
     "deals": [
       {
         "id": 1,
@@ -2508,8 +2508,8 @@
         "roomView": "Oceanview, Tropical Garden",
         "bedding": "Two king beds, two double beds, one twin daybed with a trundle and three single pullout sofa beds.",
         "discount": "7%+ off",
-        "priceFrom": 1087,
-        "priceChild": 47,
+        "priceFrom": 1061,
+        "priceChild": 38,
         "priceWas": null,
         "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/w3bg/"
       },
@@ -2530,7 +2530,7 @@
         "bedding": "1 King Bed, 1 Bunk Bed w/trundle, 1 Sleeper Sofa",
         "discount": "7%+ off",
         "priceFrom": 884,
-        "priceChild": 47,
+        "priceChild": 38,
         "priceWas": null,
         "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/xc/"
       },
@@ -2551,7 +2551,7 @@
         "bedding": "1 king bed, 1 sleeper chair, 1 bunk bed w/trundle",
         "discount": "7%+ off",
         "priceFrom": 768,
-        "priceChild": 47,
+        "priceChild": 38,
         "priceWas": null,
         "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/r2/"
       },
@@ -2572,7 +2572,7 @@
         "bedding": "1 King Bed, 2 Double Beds, 1 Twin Daybed with Trundle and 1 Single Pullout Sofa Bed.",
         "discount": "7%+ off",
         "priceFrom": 603,
-        "priceChild": 47,
+        "priceChild": 38,
         "priceWas": null,
         "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/bcc/"
       },
@@ -2593,7 +2593,7 @@
         "bedding": "1 King Bed, 2 Double Beds, and a Twin Daybed with Trundle.",
         "discount": "7%+ off",
         "priceFrom": 586,
-        "priceChild": 68,
+        "priceChild": 58,
         "priceWas": null,
         "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/glc/"
       },
@@ -2614,7 +2614,7 @@
         "bedding": "1 King Bed, 1 Queen Sleeper Sofa Bed, Can Accomodate Rollaway",
         "discount": "7%+ off",
         "priceFrom": 533,
-        "priceChild": 47,
+        "priceChild": 38,
         "priceWas": null,
         "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/g1/"
       },
@@ -2635,7 +2635,7 @@
         "bedding": "1 King Bed, 1 Single Pullout Sofa Bed and 1 Twin-size Daybed with Trundle.",
         "discount": "7%+ off",
         "priceFrom": 406,
-        "priceChild": 54,
+        "priceChild": 45,
         "priceWas": null,
         "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gs/"
       }
