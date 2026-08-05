@@ -3571,5 +3571,141 @@
         "bookUrl": "https://www.sandals.com/ochi/rooms-suites/nv1/"
       }
     ]
+  },
+  {
+    "weekLabel": "Aug 5 – Aug 11, 2026",
+    "fetchedAt": "2026-08-05T06:38:33.359670+00:00",
+    "deals": [
+      {
+        "id": 1,
+        "resortCode": "SML",
+        "resort": "Sandals Montego Bay",
+        "location": "Montego Bay, Jamaica",
+        "imgColor": "#487858",
+        "imgUrl": "",
+        "imgPath": "",
+        "imgPaths": [],
+        "roomCode": "OSC",
+        "roomName": "Oceanfront Swim-up Club Room w/ Patio Tranquility Soaking Tub",
+        "roomView": "Oceanfront, Pool, Tropical Garden",
+        "bedding": "1 King Bed",
+        "discount": "7%+ off",
+        "priceFrom": 614,
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/sandals-montego-bay/rooms-suites/osc/"
+      },
+      {
+        "id": 2,
+        "resortCode": "SLU",
+        "resort": "Sandals Regency La Toc",
+        "location": "Castries, Saint Lucia",
+        "imgColor": "#5a4878",
+        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/slu/accommodations/large/slu-251.jpg",
+        "imgPath": "images/SLU_BO.jpg",
+        "imgPaths": [
+          "images/SLU_BO.jpg",
+          "images/SLU_BO_2.jpg",
+          "images/SLU_BO_3.jpg"
+        ],
+        "roomCode": "BO",
+        "roomName": "Piton Oceanview Two Story Butler Veranda Suite",
+        "roomView": "Oceanview",
+        "bedding": "1 King Bed",
+        "discount": "7%+ off",
+        "priceFrom": 502,
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/sandals-regency-la-toc/rooms-suites/bo/"
+      },
+      {
+        "id": 3,
+        "resortCode": "SRB",
+        "resort": "Sandals Royal Bahamian",
+        "location": "Nassau, Bahamas",
+        "imgColor": "#2a6858",
+        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/srb/accommodations/large/srb-187.jpg",
+        "imgPath": "images/SRB_V1PP.jpg",
+        "imgPaths": [
+          "images/SRB_V1PP.jpg",
+          "images/SRB_V1PP_2.jpg",
+          "images/SRB_V1PP_3.jpg",
+          "images/SRB_V1PP_4.jpg"
+        ],
+        "roomCode": "V1PP",
+        "roomName": "Island Village One Bedroom Butler Villa Suite w/ Private Pool",
+        "roomView": "Pool, Tropical Garden",
+        "bedding": "1 King Bed",
+        "discount": "7%+ off",
+        "priceFrom": 481,
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/v1pp/"
+      },
+      {
+        "id": 4,
+        "resortCode": "SAB",
+        "resort": "Sandals Grande Antigua",
+        "location": "St. John's, Antigua",
+        "imgColor": "#5a6848",
+        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sat/accommodations/large/sat-229.jpg",
+        "imgPath": "images/SAB_GO.jpg",
+        "imgPaths": [
+          "images/SAB_GO.jpg",
+          "images/SAB_GO_2.jpg",
+          "images/SAB_GO_3.jpg"
+        ],
+        "roomCode": "GO",
+        "roomName": "Mediterranean Oceanview Grande Luxe Club Level Suite",
+        "roomView": "Oceanview, Pool",
+        "bedding": "1 King Bed",
+        "discount": "7%+ off",
+        "priceFrom": 403,
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/sandals-grande-antigua/rooms-suites/go/"
+      },
+      {
+        "id": 5,
+        "resortCode": "SBR",
+        "resort": "Sandals Barbados",
+        "location": "Christ Church, Barbados",
+        "imgColor": "#3a7868",
+        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sbd/accommodations/large/sbd-169.jpg",
+        "imgPath": "images/SBR_OBT.jpg",
+        "imgPaths": [
+          "images/SBR_OBT.jpg",
+          "images/SBR_OBT_2.jpg",
+          "images/SBR_OBT_3.jpg"
+        ],
+        "roomCode": "OBT",
+        "roomName": "Beachfront Club Level Suite with Balcony Tranquility Soaking Tub",
+        "roomView": "Beachfront, Oceanfront, Oceanview",
+        "bedding": "1 King Bed",
+        "discount": "7%+ off",
+        "priceFrom": 349,
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/sandals-barbados/rooms-suites/obt/"
+      },
+      {
+        "id": 6,
+        "resortCode": "SGO",
+        "resort": "Sandals Ochi",
+        "location": "Ocho Rios, Jamaica",
+        "imgColor": "#1a5c6a",
+        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sgo/accommodations/large/sgo-080.jpg",
+        "imgPath": "images/SGO_NPV.jpg",
+        "imgPaths": [
+          "images/SGO_NPV.jpg",
+          "images/SGO_NPV_2.jpg",
+          "images/SGO_NPV_3.jpg",
+          "images/SGO_NPV_4.jpg"
+        ],
+        "roomCode": "NPV",
+        "roomName": "Poolside Club Level Villa Room",
+        "roomView": "Pool, Tropical Garden",
+        "bedding": "1 King Bed",
+        "discount": "7%+ off",
+        "priceFrom": 275,
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/ochi/rooms-suites/npv/"
+      }
+    ]
   }
 ]
