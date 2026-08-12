@@ -3710,7 +3710,7 @@
   },
   {
     "weekLabel": "Aug 12 – Aug 18, 2026",
-    "fetchedAt": "2026-08-12T07:45:56.946632+00:00",
+    "fetchedAt": "2026-08-12T08:36:11.802749+00:00",
     "deals": [
       {
         "id": 1,
@@ -3755,28 +3755,6 @@
       },
       {
         "id": 3,
-        "resortCode": "SLU",
-        "resort": "Sandals Regency La Toc",
-        "location": "Castries, Saint Lucia",
-        "imgColor": "#5a4878",
-        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/slu/accommodations/large/slu-300.jpg",
-        "imgPath": "images/SLU_WEBT.jpg",
-        "imgPaths": [
-          "images/SLU_WEBT.jpg",
-          "images/SLU_WEBT_2.jpg",
-          "images/SLU_WEBT_3.jpg"
-        ],
-        "roomCode": "WEBT",
-        "roomName": "Emerald Beachfront Walkout Club Level Junior Suite w/ Patio Tranquility Soaking Tub",
-        "roomView": "Beachfront, Oceanfront, Oceanview",
-        "bedding": "1 King Bed",
-        "discount": "7%+ off",
-        "priceFrom": 397,
-        "priceWas": null,
-        "bookUrl": "https://www.sandals.com/sandals-regency-la-toc/rooms-suites/webt/"
-      },
-      {
-        "id": 4,
         "resortCode": "SBR",
         "resort": "Sandals Barbados",
         "location": "Christ Church, Barbados",
@@ -3796,6 +3774,28 @@
         "priceFrom": 354,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/sandals-barbados/rooms-suites/opt/"
+      },
+      {
+        "id": 4,
+        "resortCode": "SLU",
+        "resort": "Sandals Regency La Toc",
+        "location": "Castries, Saint Lucia",
+        "imgColor": "#5a4878",
+        "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/slu/accommodations/large/slu-300.jpg",
+        "imgPath": "images/SLU_WEBT.jpg",
+        "imgPaths": [
+          "images/SLU_WEBT.jpg",
+          "images/SLU_WEBT_2.jpg",
+          "images/SLU_WEBT_3.jpg"
+        ],
+        "roomCode": "WEBT",
+        "roomName": "Emerald Beachfront Walkout Club Level Junior Suite w/ Patio Tranquility Soaking Tub",
+        "roomView": "Beachfront, Oceanfront, Oceanview",
+        "bedding": "1 King Bed",
+        "discount": "7%+ off",
+        "priceFrom": 333,
+        "priceWas": null,
+        "bookUrl": "https://www.sandals.com/sandals-regency-la-toc/rooms-suites/webt/"
       },
       {
         "id": 5,
