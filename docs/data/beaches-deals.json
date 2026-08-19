@@ -1,6 +1,6 @@
 {
   "weekLabel": "Aug 19 – Aug 25, 2026",
-  "fetchedAt": "2026-08-19T07:50:17.272992+00:00",
+  "fetchedAt": "2026-08-19T08:50:19.379029+00:00",
   "dealCount": 7,
   "deals": [
     {
@@ -19,8 +19,8 @@
       "roomView": "Oceanview, Pool, Tropical Garden",
       "bedding": "1 King bed, 1 sleeper chair, 1 bunk bed w/trundle, 1 daybed w/trundle, 1 sofa bed",
       "discount": "7%+ off",
-      "priceFrom": 1991,
-      "priceChild": 47,
+      "priceFrom": 1571,
+      "priceChild": 38,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/m2p/"
     },
@@ -43,8 +43,8 @@
       "roomView": "Beachfront, Oceanview",
       "bedding": "1 King Bed, 2 Queen Beds, 1 Twin Bunk Bed, 2 Queen Sleeper Sofa Beds",
       "discount": "7%+ off",
-      "priceFrom": 1498,
-      "priceChild": 47,
+      "priceFrom": 1202,
+      "priceChild": 38,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/3rt/"
     },
@@ -64,8 +64,8 @@
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed, 1 Bunk Bed w/trundle, 1 Sleeper Sofa",
       "discount": "7%+ off",
-      "priceFrom": 1338,
-      "priceChild": 47,
+      "priceFrom": 1048,
+      "priceChild": 38,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/xwc/"
     },
@@ -85,8 +85,8 @@
       "roomView": "Oceanview",
       "bedding": "1 King Bed & 1 Trundle Bed (can accommodate a rollaway)",
       "discount": "7%+ off",
-      "priceFrom": 1251,
-      "priceChild": 47,
+      "priceFrom": 979,
+      "priceChild": 38,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/1bo/"
     },
@@ -106,8 +106,8 @@
       "roomView": "Tropical Garden",
       "bedding": "1 King Bed & 1 Trundle Bed",
       "discount": "7%+ off",
-      "priceFrom": 759,
-      "priceChild": 47,
+      "priceFrom": 586,
+      "priceChild": 38,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/i1b/"
     },
@@ -127,8 +127,8 @@
       "roomView": "Tropical Garden",
       "bedding": "1 King Bed & a Twin-Size Daybed with Trundle",
       "discount": "7%+ off",
-      "priceFrom": 397,
-      "priceChild": 59,
+      "priceFrom": 333,
+      "priceChild": 51,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gck/"
     },
@@ -148,8 +148,8 @@
       "roomView": "Tropical Garden",
       "bedding": "2 Double Beds And a Single Pull-Out Sofa Bed",
       "discount": "7%+ off",
-      "priceFrom": 397,
-      "priceChild": 59,
+      "priceFrom": 333,
+      "priceChild": 51,
       "priceWas": null,
       "bookUrl": "https://www.beaches.com/resorts/negril/rooms-suites/gcd/"
     }
