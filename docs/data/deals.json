@@ -1,6 +1,6 @@
 {
   "weekLabel": "Aug 19 – Aug 25, 2026",
-  "fetchedAt": "2026-08-19T07:48:25.253933+00:00",
+  "fetchedAt": "2026-08-19T08:49:04.231148+00:00",
   "dealCount": 6,
   "deals": [
     {
@@ -17,7 +17,7 @@
       "roomView": "Beachfront, Oceanview",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 651,
+      "priceFrom": 581,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/sandals-montego-bay/rooms-suites/b1b/"
     },
@@ -62,12 +62,34 @@
       "roomView": "Oceanview",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 502,
+      "priceFrom": 422,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/sandals-regency-la-toc/rooms-suites/bo/"
     },
     {
       "id": 4,
+      "resortCode": "SRB",
+      "resort": "Sandals Royal Bahamian",
+      "location": "Nassau, Bahamas",
+      "imgColor": "#2a6858",
+      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/srb/accommodations/large/srb-281.jpg",
+      "imgPath": "images/SRB_JS.jpg",
+      "imgPaths": [
+        "images/SRB_JS.jpg",
+        "images/SRB_JS_2.jpg",
+        "images/SRB_JS_3.jpg"
+      ],
+      "roomCode": "JS",
+      "roomName": "West Bay Honeymoon Oceanview Club Level Suite",
+      "roomView": "Oceanview, Pool, Tropical Garden",
+      "bedding": "1 King Bed",
+      "discount": "7%+ off",
+      "priceFrom": 313,
+      "priceWas": null,
+      "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/js/"
+    },
+    {
+      "id": 5,
       "resortCode": "SGO",
       "resort": "Sandals Ochi",
       "location": "Ocho Rios, Jamaica",
@@ -85,31 +107,9 @@
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 392,
+      "priceFrom": 311,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/ochi/rooms-suites/nv1/"
-    },
-    {
-      "id": 5,
-      "resortCode": "SRB",
-      "resort": "Sandals Royal Bahamian",
-      "location": "Nassau, Bahamas",
-      "imgColor": "#2a6858",
-      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/srb/accommodations/large/srb-281.jpg",
-      "imgPath": "images/SRB_JS.jpg",
-      "imgPaths": [
-        "images/SRB_JS.jpg",
-        "images/SRB_JS_2.jpg",
-        "images/SRB_JS_3.jpg"
-      ],
-      "roomCode": "JS",
-      "roomName": "West Bay Honeymoon Oceanview Club Level Suite",
-      "roomView": "Oceanview, Pool, Tropical Garden",
-      "bedding": "1 King Bed",
-      "discount": "7%+ off",
-      "priceFrom": 383,
-      "priceWas": null,
-      "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/js/"
     },
     {
       "id": 6,
@@ -129,7 +129,7 @@
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 353,
+      "priceFrom": 289,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/sandals-grande-antigua/rooms-suites/wjs/"
     }
