@@ -1,28 +1,10 @@
 {
   "weekLabel": "Aug 26 – Sep 1, 2026",
-  "fetchedAt": "2026-08-26T07:54:00.491006+00:00",
+  "fetchedAt": "2026-08-26T08:55:03.104381+00:00",
   "dealCount": 6,
   "deals": [
     {
       "id": 1,
-      "resortCode": "SML",
-      "resort": "Sandals Montego Bay",
-      "location": "Montego Bay, Jamaica",
-      "imgColor": "#487858",
-      "imgUrl": "",
-      "imgPath": "",
-      "imgPaths": [],
-      "roomCode": "BSUP",
-      "roomName": "Beachfront Swim-up Club Junior Suite w/ Patio Tranquility Soaking Tub",
-      "roomView": "Beachfront, Pool",
-      "bedding": "1 King Bed",
-      "discount": "7%+ off",
-      "priceFrom": 691,
-      "priceWas": null,
-      "bookUrl": "https://www.sandals.com/sandals-montego-bay/rooms-suites/bsup/"
-    },
-    {
-      "id": 2,
       "resortCode": "SLU",
       "resort": "Sandals Regency La Toc",
       "location": "Castries, Saint Lucia",
@@ -40,9 +22,27 @@
       "roomView": "Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 630,
+      "priceFrom": 554,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/sandals-regency-la-toc/rooms-suites/rpp/"
+    },
+    {
+      "id": 2,
+      "resortCode": "SML",
+      "resort": "Sandals Montego Bay",
+      "location": "Montego Bay, Jamaica",
+      "imgColor": "#487858",
+      "imgUrl": "",
+      "imgPath": "",
+      "imgPaths": [],
+      "roomCode": "BSUP",
+      "roomName": "Beachfront Swim-up Club Junior Suite w/ Patio Tranquility Soaking Tub",
+      "roomView": "Beachfront, Pool",
+      "bedding": "1 King Bed",
+      "discount": "7%+ off",
+      "priceFrom": 537,
+      "priceWas": null,
+      "bookUrl": "https://www.sandals.com/sandals-montego-bay/rooms-suites/bsup/"
     },
     {
       "id": 3,
@@ -63,7 +63,7 @@
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 569,
+      "priceFrom": 452,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/vps/"
     },
@@ -86,34 +86,12 @@
       "roomView": "Oceanview, Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 372,
+      "priceFrom": 370,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/ochi/rooms-suites/ov1/"
     },
     {
       "id": 5,
-      "resortCode": "SAB",
-      "resort": "Sandals Grande Antigua",
-      "location": "St. John's, Antigua",
-      "imgColor": "#5a6848",
-      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sat/accommodations/large/sat-235.jpg",
-      "imgPath": "images/SAB_PF.jpg",
-      "imgPaths": [
-        "images/SAB_PF.jpg",
-        "images/SAB_PF_2.jpg",
-        "images/SAB_PF_3.jpg"
-      ],
-      "roomCode": "PF",
-      "roomName": "Mediterranean Walkout Club Level Suite",
-      "roomView": "Tropical Garden",
-      "bedding": "1 King Bed",
-      "discount": "7%+ off",
-      "priceFrom": 352,
-      "priceWas": null,
-      "bookUrl": "https://www.sandals.com/sandals-grande-antigua/rooms-suites/pf/"
-    },
-    {
-      "id": 6,
       "resortCode": "SBR",
       "resort": "Sandals Barbados",
       "location": "Christ Church, Barbados",
@@ -130,9 +108,31 @@
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 332,
+      "priceFrom": 297,
       "priceWas": null,
       "bookUrl": "https://www.sandals.com/sandals-barbados/rooms-suites/lx/"
+    },
+    {
+      "id": 6,
+      "resortCode": "SAB",
+      "resort": "Sandals Grande Antigua",
+      "location": "St. John's, Antigua",
+      "imgColor": "#5a6848",
+      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sat/accommodations/large/sat-235.jpg",
+      "imgPath": "images/SAB_PF.jpg",
+      "imgPaths": [
+        "images/SAB_PF.jpg",
+        "images/SAB_PF_2.jpg",
+        "images/SAB_PF_3.jpg"
+      ],
+      "roomCode": "PF",
+      "roomName": "Mediterranean Walkout Club Level Suite",
+      "roomView": "Tropical Garden",
+      "bedding": "1 King Bed",
+      "discount": "7%+ off",
+      "priceFrom": 288,
+      "priceWas": null,
+      "bookUrl": "https://www.sandals.com/sandals-grande-antigua/rooms-suites/pf/"
     }
   ]
 }
