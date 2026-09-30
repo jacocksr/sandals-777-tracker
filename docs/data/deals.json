@@ -1,6 +1,6 @@
 {
-  "weekLabel": "Sep 23 – Sep 29, 2026",
-  "fetchedAt": "2026-09-23T14:44:05.259377+00:00",
+  "weekLabel": "Sep 30 – Oct 6, 2026",
+  "fetchedAt": "2026-09-30T11:01:45.665069+00:00",
   "dealCount": 6,
   "deals": [
     {
@@ -12,127 +12,127 @@
       "imgUrl": "",
       "imgPath": "",
       "imgPaths": [],
-      "roomCode": "B1B",
-      "roomName": "Beachfront Honeymoon One-Bedroom Butler Suite w/ Balcony Tranquility Soaking Tub",
-      "roomView": "Beachfront, Oceanview",
+      "roomCode": "BSUP",
+      "roomName": "Beachfront Swim-up Club Junior Suite w/ Patio Tranquility Soaking Tub",
+      "roomView": "Beachfront, Pool",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 581,
+      "priceFrom": 537,
       "priceWas": null,
-      "bookUrl": "https://www.sandals.com/sandals-montego-bay/rooms-suites/b1b/"
+      "bookUrl": "https://www.sandals.com/sandals-montego-bay/rooms-suites/bsup/"
     },
     {
       "id": 2,
-      "resortCode": "SBR",
-      "resort": "Sandals Barbados",
-      "location": "Christ Church, Barbados",
-      "imgColor": "#3a7868",
-      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sbd/accommodations/large/sbd-160.jpg",
-      "imgPath": "images/SBR_O1B.jpg",
-      "imgPaths": [
-        "images/SBR_O1B.jpg",
-        "images/SBR_O1B_2.jpg",
-        "images/SBR_O1B_3.jpg",
-        "images/SBR_O1B_4.jpg"
-      ],
-      "roomCode": "O1B",
-      "roomName": "Beachfront One Bedroom Butler Suite with Balcony Tranquility Soaking Tub",
-      "roomView": "Beachfront, Oceanfront, Oceanview, Pool",
-      "bedding": "1 King Bed",
-      "discount": "7%+ off",
-      "priceFrom": 521,
-      "priceWas": null,
-      "bookUrl": "https://www.sandals.com/sandals-barbados/rooms-suites/o1b/"
-    },
-    {
-      "id": 3,
       "resortCode": "SLU",
       "resort": "Sandals Regency La Toc",
       "location": "Castries, Saint Lucia",
       "imgColor": "#5a4878",
-      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/slu/accommodations/large/slu-280.jpg",
-      "imgPath": "images/SLU_BS.jpg",
+      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/slu/accommodations/large/slu-333.jpg",
+      "imgPath": "images/SLU_RPP.jpg",
       "imgPaths": [
-        "images/SLU_BS.jpg",
-        "images/SLU_BS_2.jpg",
-        "images/SLU_BS_3.jpg",
-        "images/SLU_BS_4.jpg"
+        "images/SLU_RPP.jpg",
+        "images/SLU_RPP_2.jpg",
+        "images/SLU_RPP_3.jpg",
+        "images/SLU_RPP_4.jpg"
       ],
-      "roomCode": "BS",
-      "roomName": "Sunset Bluff Honeymoon Oceanfront One Bedroom Butler Villa Suite with Private Pool",
-      "roomView": "Oceanfront, Oceanview",
+      "roomCode": "RPP",
+      "roomName": "Rondoval Butler Villa w/ Private Pool",
+      "roomView": "Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 494,
+      "priceFrom": 528,
       "priceWas": null,
-      "bookUrl": "https://www.sandals.com/sandals-regency-la-toc/rooms-suites/bs/"
+      "bookUrl": "https://www.sandals.com/sandals-regency-la-toc/rooms-suites/rpp/"
     },
     {
-      "id": 4,
-      "resortCode": "SAB",
-      "resort": "Sandals Grande Antigua",
-      "location": "St. John's, Antigua",
-      "imgColor": "#5a6848",
-      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sat/accommodations/large/sat-201.jpg",
-      "imgPath": "images/SAB_WJS.jpg",
-      "imgPaths": [
-        "images/SAB_WJS.jpg",
-        "images/SAB_WJS_2.jpg",
-        "images/SAB_WJS_3.jpg"
-      ],
-      "roomCode": "WJS",
-      "roomName": "Caribbean Walkout Club Level Veranda Suite",
-      "roomView": "Pool, Tropical Garden",
-      "bedding": "1 King Bed",
-      "discount": "7%+ off",
-      "priceFrom": 409,
-      "priceWas": null,
-      "bookUrl": "https://www.sandals.com/sandals-grande-antigua/rooms-suites/wjs/"
-    },
-    {
-      "id": 5,
+      "id": 3,
       "resortCode": "SRB",
       "resort": "Sandals Royal Bahamian",
       "location": "Nassau, Bahamas",
       "imgColor": "#2a6858",
-      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/srb/accommodations/large/srb-281.jpg",
-      "imgPath": "images/SRB_JS.jpg",
+      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/srb/accommodations/large/srb-230.jpg",
+      "imgPath": "images/SRB_VPS.jpg",
       "imgPaths": [
-        "images/SRB_JS.jpg",
-        "images/SRB_JS_2.jpg",
-        "images/SRB_JS_3.jpg"
+        "images/SRB_VPS.jpg",
+        "images/SRB_VPS_2.jpg",
+        "images/SRB_VPS_3.jpg",
+        "images/SRB_VPS_4.jpg"
       ],
-      "roomCode": "JS",
-      "roomName": "West Bay Honeymoon Oceanview Club Level Suite",
-      "roomView": "Oceanview, Pool, Tropical Garden",
+      "roomCode": "VPS",
+      "roomName": "Island Village Walkout Butler Hideaway Villa Suite w/ Private Pool",
+      "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 313,
+      "priceFrom": 452,
       "priceWas": null,
-      "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/js/"
+      "bookUrl": "https://www.sandals.com/royal-bahamian/rooms-suites/vps/"
     },
     {
-      "id": 6,
+      "id": 4,
       "resortCode": "SGO",
       "resort": "Sandals Ochi",
       "location": "Ocho Rios, Jamaica",
       "imgColor": "#1a5c6a",
-      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sgo/accommodations/large/sgo-075.jpg",
-      "imgPath": "images/SGO_NV1.jpg",
+      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sgo/accommodations/large/sgo-100.jpg",
+      "imgPath": "images/SGO_OV1.jpg",
       "imgPaths": [
-        "images/SGO_NV1.jpg",
-        "images/SGO_NV1_2.jpg",
-        "images/SGO_NV1_3.jpg",
-        "images/SGO_NV1_4.jpg"
+        "images/SGO_OV1.jpg",
+        "images/SGO_OV1_2.jpg",
+        "images/SGO_OV1_3.jpg",
+        "images/SGO_OV1_4.jpg"
       ],
-      "roomCode": "NV1",
-      "roomName": "One Bedroom Poolside Butler Villa Suite",
+      "roomCode": "OV1",
+      "roomName": "Oceanview One Bedroom Poolside Butler Villa Suite",
+      "roomView": "Oceanview, Pool, Tropical Garden",
+      "bedding": "1 King Bed",
+      "discount": "7%+ off",
+      "priceFrom": 370,
+      "priceWas": null,
+      "bookUrl": "https://www.sandals.com/ochi/rooms-suites/ov1/"
+    },
+    {
+      "id": 5,
+      "resortCode": "SBR",
+      "resort": "Sandals Barbados",
+      "location": "Christ Church, Barbados",
+      "imgColor": "#3a7868",
+      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sbd/accommodations/large/sbd-189.jpg",
+      "imgPath": "images/SBR_LX.jpg",
+      "imgPaths": [
+        "images/SBR_LX.jpg",
+        "images/SBR_LX_2.jpg",
+        "images/SBR_LX_3.jpg"
+      ],
+      "roomCode": "LX",
+      "roomName": "Crystal Lagoon Luxury Honeymoon Room with Balcony Tranquility Soaking Tub",
       "roomView": "Pool, Tropical Garden",
       "bedding": "1 King Bed",
       "discount": "7%+ off",
-      "priceFrom": 311,
+      "priceFrom": 332,
       "priceWas": null,
-      "bookUrl": "https://www.sandals.com/ochi/rooms-suites/nv1/"
+      "bookUrl": "https://www.sandals.com/sandals-barbados/rooms-suites/lx/"
+    },
+    {
+      "id": 6,
+      "resortCode": "SAB",
+      "resort": "Sandals Grande Antigua",
+      "location": "St. John's, Antigua",
+      "imgColor": "#5a6848",
+      "imgUrl": "https://cdn.sandals.com/sandals/v13/images/EN/resorts/sat/accommodations/large/sat-235.jpg",
+      "imgPath": "images/SAB_PF.jpg",
+      "imgPaths": [
+        "images/SAB_PF.jpg",
+        "images/SAB_PF_2.jpg",
+        "images/SAB_PF_3.jpg"
+      ],
+      "roomCode": "PF",
+      "roomName": "Mediterranean Walkout Club Level Suite",
+      "roomView": "Tropical Garden",
+      "bedding": "1 King Bed",
+      "discount": "7%+ off",
+      "priceFrom": 322,
+      "priceWas": null,
+      "bookUrl": "https://www.sandals.com/sandals-grande-antigua/rooms-suites/pf/"
     }
   ]
 }
