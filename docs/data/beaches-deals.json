@@ -1,6 +1,6 @@
 {
   "weekLabel": "Oct 7 – Oct 13, 2026",
-  "fetchedAt": "2026-10-07T10:59:53.900597+00:00",
+  "fetchedAt": "2026-10-07T11:42:24.271465+00:00",
   "dealCount": 7,
   "deals": [
     {
@@ -22,7 +22,7 @@
       "priceFrom": 1381,
       "priceChild": 38,
       "priceWas": null,
-      "bookUrl": "https://www.beaches.com/resorts/turks-caicos/rooms-suites/rw/"
+      "bookUrl": "https://www.beaches.com/specials/suite-deals/"
     },
     {
       "id": 2,
