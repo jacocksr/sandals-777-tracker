@@ -4805,7 +4805,7 @@
   },
   {
     "weekLabel": "Oct 7 – Oct 13, 2026",
-    "fetchedAt": "2026-10-07T16:21:20.356043+00:00",
+    "fetchedAt": "2026-10-07T17:19:20.437792+00:00",
     "deals": [
       {
         "id": 1,
@@ -4890,7 +4890,7 @@
         "roomView": "Pool",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 441,
+        "priceFrom": 437,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/sandals-barbados/rooms-suites/1b/"
       },
@@ -4936,7 +4936,7 @@
         "roomView": "Pool, Tropical Garden",
         "bedding": "1 King Bed",
         "discount": "7%+ off",
-        "priceFrom": 311,
+        "priceFrom": 316,
         "priceWas": null,
         "bookUrl": "https://www.sandals.com/ochi/rooms-suites/nv1/"
       }
